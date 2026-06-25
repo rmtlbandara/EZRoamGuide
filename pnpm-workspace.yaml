@@ -5,8 +5,10 @@ packages:
 allowBuilds:
   esbuild: true
   sharp: true
+  workerd: true
 
 # pnpm 10 deployment environments
 onlyBuiltDependencies:
   - esbuild
   - sharp
+  - workerd
