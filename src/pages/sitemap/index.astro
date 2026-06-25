@@ -1,0 +1,17 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Breadcrumb from "../../components/Breadcrumb.astro";
+import { countryGuides, cityGuides, basicGuides, hrefFor } from "../../data/site";
+import { infoPages } from "../../data/pages";
+---
+<BaseLayout title="Sitemap | EZ Roam Guide" description="Browse every country guide, city guide, travel basics article, and information page on EZ Roam Guide.">
+  <Breadcrumb items={[{label:"Home",href:"/"},{label:"Sitemap"}]} />
+  <article class="prose"><div class="reading">
+    <p class="eyebrow">Find a page</p><h1>Sitemap</h1><p class="lede">A human-readable map of every main page on EZ Roam Guide.</p>
+    <h2>Main sections</h2><ul><li><a href="/">Home</a></li><li><a href="/countries/">Countries</a></li><li><a href="/cities/">Cities</a></li><li><a href="/travel-basics/">Travel Basics</a></li></ul>
+    <h2>Country guides</h2><ul>{countryGuides.map((guide) => <li><a href={hrefFor(guide)}>{guide.title}</a></li>)}</ul>
+    <h2>City guides</h2><ul>{cityGuides.map((guide) => <li><a href={hrefFor(guide)}>{guide.title}</a></li>)}</ul>
+    <h2>Travel basics</h2><ul>{basicGuides.map((guide) => <li><a href={hrefFor(guide)}>{guide.title}</a></li>)}</ul>
+    <h2>About and policies</h2><ul>{infoPages.map((page) => <li><a href={`/${page.slug}/`}>{page.title}</a></li>)}</ul>
+  </div></article>
+</BaseLayout>

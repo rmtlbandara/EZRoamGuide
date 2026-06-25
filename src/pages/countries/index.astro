@@ -1,0 +1,11 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import GuideCard from "../../components/GuideCard.astro";
+import Breadcrumb from "../../components/Breadcrumb.astro";
+import { countryGuides } from "../../data/site";
+---
+<BaseLayout title="Country Arrival Guides | EZ Roam Guide" description="Browse practical first 24 hours country guides covering airports, transport, SIMs, money, safety, food, and local etiquette.">
+  <Breadcrumb items={[{label:"Home",href:"/"},{label:"Countries"}]} />
+  <header class="page-head"><div class="container"><p class="eyebrow">Country guides</p><h1>Your first 24 hours, country by country</h1><p class="lede">Start with the systems that shape an arrival: entry formalities, airport transport, connectivity, money, local movement, and everyday etiquette.</p></div></header>
+  <section class="section"><div class="container card-grid">{countryGuides.map((guide) => <GuideCard guide={guide} />)}</div></section>
+</BaseLayout>

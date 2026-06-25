@@ -1,0 +1,7 @@
+---
+import GuideArticle from "../../components/GuideArticle.astro";
+import { basicGuides } from "../../data/site";
+export function getStaticPaths() { return basicGuides.map((guide) => ({ params: { slug: guide.slug }, props: { guide } })); }
+const { guide } = Astro.props;
+---
+<GuideArticle guide={guide} />

@@ -1,0 +1,22 @@
+---
+const links = [
+  ["About", "/about/"], ["Contact", "/contact/"], ["Privacy Policy", "/privacy-policy/"],
+  ["Terms of Use", "/terms-of-use/"], ["Disclaimer", "/disclaimer/"],
+  ["Editorial Policy", "/editorial-policy/"], ["Cookie Policy", "/cookie-policy/"], ["Sitemap", "/sitemap/"]
+];
+---
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a class="brand" href="/"><span class="brand-mark" aria-hidden="true">EZ</span><span>EZ Roam Guide</span></a>
+        <p>Simple travel guides for your first day in a new place.</p>
+      </div>
+      <nav aria-label="Footer navigation">
+        {links.map(([label, href]) => <a href={href}>{label}</a>)}
+      </nav>
+    </div>
+    <small>EZ Roam Guide provides general travel information for planning purposes. Always confirm official rules, local laws, and travel requirements before your trip.</small>
+    <small>© {new Date().getFullYear()} EZ Roam Guide. All rights reserved.</small>
+  </div>
+</footer>

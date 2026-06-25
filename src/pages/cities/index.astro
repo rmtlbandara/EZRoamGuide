@@ -1,0 +1,11 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import GuideCard from "../../components/GuideCard.astro";
+import Breadcrumb from "../../components/Breadcrumb.astro";
+import { cityGuides } from "../../data/site";
+---
+<BaseLayout title="City Arrival Guides | EZ Roam Guide" description="Browse city arrival guides for airport transfers, local transport, money, internet, food, safety, and a simple first-day plan.">
+  <Breadcrumb items={[{label:"Home",href:"/"},{label:"Cities"}]} />
+  <header class="page-head"><div class="container"><p class="eyebrow">City guides</p><h1>Get from arrivals to settled</h1><p class="lede">City-level advice for the details that matter immediately: which airport you used, how to reach your district, and how to make the first evening easy.</p></div></header>
+  <section class="section"><div class="container card-grid">{cityGuides.map((guide) => <GuideCard guide={guide} />)}</div></section>
+</BaseLayout>

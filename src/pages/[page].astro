@@ -1,0 +1,28 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
+import { infoPages } from "../data/pages";
+
+export function getStaticPaths() {
+  return infoPages.map((page) => ({ params: { page: page.slug }, props: { page } }));
+}
+const { page } = Astro.props;
+---
+<BaseLayout title={page.seoTitle} description={page.description} canonical={`/${page.slug}/`}>
+  <Breadcrumb items={[{label:"Home",href:"/"},{label:page.title}]} />
+  <article class="prose">
+    <div class="reading">
+      <p class="eyebrow">EZ Roam Guide</p>
+      <h1>{page.title}</h1>
+      <p class="lede">{page.intro}</p>
+      {page.sections.map((section) => (
+        <section>
+          <h2>{section.heading}</h2>
+          {section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+          {section.bullets && <ul>{section.bullets.map((item) => <li>{item}</li>)}</ul>}
+        </section>
+      ))}
+      {page.slug === "contact" && <div class="contact-box"><strong>Email:</strong> <a href="mailto:hello@ezroamguide.com">hello@ezroamguide.com</a></div>}
+    </div>
+  </article>
+</BaseLayout>
