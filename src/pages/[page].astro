@@ -20,6 +20,7 @@ const { page } = Astro.props;
           <h2>{section.heading}</h2>
           {section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
           {section.bullets && <ul>{section.bullets.map((item) => <li>{item}</li>)}</ul>}
+          {section.links && <ul>{section.links.map((link) => <li><a href={link.href} rel="noopener noreferrer">{link.label}</a></li>)}</ul>}
         </section>
       ))}
       {page.slug === "contact" && <div class="contact-box"><strong>Email:</strong> <a href="mailto:hello@ezroamguide.com">hello@ezroamguide.com</a></div>}

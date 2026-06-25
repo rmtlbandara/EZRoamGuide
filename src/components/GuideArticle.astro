@@ -1,7 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Breadcrumb from "./Breadcrumb.astro";
-import AdPlaceholder from "./AdPlaceholder.astro";
 import { findGuideByHref, hrefFor, site, type Guide } from "../data/site";
 
 const { guide } = Astro.props as { guide: Guide };
@@ -20,7 +19,7 @@ const articleSchema = {
   "@context": "https://schema.org", "@type": "Article",
   headline: guide.title, description: guide.description, dateModified: "2026-06-25",
   datePublished: "2026-06-25", mainEntityOfPage: url,
-  author: { "@type": "Organization", name: site.name },
+  author: { "@type": "Organization", name: `${site.name} Editorial Team`, url: new URL("/editorial-policy/", site.url).toString() },
   publisher: { "@type": "Organization", name: site.name, url: site.url }
 };
 const faqSchema = {
@@ -43,7 +42,11 @@ const secondSections = guide.sections.slice(midpoint);
       <p class="eyebrow">{guide.eyebrow}</p>
       <h1>{guide.title}</h1>
       <p class="lede">{guide.intro}</p>
-      <div class="meta"><span>Last updated: {guide.lastUpdated}</span><span>{guide.readingTime}</span><span>Reviewed for practical clarity</span></div>
+      <div class="meta"><span>Last updated: {guide.lastUpdated}</span><span>{guide.readingTime}</span></div>
+      <div class="trust-line" aria-label="Editorial information">
+        <span>Written by EZ Roam Guide Editorial Team</span>
+        <span>Reviewed for clarity and source accuracy</span>
+      </div>
     </div>
   </header>
   <div class="container article-shell">
@@ -52,18 +55,24 @@ const secondSections = guide.sections.slice(midpoint);
         <h2 id="quick-summary">Quick summary</h2>
         <ul>{guide.quick.map((item) => <li>{item}</li>)}</ul>
       </section>
-      <AdPlaceholder slotName="after-introduction" />
       {firstSections.map((section) => <section class="article-section" id={section.id}><h2>{section.heading}</h2>{section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}</section>)}
-      <AdPlaceholder slotName="mid-article" />
       {secondSections.map((section) => <section class="article-section" id={section.id}><h2>{section.heading}</h2>{section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}</section>)}
       {guide.mistakes && <section class="callout warm article-section" id="mistakes"><h2>Common first-day mistakes</h2><ul>{guide.mistakes.map((item) => <li>{item}</li>)}</ul></section>}
       {guide.checklist && <section class="callout article-section" id="checklist"><h2>First 24 hours checklist</h2><ul>{guide.checklist.map((item) => <li>{item}</li>)}</ul></section>}
       <aside class="note"><strong>Check before you travel:</strong> Rules, prices, entry procedures, transport options, health advice, and safety conditions can change. Use this guide as a practical starting point and confirm official details for your dates and circumstances.</aside>
+      {guide.officialSources && (
+        <section class="article-section" id="official-sources">
+          <h2>Official sources to check before you travel</h2>
+          <p>Use these first-party websites to confirm current entry rules, airport procedures, and transport information.</p>
+          <ul class="source-list">
+            {guide.officialSources.map((source) => <li><a href={source.href} rel="noopener noreferrer">{source.label}</a></li>)}
+          </ul>
+        </section>
+      )}
       <section class="faq article-section" id="faq">
         <h2>Frequently asked questions</h2>
         {guide.faqs.map((faq) => <details><summary>{faq.question}</summary><p>{faq.answer}</p></details>)}
       </section>
-      <AdPlaceholder slotName="before-related-guides" />
       <section class="article-section" id="related">
         <h2>Related guides</h2>
         <div class="related">
@@ -78,6 +87,7 @@ const secondSections = guide.sections.slice(midpoint);
         {guide.sections.map((section) => <li><a href={`#${section.id}`}>{section.heading}</a></li>)}
         {guide.mistakes && <li><a href="#mistakes">Common mistakes</a></li>}
         {guide.checklist && <li><a href="#checklist">Checklist</a></li>}
+        {guide.officialSources && <li><a href="#official-sources">Official sources</a></li>}
         <li><a href="#faq">FAQ</a></li>
         <li><a href="#related">Related guides</a></li>
       </ul>

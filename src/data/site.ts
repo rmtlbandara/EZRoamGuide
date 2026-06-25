@@ -7,6 +7,7 @@ export const site = {
 
 export type FAQ = { question: string; answer: string };
 export type GuideSection = { id: string; heading: string; paragraphs: string[] };
+export type OfficialSource = { label: string; href: string };
 
 export type Guide = {
   kind: "country" | "city" | "basic";
@@ -25,6 +26,7 @@ export type Guide = {
   mistakes?: string[];
   faqs: FAQ[];
   related: string[];
+  officialSources?: OfficialSource[];
 };
 
 const updated = "June 25, 2026";
@@ -203,7 +205,83 @@ function countryGuide(d: typeof countryBlueprints[number]): Guide {
   };
 }
 
-export const countryGuides: Guide[] = countryBlueprints.map(countryGuide);
+const countryEnhancements: Record<string, Partial<Guide>> = {
+  "sri-lanka-first-24-hours": {
+    seoTitle: "First 24 Hours in Sri Lanka: Arrival Guide | EZ Roam Guide",
+    description: "Arriving in Sri Lanka? Plan airport transport, SIM setup, cash, your first night, safety, etiquette, late arrivals, and the first 24 hours.",
+    sections: [
+      { id: "first-steps", heading: "The first thing to do after arriving", paragraphs: ["Before joining a SIM, taxi, or exchange queue, connect to airport Wi-Fi and message your accommodation. Confirm whether you are going to Colombo, Negombo, or directly elsewhere; drivers may hear “Colombo” as the city even when a booking is closer to the airport.", "Keep the address in English and, if supplied by the property, Sinhala or Tamil. A nearby landmark and telephone number help when a map pin falls on the wrong entrance."] },
+      { id: "arrival-process", heading: "Arrival process at Bandaranaike International Airport", paragraphs: ["International arrivals normally move through immigration, baggage reclaim, and customs before entering the public arrivals hall. Complete any required travel authorization through Sri Lanka's official immigration channels before departure and keep the confirmation available offline.", "Baggage, immigration, and customs requirements depend on your circumstances. Follow airport signs and officers' instructions rather than advice from unofficial helpers."] },
+      { id: "first-night", heading: "Where to stay on the first night", paragraphs: ["Negombo is closer to the airport and can be practical after a late flight or before an early departure. Colombo makes more sense when your next step is in the capital, at Colombo Fort railway station, or south along the coast.", "If you plan to continue to Kandy, Galle, or another region, check the real door-to-door journey before committing to a same-night transfer. A rested morning departure is often easier than navigating an unfamiliar road after midnight."] },
+      { id: "late-arrival", heading: "Arriving late at night", paragraphs: ["Pre-arrange check-in and save the property's night contact. Use an official airport taxi channel or a ride booked through a recognized app, verify the vehicle, and avoid changing accommodation because someone in the arrivals area says your booking is closed.", "Get water and any essential snack before the final drive. Smaller shops near your accommodation may be closed, and a late arrival is not the moment to search for a better exchange rate across town."] }
+    ],
+    related: ["/cities/colombo-arrival-guide/", "/travel-basics/sim-card-vs-esim/", "/travel-basics/airport-taxi-scams/", "/travel-basics/first-international-trip-checklist/"],
+    officialSources: [
+      { label: "Bandaranaike International Airport passenger information", href: "https://www.airport.lk/" },
+      { label: "Sri Lanka Department of Immigration and Emigration", href: "https://www.immigration.gov.lk/" },
+      { label: "Sri Lanka Electronic Travel Authorization", href: "https://eta.gov.lk/" },
+      { label: "Sri Lanka Tourism Development Authority", href: "https://www.sltda.gov.lk/" },
+      { label: "Sri Lanka Railways", href: "https://railway.gov.lk/" }
+    ]
+  },
+  "japan-first-24-hours": {
+    description: "First time in Japan? Plan immigration, Narita or Haneda transport, internet, cash, local transport, etiquette, your first night, and arrival.",
+    sections: [
+      { id: "first-steps", heading: "The first thing to do after arriving", paragraphs: ["Check which airport and terminal you are actually in before opening a route app. Haneda and Narita have different operators, journey times, and last departures; a saved “Tokyo airport” plan is not enough.", "Connect to official airport Wi-Fi, confirm your hotel's nearest station and exit, and decide whether your luggage makes a direct airport bus simpler than a faster route with several rail changes."] },
+      { id: "arrival-process", heading: "Immigration, customs, and baggage", paragraphs: ["Japan provides official digital arrival services that can reduce form-filling at the airport, but eligibility and procedures can change. Complete only official government forms and keep your passport and any generated codes accessible.", "After baggage reclaim, follow the customs route that applies to your declaration. Do not pack prohibited food, medication, or other controlled items without checking Japanese government guidance before departure."] },
+      { id: "first-night", heading: "Choosing a sensible first-night area", paragraphs: ["Choose a district with a direct or simple route from your arrival airport. Ueno and Tokyo Station can be convenient from Narita; Shinagawa and central southern districts can work well from Haneda. The best choice still depends on the service operating when you land.", "A hotel beside the correct station is often more useful on night one than a famous neighborhood requiring two transfers and a long walk through a large interchange."] },
+      { id: "late-arrival", heading: "Late-night arrival in Japan", paragraphs: ["Last trains and airport buses do not wait for delayed flights. Check the official timetable for your date and keep a late-arrival option: an airport hotel, a confirmed night bus, or a taxi budget you are genuinely prepared to pay.", "If you miss the last practical service, stay in a staffed airport area while reorganizing. Do not rush onto an unfamiliar train simply because it is the final departure shown."] }
+    ],
+    related: ["/cities/tokyo-arrival-guide/", "/travel-basics/sim-card-vs-esim/", "/travel-basics/how-to-use-public-transport-abroad/", "/travel-basics/arriving-late-at-night/"],
+    officialSources: [
+      { label: "Narita International Airport", href: "https://www.narita-airport.jp/en/" },
+      { label: "Haneda Airport Passenger Terminal", href: "https://tokyo-haneda.com/en/" },
+      { label: "Visit Japan Web — Digital Agency", href: "https://www.vjw.digital.go.jp/" },
+      { label: "Japan National Tourism Organization", href: "https://www.japan.travel/en/" },
+      { label: "Tokyo Metro", href: "https://www.tokyometro.jp/en/" }
+    ]
+  },
+  "thailand-first-24-hours": {
+    description: "Arriving in Thailand? Learn how to handle Bangkok airports, transport, SIMs, baht, food, safety, etiquette, late arrivals, and your first night.",
+    sections: [
+      { id: "first-steps", heading: "The first thing to do after arriving", paragraphs: ["Confirm whether your baggage and onward booking are at Suvarnabhumi (BKK) or Don Mueang (DMK). The airports are not interchangeable, and a same-day airport transfer needs a generous buffer.", "Connect, save your hotel address in Thai if the property provides it, and check the correct pickup level before requesting a ride. Airport pickup zones can differ from ordinary city pickup points."] },
+      { id: "arrival-process", heading: "Airport arrival process", paragraphs: ["Follow immigration, baggage, and customs signs before entering the public arrivals hall. Use only official Thai government channels for visas, arrival forms, and immigration information; paid lookalike form sites are not necessary.", "Keep onward-flight details available if you are transferring between airports. An airside connection and a landside airport change are very different journeys."] },
+      { id: "first-night", heading: "Where to stay on the first night", paragraphs: ["For a short Bangkok stay, choose a district that connects cleanly to your airport route and next-day plans. A hotel near the Airport Rail Link, BTS, or MRT can reduce the need for a long road journey during peak traffic.", "If you land late and fly domestically early, staying near the correct airport may be calmer than crossing Bangkok twice. Always check that the hotel shuttle or reception operates at your actual arrival hour."] },
+      { id: "late-arrival", heading: "Late-night arrival in Thailand", paragraphs: ["Check the last rail service before flying. After rail closes, use the official taxi queue, a licensed app pickup point, or a confirmed transfer; screenshot the booking and vehicle details.", "Do not let a driver or tout replace your hotel with a “better” property. If reception is closed, contact the booking platform or move to a staffed hotel desk rather than following an unsolicited offer."] }
+    ],
+    related: ["/cities/bangkok-arrival-guide/", "/travel-basics/airport-taxi-scams/", "/travel-basics/sim-card-vs-esim/", "/travel-basics/cash-vs-card-while-traveling/"],
+    officialSources: [
+      { label: "Suvarnabhumi Airport", href: "https://suvarnabhumi.airportthai.co.th/" },
+      { label: "Don Mueang International Airport", href: "https://donmueang.airportthai.co.th/" },
+      { label: "Thailand Immigration Bureau", href: "https://www.immigration.go.th/" },
+      { label: "Tourism Authority of Thailand", href: "https://www.tourismthailand.org/" },
+      { label: "BTS Skytrain", href: "https://www.bts.co.th/eng/" }
+    ]
+  },
+  "singapore-first-24-hours": {
+    description: "Arriving in Singapore? Plan Changi immigration, MRT or taxi transport, mobile data, payment, safety, local rules, and your first 24 hours.",
+    sections: [
+      { id: "first-steps", heading: "The first thing to do after arriving", paragraphs: ["Complete immigration and collect every bag before treating Changi as an attraction. Confirm your terminal, hotel address, and the operating time of your chosen city transport; terminal transfers add time.", "Connect to airport Wi-Fi and check whether your bank card or mobile wallet is suitable for contactless transport. Keep one alternative payment method available until you know it works locally."] },
+      { id: "arrival-process", heading: "Immigration and arrival formalities", paragraphs: ["Check Singapore's official Immigration & Checkpoints Authority guidance for visa requirements, the SG Arrival Card, medication, and restricted goods. The arrival card is not a visa, and unofficial sites may charge for a government process.", "After immigration and baggage reclaim, follow the customs channel that applies to you. Singapore enforces import controls closely, so uncertainty should be resolved before travel rather than at the checkpoint."] },
+      { id: "first-night", heading: "Where to stay on the first night", paragraphs: ["Choose for transport convenience, not only the lowest room rate. City Hall, Bugis, Lavender, and other central MRT-connected areas can make a short visit simple, while an airport-area hotel may suit a late arrival or early onward flight.", "Check the walking route from the station. Tropical rain, heat, road crossings, and luggage can turn a short map distance into an awkward final leg."] },
+      { id: "late-arrival", heading: "Late-night arrival at Changi", paragraphs: ["Confirm the final MRT departure for your date before relying on rail. Official taxis and licensed ride services remain the practical fallback, but pickup points and surcharges can vary.", "If you have a long overnight layover, check Changi's current transit and landside rules before booking a room or leaving the secure area."] }
+    ],
+    related: ["/cities/singapore-arrival-guide/", "/travel-basics/sim-card-vs-esim/", "/travel-basics/cash-vs-card-while-traveling/", "/travel-basics/arriving-late-at-night/"],
+    officialSources: [
+      { label: "Changi Airport arrival guide", href: "https://www.changiairport.com/en/fly/arrival-guide.html" },
+      { label: "Immigration & Checkpoints Authority", href: "https://www.ica.gov.sg/" },
+      { label: "Singapore visa information — Ministry of Foreign Affairs", href: "https://www.mfa.gov.sg/visiting-singapore/check-if-you-need-a-singapore-visa/" },
+      { label: "Visit Singapore", href: "https://www.visitsingapore.com/" },
+      { label: "Land Transport Authority", href: "https://www.lta.gov.sg/" }
+    ]
+  }
+};
+
+export const countryGuides: Guide[] = countryBlueprints.map((item) => {
+  const guide = countryGuide(item);
+  const enhancement = countryEnhancements[guide.slug];
+  return enhancement ? { ...guide, ...enhancement, sections: [...(enhancement.sections ?? []), ...guide.sections] } : guide;
+});
 
 const cityBlueprints = [
   ["colombo-arrival-guide", "Colombo", "Sri Lanka", "Bandaranaike International Airport", "Colombo is roughly a road transfer from the airport, not an airport district. Official taxis, ride apps, buses, and arranged transfers serve the route; traffic changes the timing.", "Use app-based rides for simple point-to-point trips, and try trains or buses once you understand the route. Fort is the main rail hub.", "Heat, humidity, and traffic can drain energy quickly. Plan one useful errand and one relaxed meal."],
@@ -251,7 +329,59 @@ function cityGuide(d: typeof cityBlueprints[number]): Guide {
   };
 }
 
-export const cityGuides: Guide[] = cityBlueprints.map(cityGuide);
+const cityEnhancements: Record<string, Partial<Guide>> = {
+  "colombo-arrival-guide": {
+    description: "Arriving in Colombo? Plan the airport transfer, SIM, cash, first-night area, local transport, food, late arrival, safety, and day-one essentials.",
+    sections: [
+      { id: "first-hour", heading: "Your first hour after landing", paragraphs: ["Bandaranaike International Airport is near Katunayake, outside Colombo. Before leaving the terminal, confirm whether your booking is in Colombo city, Negombo, or another district with a similar address.", "Set up enough connectivity to contact your accommodation and driver, then choose transport through an official counter or a recognized app. Keep the booking screen open until you match the vehicle."] },
+      { id: "stay", heading: "Choosing your first-night area", paragraphs: ["Fort and Pettah place you near the main railway station and commercial center, but the streets can feel busy on a first arrival. Kollupitiya and Bambalapitiya offer coastal access and many everyday services; Negombo is the practical choice when airport proximity matters more than central Colombo.", "Choose a property with clear late check-in and a map pin that matches the written address. Colombo hotel names and road names can be similar, so save the telephone number too."] },
+      { id: "late", heading: "Late-night arrival in Colombo", paragraphs: ["Confirm reception before boarding the flight and use a direct airport ride. Public transport choices narrow late at night, while road travel may still take longer than expected.", "Do not plan a train connection, long-distance bus, or same-night coastal transfer unless the timing has been confirmed independently. A simple airport-to-room journey is the safer first objective."] }
+    ],
+    related: ["/countries/sri-lanka-first-24-hours/", "/travel-basics/airport-taxi-scams/", "/travel-basics/sim-card-vs-esim/", "/travel-basics/arriving-late-at-night/"],
+    officialSources: [
+      { label: "Bandaranaike International Airport", href: "https://www.airport.lk/" },
+      { label: "Sri Lanka Immigration and Emigration", href: "https://www.immigration.gov.lk/" },
+      { label: "Sri Lanka Railways", href: "https://railway.gov.lk/" },
+      { label: "Sri Lanka Tourism Development Authority", href: "https://www.sltda.gov.lk/" }
+    ]
+  },
+  "tokyo-arrival-guide": {
+    description: "Arriving in Tokyo? Compare Narita and Haneda transfers, set up internet and payment, choose a first-night area, use trains, and plan day one.",
+    sections: [
+      { id: "first-hour", heading: "Your first hour at Narita or Haneda", paragraphs: ["Identify the terminal and the exact airport before buying any ticket. At Narita, rail choices can favor Ueno, Tokyo Station, Shinjuku, or other corridors differently. At Haneda, rail and monorail routes reach different central interchange stations.", "Ask the staffed counter which service gives you the simplest final walk—not merely the shortest platform-to-platform time. A direct bus can be easier with large luggage or a hotel stop."] },
+      { id: "stay", heading: "Where to stay on the first night", paragraphs: ["Stay near a station served directly from the airport or with one clear transfer. Ueno, Tokyo Station, Shinagawa, Shinjuku, and Asakusa each suit different airport routes; none is universally best.", "Check the station exit number and hotel entrance before arrival. Tokyo stations can cover several blocks, and choosing the wrong exit with luggage is a tiring way to begin the trip."] },
+      { id: "late", heading: "If your Tokyo flight lands late", paragraphs: ["Look up the final airport train and bus on the operator's official timetable. Immigration and baggage delays can consume a connection that looked comfortable on the flight schedule.", "Keep an airport-area hotel or confirmed taxi plan as a real fallback. Sleeping near the airport and starting early can cost less—and feel much better—than a long taxi ride across Tokyo."] }
+    ],
+    related: ["/countries/japan-first-24-hours/", "/travel-basics/how-to-use-public-transport-abroad/", "/travel-basics/sim-card-vs-esim/", "/travel-basics/arriving-late-at-night/"],
+    officialSources: [
+      { label: "Narita International Airport access information", href: "https://www.narita-airport.jp/en/access/" },
+      { label: "Haneda Airport access information", href: "https://tokyo-haneda.com/en/access/" },
+      { label: "GO TOKYO — official Tokyo travel guide", href: "https://www.gotokyo.org/en/" },
+      { label: "Tokyo Metro", href: "https://www.tokyometro.jp/en/" }
+    ]
+  },
+  "bangkok-arrival-guide": {
+    description: "Arriving in Bangkok? Understand BKK and DMK transfers, mobile data, baht, first-night areas, local trains, taxi safety, and a realistic day one.",
+    sections: [
+      { id: "first-hour", heading: "Your first hour at BKK or DMK", paragraphs: ["Check the airport code before arranging anything: Suvarnabhumi is BKK and Don Mueang is DMK. Save your hotel address in Thai where possible and confirm the correct public-transport or app-ride pickup level.", "If you need cash, make one considered ATM withdrawal rather than several small ones. Test your data connection before leaving the terminal because pickup areas can be confusing without messaging."] },
+      { id: "stay", heading: "Where to stay on your first night", paragraphs: ["For a first visit, a hotel near the BTS or MRT usually makes the next morning easier. From Suvarnabhumi, areas with straightforward Airport Rail Link connections reduce road exposure; from Don Mueang, your best route may be rail, bus, or road depending on the district.", "A cheap room far beyond the rail network can lose its advantage in traffic and taxi fares. Check the final walk and late check-in, not only the district name."] },
+      { id: "late", heading: "Late-night Bangkok arrivals", paragraphs: ["Once rail services finish, use the official taxi queue, a licensed app pickup zone, or a pre-confirmed transfer. Keep the queue ticket or app record until the ride is complete.", "Ask to go directly to the booked address. Decline shopping stops, tour offices, and claims that your hotel has closed unless you verify with the property yourself."] }
+    ],
+    related: ["/countries/thailand-first-24-hours/", "/travel-basics/airport-taxi-scams/", "/travel-basics/sim-card-vs-esim/", "/travel-basics/cash-vs-card-while-traveling/"],
+    officialSources: [
+      { label: "Suvarnabhumi Airport", href: "https://suvarnabhumi.airportthai.co.th/" },
+      { label: "Don Mueang International Airport", href: "https://donmueang.airportthai.co.th/" },
+      { label: "Tourism Authority of Thailand", href: "https://www.tourismthailand.org/" },
+      { label: "BTS Skytrain", href: "https://www.bts.co.th/eng/" }
+    ]
+  }
+};
+
+export const cityGuides: Guide[] = cityBlueprints.map((item) => {
+  const guide = cityGuide(item);
+  const enhancement = cityEnhancements[guide.slug];
+  return enhancement ? { ...guide, ...enhancement, sections: [...(enhancement.sections ?? []), ...guide.sections] } : guide;
+});
 
 const basicBlueprints = [
   {
@@ -263,8 +393,11 @@ const basicBlueprints = [
       ["phone", "Prepare your phone and internet", ["Check whether the phone is unlocked and supports eSIM. Compare roaming, eSIM, and local SIM options based on trip length and whether you need calls, texts, or hotspot data.", "Download offline maps, translation data, airline apps, bookings, and the first accommodation address. Add a screen lock, device tracking, and secure backup before departure."]],
       ["health", "Health, medication, and insurance", ["Confirm destination-specific health advice with an official clinic or health authority well before travel. Carry medicine in original packaging with supporting documentation where required.", "Buy insurance that fits the trip rather than the cheapest label. Read exclusions for existing conditions, scooters, adventure activities, delays, and expensive electronics."]],
       ["packing", "Pack for recovery, not perfection", ["Put one change of clothes, essential medicine, chargers, documents, and basic toiletries in cabin baggage. Checked bags can be delayed even when the flight runs perfectly.", "Use a short packing list built around weather, local norms, laundry access, and activities. Extra weight makes every station, stair, and transfer harder."]],
+      ["final-check", "The 72-hour final check", ["Reconfirm the flight, terminal, baggage allowance, airport transfer, accommodation check-in, and any official arrival form. Download fresh copies instead of relying on links buried in email.", "Check the destination weather and any transport disruption. Put the first-night address, emergency contacts, and insurance details into one offline note that can be opened quickly."]],
       ["arrival", "Plan the arrival before departure", ["Know the airport, terminal, immigration steps, official transport choices, accommodation check-in window, and what you will do if the flight is late.", "Save the hotel address offline and, where useful, in the local script. Decide whether you will get cash or data at the airport and set a maximum acceptable convenience cost."]],
-      ["day-one", "Keep the first 24 hours simple", ["Prioritize immigration, transport, check-in, food, water, sleep, and one short orientation walk. A flexible first day protects the rest of the trip.", "Send a trusted person the flight and accommodation details. Agree on how and when you will check in, particularly if traveling alone."]]
+      ["day-one", "Keep the first 24 hours simple", ["Prioritize immigration, transport, check-in, food, water, sleep, and one short orientation walk. A flexible first day protects the rest of the trip.", "Send a trusted person the flight and accommodation details. Agree on how and when you will check in, particularly if traveling alone."]],
+      ["airport-folder", "Build a small airport folder", ["Keep the passport, boarding pass, arrival address, official entry confirmation, return or onward booking, and essential medication documents together. Do not place the only copies in checked baggage.", "Use a slim folder or one secure phone note rather than repeatedly unpacking your main bag at counters. Return each document to the same place after use."]],
+      ["do-not-delay", "Tasks not to leave until the airport", ["Do not wait until check-in to discover a passport issue, missing transit visa, carrier-locked phone, or card that cannot be used abroad. Airport staff cannot rewrite another country's entry rules or unlock a device.", "Complete airline document checks when offered, but still verify requirements through official government sources. An airline allowing online check-in does not guarantee permission to enter the destination."]]
     ]
   },
   {
@@ -280,14 +413,17 @@ const basicBlueprints = [
     ]
   },
   {
-    slug: "sim-vs-esim-vs-roaming", title: "SIM vs eSIM vs Roaming for Travelers", desc: "Compare travel SIM cards, eSIM plans, and international roaming by convenience, cost, phone compatibility, calls, and reliability.",
+    slug: "sim-card-vs-esim", title: "SIM Card vs eSIM for International Travel", desc: "Compare travel SIM cards, eSIMs, and roaming by setup, phone compatibility, calls, hotspot use, reliability, and trip length.",
     intro: "The best travel connection is not automatically the cheapest data package. It is the option that works with your phone, starts when you need it, and lets you receive the messages your trip depends on.",
     sections: [
       ["roaming", "International roaming: simplest, sometimes expensive", ["Roaming keeps your usual number active and requires little setup. It is useful for short trips, bank verification texts, or travelers whose home plan includes reasonable international service.", "Check daily fees, data limits, covered countries, cruise or aircraft networks, and what happens after the allowance ends. Disable data roaming until you understand the plan."]],
       ["physical", "Local physical SIM: strong value with setup", ["A local prepaid SIM can offer generous data and sometimes a local number. It may require passport registration, an unlocked phone, and time at an airport or city shop.", "Store your home SIM securely and know whether removing it affects messaging apps or verification. Test calls, data, and hotspot use before leaving the counter."]],
       ["esim", "Travel eSIM: fast and flexible", ["An eSIM can be installed before departure and activated on arrival. It is especially helpful for airport navigation and travelers who want to keep a physical home SIM in place.", "Many travel eSIMs are data-only. Confirm destination coverage, network, activation rules, validity, tethering, and whether installation requires internet."]],
       ["choose", "How to choose", ["Use roaming when simplicity and your normal number matter most. Use a local SIM for longer stays or a local number. Use eSIM for rapid setup, multi-country routes, or dual-SIM convenience.", "A hybrid approach often works: keep the home line active for incoming texts with data disabled, and use a local SIM or eSIM for data. Review charges carefully."]],
+      ["before-buying", "Check these details before buying", ["Confirm that the phone is unlocked, supports the required eSIM standard or physical SIM size, and works on the destination's network bands. A compatible-looking plan is useless if the device is carrier-locked.", "Check whether the plan includes a local phone number, SMS, hotspot use, incoming calls, and coverage outside major cities. Read when validity starts: purchase, installation, or first network connection."]],
       ["setup", "Set up without surprises", ["Install the provider app or eSIM while on trusted Wi-Fi. Label lines clearly, choose the correct mobile-data line, and disable mobile-data switching if it could move traffic to an expensive home plan.", "Save the installation record and support details. Some eSIM codes cannot be reused after deletion, so do not remove a plan casually while abroad."]],
+      ["arrival-test", "Test your connection before leaving the airport", ["Turn off airport Wi-Fi briefly and confirm that mobile data actually loads a map. Send a message, open your accommodation address, and test hotspot use if it matters to the trip.", "If using dual SIM, check which line handles data, calls, and SMS. Keep data roaming disabled on the expensive line unless your chosen plan specifically requires it."]],
+      ["verification", "Bank texts and account verification", ["Keeping the home number active can matter for bank alerts and one-time security codes. Before departure, check whether the carrier charges for receiving texts abroad and whether important accounts offer an authenticator app or backup codes.", "Do not make an unfamiliar travel SIM the only recovery method for email, banking, or cloud storage. A lost phone should not lock you out of every account needed to continue the trip."]],
       ["security", "Connectivity and security", ["Public Wi-Fi is useful but should not be your only arrival plan. Confirm the network name with staff, use encrypted websites, update devices before travel, and avoid sensitive account changes on unknown networks.", "A VPN can reduce exposure on local networks but cannot make scams, fake websites, or unsafe downloads trustworthy."]]
     ]
   },
@@ -344,10 +480,13 @@ const basicBlueprints = [
     intro: "Most airport drivers are doing an ordinary job. The problem is that a tired visitor cannot easily tell an ordinary driver from an unofficial broker. Use a process that does not depend on reading personalities.",
     sections: [
       ["patterns", "Recognize the common patterns", ["Warning signs include intercepting passengers before the official rank, claiming the meter is broken, saying a hotel is closed, substituting a different car, or insisting that only cash is possible after advertising card payment.", "Another pattern is an unnecessary stop at a shop, tour office, or different hotel where the driver receives commission. Verify any claimed change independently."]],
+      ["before-landing", "Reduce the risk before you land", ["Open the airport's official transport page and note where licensed taxis, ride apps, buses, and rail services leave. Save a screenshot because arrivals Wi-Fi may be slow exactly when you need the pickup instructions.", "Write down the accommodation address and one recognizable nearby landmark. Ask the property whether drivers commonly confuse it with another hotel or entrance."]],
       ["official", "Start from an official channel", ["Use the signed taxi rank, airport counter, licensed ride pickup zone, or transport booked directly by your accommodation. Ignore a lanyard or confident manner as proof of authorization.", "Check the airport website shortly before travel because pickup rules and licensed providers can change."]],
       ["fare", "Confirm how the fare works", ["Ask whether the trip uses a meter, fixed zone, app price, tolls, airport surcharge, or receipt. You do not need to negotiate when an official regulated process already exists.", "Have the destination written clearly. If paying cash, carry smaller notes and count change before leaving the vehicle."]],
       ["vehicle", "Verify the car and driver", ["Match the registration plate, driver name, company, vehicle model, or queue receipt. Do not accept a substitute unless the official service confirms it in the app or at the desk.", "Photographing or sharing the plate can be useful where lawful, but do it discreetly and avoid provoking a confrontation."]],
       ["journey", "During the journey", ["Keep passports, phones, and small valuables with you rather than in the trunk. Follow the route loosely and ask calmly about a major deviation.", "Traffic, one-way systems, toll choices, and closures can create legitimate detours. Evidence matters more than immediate accusation."]],
+      ["different-systems", "Understand that airport taxi systems differ", ["Some airports issue a queue ticket, some use a prepaid desk, some require a meter, and others allow app pickups only in designated zones. Advice from another country may be wrong here.", "The safest signal is a process published by the airport or local transport authority—not a universal rule such as always negotiating or always refusing a fixed fare."]],
+      ["apps", "A ride app is a tool, not a guarantee", ["A recognized app creates a booking record and shows vehicle details, but you still need to match the plate and driver. Never enter a substitute car because someone knows your name or destination.", "Keep communication and payment inside the app where practical. Requests to cancel, pay through an unrelated link, or move to a different pickup point deserve a pause and independent verification."]],
       ["dispute", "Handle a dispute safely", ["If the amount is wrong but you are safe, move to a staffed hotel entrance or public area before debating it. Preserve the receipt, plate, booking, route, and payment record.", "Do not physically fight over luggage or block a vehicle. Report the incident to the airport authority, taxi regulator, app, hotel, card issuer, or police as appropriate."]]
     ]
   },
@@ -378,12 +517,12 @@ const basicBlueprints = [
 ] as const;
 
 function basicGuide(d: typeof basicBlueprints[number]): Guide {
-  return {
+  const guide: Guide = {
     kind: "basic", slug: d.slug, label: d.title, eyebrow: "Travel basics",
     title: d.title, seoTitle: `${d.title} | EZ Roam Guide`, description: d.desc,
     intro: d.intro, lastUpdated: updated, readingTime: "11 min read",
     quick: ["Secure documents and payment backups.", "Save key details for offline use.", "Prefer official transport and information channels.", "Leave margin for fatigue and delays.", "Confirm changing rules with official sources."],
-    sections: d.sections.map(([id, heading, paragraphs]) => ({ id, heading, paragraphs: [...paragraphs, "Rules and services vary by destination. Check current official guidance for the specific place, date, and circumstances of your trip."] })),
+    sections: d.sections.map(([id, heading, paragraphs]) => ({ id, heading, paragraphs: [...paragraphs] })),
     mistakes: ["Building a plan that requires perfect timing", "Keeping every backup in the same bag", "Trusting urgency more than verification", "Assuming rules and payment habits match home"],
     checklist: ["Check official requirements", "Save documents securely", "Prepare two payment methods", "Arrange connectivity", "Plan arrival and a backup", "Share key details privately", "Leave room for rest"],
     faqs: [
@@ -393,6 +532,40 @@ function basicGuide(d: typeof basicBlueprints[number]): Guide {
     ],
     related: ["/travel-basics/first-international-trip-checklist/", "/travel-basics/plan-your-first-24-hours-abroad/", "/countries/", "/cities/"]
   };
+  const enhancements: Record<string, Partial<Guide>> = {
+    "first-international-trip-checklist": {
+      seoTitle: "First International Trip Checklist: Before You Fly | EZ Roam Guide",
+      description: "Planning your first international trip? Use this practical checklist for documents, money, phone setup, packing, airport arrival, safety, and day one.",
+      related: ["/travel-basics/plan-your-first-24-hours-abroad/", "/travel-basics/sim-card-vs-esim/", "/travel-basics/cash-vs-card-while-traveling/", "/travel-basics/travel-safety-basics/"],
+      faqs: [
+        { question: "What should I check first for an international trip?", answer: "Start with passport validity, destination entry requirements, transit rules, and health requirements. These can take the longest to correct." },
+        { question: "What belongs in cabin baggage?", answer: "Carry travel documents, essential medicine, valuables, chargers, one change of clothes, and anything you cannot safely replace during the first day." },
+        { question: "How much should I plan for arrival day?", answer: "Allow for airport transport, food, mobile data, a modest cash reserve, and an unexpected backup ride or hotel change. Confirm current local prices before departure." }
+      ]
+    },
+    "sim-card-vs-esim": {
+      seoTitle: "SIM Card vs eSIM for International Travel | EZ Roam Guide",
+      description: "SIM card or eSIM for travel? Compare setup, compatibility, cost, calls, verification texts, hotspot use, reliability, and the right option.",
+      related: ["/countries/sri-lanka-first-24-hours/", "/countries/japan-first-24-hours/", "/countries/thailand-first-24-hours/", "/countries/singapore-first-24-hours/"],
+      faqs: [
+        { question: "Is an eSIM better than a physical SIM for travel?", answer: "An eSIM is faster to arrange and keeps the physical slot free, but a local SIM may include a local number or better long-stay value. Phone compatibility and coverage decide the answer." },
+        { question: "Can I keep my normal number active?", answer: "Many dual-SIM phones let you keep the home line active for calls or verification texts while using a travel line for data. Disable expensive data roaming and review your carrier's charges." },
+        { question: "Should I install an eSIM before flying?", answer: "Installation before departure is usually sensible when the provider allows it. Read when the plan's validity begins and avoid activating it earlier than intended." }
+      ]
+    },
+    "airport-taxi-scams": {
+      seoTitle: "Airport Taxi Scams: Warning Signs and Safe Rides | EZ Roam Guide",
+      description: "Learn common airport taxi scams, how to find official rides, verify fares, apps and vehicles, protect luggage, and handle disputes safely.",
+      related: ["/cities/colombo-arrival-guide/", "/cities/tokyo-arrival-guide/", "/cities/bangkok-arrival-guide/", "/cities/dubai-arrival-guide/"],
+      faqs: [
+        { question: "How can I identify an official airport taxi?", answer: "Use the process published by the airport: a signed rank, staffed counter, queue ticket, regulated meter, or designated app pickup zone. A badge or verbal claim alone is not proof." },
+        { question: "What if a driver says my hotel is closed?", answer: "Contact the hotel using the number in your own booking. Do not accept a replacement property, shop, or tour office suggested by the driver without independent verification." },
+        { question: "Should I argue about an incorrect fare?", answer: "Prioritize safety. Move to a staffed public place, keep the receipt and vehicle details, then report the issue through the taxi regulator, airport, app, hotel, or police as appropriate." }
+      ]
+    }
+  };
+  const enhancement = enhancements[guide.slug];
+  return enhancement ? { ...guide, ...enhancement } : guide;
 }
 
 export const basicGuides: Guide[] = basicBlueprints.map(basicGuide);
