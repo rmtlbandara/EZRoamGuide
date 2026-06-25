@@ -34,6 +34,14 @@ const schemas = Array.isArray(schema) ? schema : schema ? [schema] : [];
     <meta name="theme-color" content="#087f6b" />
     <meta name="generator" content={Astro.generator} />
     {schemas.map((item) => <script type="application/ld+json" set:html={JSON.stringify(item)} />)}
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-NTP076LHCW"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-NTP076LHCW');
+    </script>
   </head>
   <body>
     <Header />
