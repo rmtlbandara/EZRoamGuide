@@ -1,3 +1,12 @@
+packages:
+  - "."
+
+# pnpm 11+
 allowBuilds:
   esbuild: true
   sharp: true
+
+# pnpm 10 deployment environments
+onlyBuiltDependencies:
+  - esbuild
+  - sharp
