@@ -2,7 +2,7 @@ export const site = {
   name: "EZ Roam Guide",
   url: "https://ezroamguide.com",
   description: "Simple travel guides for your first day in a new place.",
-  email: "hello@ezroamguide.com"
+  email: "ezroamguide@gmail.com"
 };
 
 export type FAQ = { question: string; answer: string };
