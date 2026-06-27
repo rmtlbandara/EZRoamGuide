@@ -7,6 +7,8 @@ const schema = [
   { "@context": "https://schema.org", "@type": "WebSite", name: site.name, url: site.url, description: site.description },
   { "@context": "https://schema.org", "@type": "Organization", name: site.name, url: site.url, email: site.email }
 ];
+const latestGuideSlugs = ["airport-arrival-checklist", "best-airport-transport-new-country", "low-stress-first-day-new-city"];
+const latestGuides = basicGuides.filter((guide) => latestGuideSlugs.includes(guide.slug));
 ---
 <BaseLayout title="EZ Roam Guide | First 24 Hours Travel Guides" description="Practical first-day travel guides for airport arrivals, transport, SIMs, money, safety, etiquette, and planning your first 24 hours abroad." schema={schema}>
   <section class="hero">
@@ -66,7 +68,7 @@ const schema = [
     <div class="container">
       <div class="section-heading"><div><p class="eyebrow">Recently updated</p><h2>Latest guides</h2></div><p>Our latest practical reads, reviewed for clear steps and sensible first-day pacing.</p></div>
       <div class="card-grid">
-        <GuideCard guide={countryGuides[6]} /><GuideCard guide={cityGuides[9]} /><GuideCard guide={basicGuides[9]} />
+        {latestGuides.map((guide) => <GuideCard guide={guide} />)}
       </div>
     </div>
   </section>

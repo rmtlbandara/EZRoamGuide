@@ -17,7 +17,7 @@ const breadcrumbSchema = {
 };
 const articleSchema = {
   "@context": "https://schema.org", "@type": "Article",
-  headline: guide.title, description: guide.description, dateModified: "2026-06-25",
+  headline: guide.title, description: guide.description, dateModified: "2026-06-27",
   datePublished: "2026-06-25", mainEntityOfPage: url,
   author: { "@type": "Organization", name: `${site.name} Editorial Team`, url: new URL("/editorial-policy/", site.url).toString() },
   publisher: { "@type": "Organization", name: site.name, url: site.url }
@@ -34,6 +34,8 @@ const schemas = [breadcrumbSchema, articleSchema, faqSchema];
 const midpoint = Math.ceil(guide.sections.length / 2);
 const firstSections = guide.sections.slice(0, midpoint);
 const secondSections = guide.sections.slice(midpoint);
+const mistakesHeading = guide.mistakesHeading ?? "Common first-day mistakes";
+const checklistHeading = guide.checklistHeading ?? "First 24 hours checklist";
 ---
 <BaseLayout title={guide.seoTitle} description={guide.description} canonical={hrefFor(guide)} type="article" schema={schemas}>
   <Breadcrumb items={[{ label: "Home", href: "/" }, { label: sectionName, href: sectionHref }, { label: guide.label }]} />
@@ -57,8 +59,8 @@ const secondSections = guide.sections.slice(midpoint);
       </section>
       {firstSections.map((section) => <section class="article-section" id={section.id}><h2>{section.heading}</h2>{section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}</section>)}
       {secondSections.map((section) => <section class="article-section" id={section.id}><h2>{section.heading}</h2>{section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}</section>)}
-      {guide.mistakes && <section class="callout warm article-section" id="mistakes"><h2>Common first-day mistakes</h2><ul>{guide.mistakes.map((item) => <li>{item}</li>)}</ul></section>}
-      {guide.checklist && <section class="callout article-section" id="checklist"><h2>First 24 hours checklist</h2><ul>{guide.checklist.map((item) => <li>{item}</li>)}</ul></section>}
+      {guide.mistakes && <section class="callout warm article-section" id="mistakes"><h2>{mistakesHeading}</h2><ul>{guide.mistakes.map((item) => <li>{item}</li>)}</ul></section>}
+      {guide.checklist && <section class="callout article-section" id="checklist"><h2>{checklistHeading}</h2><ul>{guide.checklist.map((item) => <li>{item}</li>)}</ul></section>}
       <aside class="note"><strong>Check before you travel:</strong> Rules, prices, entry procedures, transport options, health advice, and safety conditions can change. Use this guide as a practical starting point and confirm official details for your dates and circumstances.</aside>
       {guide.officialSources && (
         <section class="article-section" id="official-sources">
@@ -85,7 +87,7 @@ const secondSections = guide.sections.slice(midpoint);
       <ul>
         <li><a href="#quick-summary">Quick summary</a></li>
         {guide.sections.map((section) => <li><a href={`#${section.id}`}>{section.heading}</a></li>)}
-        {guide.mistakes && <li><a href="#mistakes">Common mistakes</a></li>}
+        {guide.mistakes && <li><a href="#mistakes">{mistakesHeading}</a></li>}
         {guide.checklist && <li><a href="#checklist">Checklist</a></li>}
         {guide.officialSources && <li><a href="#official-sources">Official sources</a></li>}
         <li><a href="#faq">FAQ</a></li>

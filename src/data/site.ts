@@ -23,13 +23,15 @@ export type Guide = {
   quick: string[];
   sections: GuideSection[];
   checklist?: string[];
+  checklistHeading?: string;
   mistakes?: string[];
+  mistakesHeading?: string;
   faqs: FAQ[];
   related: string[];
   officialSources?: OfficialSource[];
 };
 
-const updated = "June 25, 2026";
+const updated = "June 27, 2026";
 
 const countryBlueprints = [
   {
@@ -513,6 +515,136 @@ const basicBlueprints = [
       ["night", "Keep nightlife decisions reversible", ["Know how you will return before drinking, watch beverages being prepared, stay with trusted companions, and avoid carrying your passport unless required.", "If a situation feels wrong, leave early. Politeness is not a debt that requires accepting a ride, drink, invitation, or isolated shortcut."]],
       ["emergency", "Prepare for the unplanned", ["Save local emergency numbers, insurance assistance, card cancellation contacts, accommodation details, and the nearest consular service. Know which number works for police, ambulance, and fire.", "In an emergency, get to safety first, then document. Contact local authorities and medical services as needed; insurance and consular staff can help with process but do not replace them."]]
     ]
+  },
+  {
+    slug: "airport-arrival-checklist", title: "Airport Arrival Checklist for First-Time International Travelers", desc: "Use this international airport arrival checklist to handle immigration, baggage, customs, internet, money, transport, and first steps after landing.",
+    intro: "Landing abroad can feel busy before anything has actually gone wrong. This airport arrival checklist gives first-time international travelers a calm order of operations from the seatbelt sign to the airport exit.",
+    sections: [
+      ["before-plane", "Before you leave the plane", ["Do the small resets while everyone is standing in the aisle: put your passport, arrival documents, phone, wallet, and boarding pass where you can reach them without unpacking.", "Turn off airplane mode only when the crew allows it, check your connection if roaming is already active, and keep the address of your first accommodation ready for immigration or transport." ]],
+      ["immigration", "At immigration and passport control", ["Join the correct lane for visitors, residents, e-gates, or transit passengers. Have your passport open, remove headphones, and answer questions simply without adding unnecessary detail.", "Entry requirements can change by nationality, route, and trip purpose. Use official government sources before travel and keep visa approvals or arrival forms available offline." ]],
+      ["baggage", "Collecting baggage", ["Check the carousel number on the airport screens and confirm the baggage tag before leaving with a similar-looking suitcase. If a bag is missing, report it before exiting the baggage area.", "Keep valuables, medicine, and documents with you, not on top of a trolley. Tired arrivals often lose phones while reorganizing bags near the carousel." ]],
+      ["customs", "Customs and declarations", ["Follow the declaration channel that matches what you are carrying. Food, medicine, cash, alcohol, tobacco, electronics, and commercial goods may have rules even when they seem ordinary at home.", "If unsure, ask a customs officer rather than guessing. A short question is easier than explaining later why an item was not declared." ]],
+      ["internet", "Getting connected to the internet", ["Before leaving the terminal, decide whether airport Wi-Fi, roaming, an eSIM, or a local SIM is enough for the onward journey. Test maps and messaging without depending on the Wi-Fi signal.", "For a deeper comparison, read the SIM Card vs eSIM for International Travel guide and choose based on phone compatibility, trip length, and whether you need calls or just data." ]],
+      ["money", "Getting local money", ["A small amount of local cash is useful for transport, tips where appropriate, water, and small shops. Use a bank ATM where possible and avoid withdrawing more than you can protect.", "If a terminal or ATM asks whether to charge in your home currency, pause before accepting. Dynamic currency conversion may cost more than paying in the local currency." ]],
+      ["transport", "Choosing safe airport transport", ["Use the airport's signed train, bus, taxi, ride-hailing, hotel-transfer, or private-transfer process. Be cautious with anyone who intercepts you before the official transport area.", "The cheapest option is not automatically the best after a long flight. Luggage, children, late arrival, weather, and the final walk all matter." ]],
+      ["before-exit", "What to do before leaving the airport", ["Use the restroom, fill or buy water where appropriate, check the address one more time, and message someone that you have arrived. These tasks are easier inside a staffed terminal than on a pavement outside.", "Take a minute to make your bags manageable. Keep passport and wallet secure, phone charged, and transport details visible enough that you do not need to stop repeatedly." ]],
+      ["common-mistakes", "Common arrival mistakes", ["Common mistakes include rushing to the first taxi offer, leaving without a working map, exchanging too much money at a poor rate, and assuming every official-looking person is official.", "Another mistake is trying to solve everything at once. Finish the tasks that affect the next two hours first: entry, bags, connection, payment, and transport." ]],
+      ["arrival-note", "A quick note on changing rules", ["Rules, prices, transport options, and local requirements can change. Confirm official information before your trip, especially for visas, customs declarations, airport transport, and restricted items.", "Your goal is not to memorize the airport. It is to have enough verified information to stay calm when the arrivals hall becomes noisy." ]]
+    ]
+  },
+  {
+    slug: "best-airport-transport-new-country", title: "How to Choose the Best Airport Transport in a New Country", desc: "Compare airport trains, buses, taxis, ride-hailing apps, hotel transfers, and private transfers so your first trip into the city is calm.",
+    intro: "The best airport transport is the option that gets you to the right door with the least avoidable stress. Speed matters, but on arrival day luggage, timing, safety, and clarity matter just as much.",
+    sections: [
+      ["why-matters", "Why airport transport matters on day one", ["Your airport transfer sets the tone for the first few hours abroad. A confusing or unsafe ride can drain energy before you even check in.", "Think in terms of the full journey: airport exit, ticket or pickup point, waiting time, luggage, transfer changes, final walk, payment, and what happens if the flight is late." ]],
+      ["train-metro", "Train or metro from the airport", ["Airport rail can be fast, predictable, and good value when the station is easy to reach and your accommodation is near the line. It works best with light luggage and arrivals during operating hours.", "Check the final walk and transfer station before choosing rail. A fast train followed by a difficult interchange and stairs may be harder than a slower door-to-door option." ]],
+      ["bus-shuttle", "Airport bus or shuttle", ["Airport buses often reach hotel districts, central stations, or areas not served directly by rail. They can be a practical middle ground for travelers with bags.", "Confirm where the bus stops, how tickets are bought, and whether luggage storage is available. Late-night, holiday, and reduced schedules can change the answer." ]],
+      ["official-taxi", "Official airport taxi", ["An official taxi is useful when you arrive tired, late, with family, or with heavy luggage. Use the airport's signed rank, counter, queue ticket, or regulated process.", "Before entering, understand whether the fare is metered, fixed by zone, prepaid, or app-based. Keep the address written clearly and ask for a receipt where available." ]],
+      ["ride-hailing", "Ride-hailing apps", ["Ride-hailing apps can show route, fare estimate, driver details, and payment records. They are helpful when the destination is hard to pronounce or when cash is limited.", "They are not magic. You still need data, battery, the correct pickup zone, and a plate match. Do not enter a substitute car because someone knows your name." ]],
+      ["hotel-transfer", "Hotel transfers", ["A hotel transfer can be worth it when you arrive late, travel with children, carry unusual luggage, or need a simple check-in after a long flight.", "Confirm the price, waiting policy, meeting point, driver identification, and what happens if the flight is delayed. Save the hotel phone number offline." ]],
+      ["private-transfer", "Private transfers", ["Private transfers suit groups, business travelers, mobility needs, and routes where public transport is inconvenient. They trade flexibility for a higher price.", "Book with a provider you can verify. Avoid vague offers without a company name, written price, pickup instructions, or cancellation policy." ]],
+      ["late-night", "What to choose if you arrive late at night", ["When transport choices shrink, reliability becomes more important than saving a small amount. A staffed taxi rank, hotel transfer, airport hotel, or clearly designated app pickup may be safer than hunting for a last train.", "Read the late-night arrival guide before departure if your flight lands near the final public transport service." ]],
+      ["family", "What to choose if you travel with family", ["Families should value fewer transfers, clear luggage handling, toilets before departure, and a direct route to the first accommodation. A longer but simpler trip can be the better choice.", "If child seats, accessibility, or extra luggage space matter, confirm them in advance. Do not assume every taxi or ride app can supply the same equipment." ]],
+      ["avoid", "What to avoid", ["Avoid unofficial drivers who approach you inside the arrivals hall, pressure you to decide immediately, or say every official option is closed. Verify at an information desk or official website.", "Avoid routes that depend on perfect timing, a nearly dead phone, or a long unlit final walk with bags." ]],
+      ["decision", "A simple decision checklist", ["Choose public transport when it is operating, clear, and close to your accommodation. Choose official road transport when you are late, loaded with bags, traveling with family, or unsure about the final walk.", "If two options look equal, pick the one with better verification: official signage, a booking record, a receipt, a staffed counter, or a route you can follow." ]]
+    ]
+  },
+  {
+    slug: "offline-travel-documents-checklist", title: "What to Keep Offline Before You Travel Abroad", desc: "Save these travel documents offline before departure: passport copies, visas, bookings, insurance, maps, contacts, and payment backups.",
+    intro: "A phone with no signal is annoying; a phone with no saved information is a real problem. Keep the documents and details you may need on arrival available without mobile data.",
+    sections: [
+      ["why-offline", "Why offline copies matter", ["Airport Wi-Fi can be slow, roaming can fail, and a booking email can hide behind a two-factor code you cannot receive. Offline copies reduce the number of things that must work at the same time.", "The aim is not to store your whole life on a phone. Save the few items that help you clear entry, reach accommodation, contact help, and prove bookings." ]],
+      ["passport-visa", "Passport and visa copies", ["Save a scan or photo of your passport identity page, visa, electronic travel authorization, residence permit, or entry approval where relevant. Keep the files protected with a device lock.", "Do not rely on copies as a replacement for original documents. They help with reporting loss, filling forms, and confirming details, but border officers still decide what documents are required." ]],
+      ["flight", "Flight and boarding details", ["Save airline booking references, boarding passes, baggage receipts, and onward travel confirmations. If your checked bag is delayed, the baggage tag can matter more than the itinerary email.", "Screenshots are useful because airline apps sometimes log out or require a connection during exactly the wrong moment." ]],
+      ["hotel", "Hotel address and booking confirmation", ["Keep the full accommodation address, phone number, check-in time, late-arrival instructions, and booking confirmation offline. Add the address in the local language or script when the property provides it.", "A map pin alone is not enough. Drivers, immigration officers, and emergency contacts may need a readable address and phone number." ]],
+      ["insurance", "Travel insurance details", ["Save the policy number, emergency assistance phone number, claims instructions, and exclusions that affect your trip. Add medical coverage details if you have specific needs.", "If traveling with family, make sure more than one adult can access the policy details. The person who bought the policy may not be the person who needs help." ]],
+      ["emergency", "Emergency contacts", ["Save local emergency numbers, your accommodation, airline, card issuer, insurer, trusted contacts, and the nearest consular service for your nationality.", "Put the most important contacts in one offline note. In a stressful moment, searching across apps is where small problems become bigger." ]],
+      ["maps", "Local maps and transport routes", ["Download the area around the airport, first accommodation, and first-day transport route. Mark the nearest station, bus stop, taxi pickup point, pharmacy, and a simple food option.", "Offline maps can be imperfect, so also save a written route and the name of the destination neighborhood. A screenshot of the route is useful when GPS behaves badly." ]],
+      ["phrases", "Translation notes and useful phrases", ["Save the address, hotel name, medical phrases, dietary restrictions, and a few transport questions in the local language where useful.", "Do not expect translation apps to work instantly without data. Download the language pack before departure if your app supports it." ]],
+      ["banking", "Payment and banking backup information", ["Store card cancellation contacts, travel card app access, emergency cash plan, and backup payment instructions somewhere secure. Avoid saving full card numbers in an unprotected note.", "If your bank uses app approval or SMS codes, check before travel how you will verify payments abroad if your home SIM has no service." ]],
+      ["safe-storage", "How to store files safely", ["Use a combination of secure cloud storage, password-protected device storage, and one limited paper backup for critical details. Do not put every copy in one bag or one unlocked phone.", "Name files clearly enough that you can find them quickly, but avoid labels that expose sensitive data on a lock-screen preview." ]],
+      ["offline-check", "Offline travel checklist", ["Before leaving for the airport, open each saved item once while offline or in airplane mode. This catches files that only looked downloaded.", "Update the folder when plans change. An old hotel confirmation can be worse than no confirmation if you hand it to the wrong driver." ]]
+    ]
+  },
+  {
+    slug: "first-night-abroad-where-to-stay", title: "First Night Abroad: How to Choose a Safe and Easy Area to Stay", desc: "Choose where to stay your first night abroad with practical tips on transport, check-in, food, walkability, safety, and airport hotels.",
+    intro: "Your first-night accommodation does not need to be the most exciting place in the city. It needs to be easy to reach, easy to enter, and forgiving when your flight, body clock, or luggage misbehaves.",
+    sections: [
+      ["different", "Why the first night is different", ["On night one you are carrying everything, learning the transport system, and making decisions while tired. A location that is charming on day three may be inconvenient right after landing.", "The best first-night area reduces friction: fewer transfers, a clear address, staffed check-in, nearby food, and a safe-feeling walk from transport." ]],
+      ["transport", "Stay near reliable transport", ["Look for accommodation near a direct airport train, bus stop, official taxi route, or a known ride-hailing zone. The route should still work at your actual arrival time.", "A hotel “near a station” can still involve stairs, underpasses, or a long walk with bags. Check the door-to-door route, not only the map distance." ]],
+      ["not-too-far", "Avoid arriving too far from the city", ["Remote stays can be lovely later, but they often require harder navigation, fewer late check-in options, and more dependence on one driver.", "If you want a rural stay, beach town, or outer neighborhood, consider spending the first night near the airport or city and moving after rest." ]],
+      ["check-in", "Choose a simple check-in experience", ["Prioritize clear instructions, reliable communication, and a check-in window that matches your flight. A staffed desk can be valuable after delays.", "Self-check-in can work well if the instructions are detailed and saved offline. It becomes stressful when a code depends on a message you cannot receive." ]],
+      ["food-shops", "Look for food and basic shops nearby", ["After a long flight, simple food and water may matter more than nightlife. Check whether there are restaurants, convenience stores, or hotel dining options open when you arrive.", "Families, older travelers, and business travelers with early meetings may prefer a less fashionable area if it offers dependable basics within a short walk." ]],
+      ["safety-walkability", "Consider safety, lighting, and walkability", ["Read recent reviews for comments about the street, entrance, elevators, noise, and late-night access. Avoid judging only by star rating or staged room photos.", "A well-lit main road near transport can be more practical than a quieter backstreet that requires a confusing walk after midnight." ]],
+      ["airport-hotel", "When an airport hotel makes sense", ["An airport hotel makes sense after a late landing, before an early onward flight, during a long layover, or when immigration and baggage may take time.", "It is not a failure of travel ambition. Sleeping near the airport can protect the rest of the trip when the arrival timing is awkward." ]],
+      ["city-center", "When a city-center stay makes sense", ["A city-center stay works well when you land early enough, have a direct route, and want to start the next morning close to sights, meetings, or transport hubs.", "Choose the specific center that fits your next step. Some cities have several “central” districts that are not equally convenient from the airport." ]],
+      ["avoid", "What to avoid on your first night", ["Avoid accommodation with unclear address details, many complaints about late check-in, a difficult final walk, or a location chosen only because it is cheap.", "Also avoid stacking major plans after arrival. Check in, eat, shower, charge devices, and give tomorrow a better traveler." ]],
+      ["checklist-stay", "First-night stay checklist", ["Ask whether the route works if your flight is delayed, whether reception is available, whether food is nearby, and whether you can explain the address to a driver.", "If the answer to several of those is uncertain, choose a simpler first night and save the adventurous stay for later." ]]
+    ]
+  },
+  {
+    slug: "money-first-24-hours-abroad", title: "How to Handle Money During Your First 24 Hours Abroad", desc: "Manage travel money after landing with simple advice on cash, airport ATMs, cards, currency exchange, transport payments, and backups.",
+    intro: "Arrival-day money decisions should be boring. You only need enough local payment ability to leave the airport, eat, check in, and handle one small surprise.",
+    sections: [
+      ["why-money", "Why money planning matters after landing", ["Money problems on the first day often come from timing rather than poverty: a card decline, closed exchange counter, cash-only taxi, or ATM limit when you are tired.", "Plan a small system before departure. One card, one backup, a modest amount of cash, and an idea of how transport is paid will solve most arrival needs." ]],
+      ["emergency-cash", "Carrying a small amount of emergency cash", ["A small reserve in a widely accepted currency or destination currency can help if ATMs are down or a card is blocked. Keep it separate from your main wallet.", "Do not carry more than you are comfortable losing. Emergency cash is a bridge, not a substitute for careful payment planning." ]],
+      ["airport-atms", "Using airport ATMs carefully", ["Airport ATMs are convenient for arrival transport and food. Prefer machines attached to recognized banks or placed in visible, controlled areas.", "Withdraw a modest amount first. Learn the note sizes, put cash away before walking off, and never accept help from strangers at the machine." ]],
+      ["exchange", "When to exchange money", ["Airport exchange counters may be useful when you need cash immediately, but rates and fees vary. Avoid exchanging your full trip budget before comparing better options.", "If you exchange, count the money at the counter and keep the receipt until you know it is no longer needed." ]],
+      ["cards", "Using cards on the first day", ["Cards are convenient for hotels, ride apps, restaurants, and transport in many destinations. Carry a physical card even if you expect to use a phone wallet.", "Some terminals require a PIN, some reject foreign cards, and some add temporary holds. A backup card stored separately is practical, not excessive." ]],
+      ["dcc", "Avoiding dynamic currency conversion", ["ATMs and card terminals may offer to charge in your home currency. The familiar number can hide a poor exchange rate or extra markup.", "When given a clear choice, local currency is often the better option, but check your own card terms and read the screen before approving." ]],
+      ["backup", "Keeping backup payment options", ["Separate your backup card from your main wallet and keep card issuer contact details offline. Enable transaction alerts before travel.", "If your phone is the only way to approve payments, know what happens if it has no signal or battery. A power bank can be a money tool on arrival day." ]],
+      ["transport-payment", "Paying for airport transport", ["Before you land, know whether your airport transport needs cash, ticket machine payment, contactless card, app payment, or a prepaid counter.", "If using a taxi, clarify whether the fare is metered, fixed, includes tolls, or needs cash. Keep small notes where cash payment is normal." ]],
+      ["mistakes-money", "Money mistakes to avoid", ["Avoid withdrawing a large amount while distracted, handing a card to someone out of sight, letting a stranger choose an ATM, or approving a conversion screen you do not understand.", "Do not chase a slightly better exchange rate across town when you are tired and carrying luggage. First-day money should buy stability." ]],
+      ["money-check", "First 24 hours money checklist", ["Before leaving the airport, confirm you can pay for transport, one meal, water, and any accommodation balance or deposit.", "After check-in, store backup cards and cash separately. Keep tomorrow's spending money small and easy to access." ]]
+    ]
+  },
+  {
+    slug: "no-phone-signal-after-landing", title: "What to Do If Your Phone Has No Signal After Landing", desc: "No phone signal after landing abroad? Follow calm steps for settings, roaming, airport Wi-Fi, offline maps, SIM options, and emergency help.",
+    intro: "No signal after landing feels bigger than it is because your phone now holds maps, bookings, messages, banking, and transport. Work through the basics before assuming the trip is in trouble.",
+    sections: [
+      ["stay-calm", "Stay calm and check basic settings", ["Move out of the passenger flow and check battery, airplane mode, mobile data, selected line, and network selection. Many arrival problems are settings problems.", "If you use dual SIM, confirm which line is set for data and whether the travel line is actually active." ]],
+      ["airplane-mode", "Turn airplane mode on and off", ["A simple network reset often helps after a long flight. Turn airplane mode on, wait briefly, turn it off, and give the phone time to search for local networks.", "Restart the phone if needed, especially after installing an eSIM or changing SIM cards. Do not delete an eSIM unless the provider says it can be reinstalled." ]],
+      ["roaming", "Check roaming settings", ["If you plan to use your home carrier, data roaming may need to be enabled. If you do not understand the charges, keep data roaming off until you can confirm the plan.", "Some travel eSIMs require data roaming on that specific line. Read the provider instructions carefully so you do not turn on roaming for the expensive line by mistake." ]],
+      ["wifi", "Connect to airport Wi-Fi", ["Use official airport Wi-Fi or a staffed information point to regain basic access. Confirm the network name through signs or airport staff rather than joining the first similar-looking network.", "Once connected, open maps, message your accommodation, check transport, and download any missing documents before walking away from the terminal." ]],
+      ["offline", "Use offline maps and saved documents", ["If you prepared offline files, this is their moment. Open the hotel address, route screenshots, booking confirmation, and emergency contacts without waiting for mobile data.", "A printed or offline address can still get you into an official taxi or hotel transfer while you solve connectivity later." ]],
+      ["sim-esim", "Find an official SIM or eSIM option", ["If mobile service is essential, use a recognizable airport telecom counter, official store, or trusted eSIM provider. Confirm activation before leaving the counter.", "Check phone compatibility, passport-registration rules, hotspot allowance, and whether the plan includes calls or data only." ]],
+      ["contact-provider", "Contact your hotel or transport provider", ["If you cannot call, use airport Wi-Fi, an information desk, or a public phone where available. Keep the message simple: you have landed, you may be delayed, and you need check-in or pickup confirmation.", "For ride apps, avoid wandering between pickup zones while offline. A taxi rank, airport bus, or hotel desk may be calmer than chasing a booking you cannot update." ]],
+      ["emergency", "What to do if you need emergency help", ["If there is immediate danger or a medical emergency, ask airport staff, police, or airline staff for help and use the local emergency number. Do not wait for your personal phone service to recover.", "Airports are staffed environments. Move toward official counters, marked police points, medical rooms, or information desks rather than isolated areas." ]],
+      ["prevent", "How to prevent this before your next trip", ["Before travel, check phone unlock status, eSIM support, roaming fees, authenticator access, and whether important apps work offline.", "Download maps and documents, save the accommodation address, and consider installing an eSIM before departure if the provider allows delayed activation." ]],
+      ["no-signal-check", "No-signal checklist", ["Reset airplane mode, check the active line, connect to official Wi-Fi, open offline documents, message accommodation, then choose a verified SIM, eSIM, taxi, or help desk.", "Solve the next practical step first. You do not need perfect service to reach a safe check-in." ]]
+    ]
+  },
+  {
+    slug: "arrival-scams-tourist-airports", title: "How to Avoid Common Arrival Scams in Tourist Airports", desc: "Learn calm ways to avoid airport arrival scams involving taxis, money exchange, SIM cards, luggage help, payment confusion, and pressure.",
+    intro: "Most people you meet at an airport are not trying to scam you. Still, tired arrivals are easy to pressure, so it helps to recognize patterns before someone creates urgency around them.",
+    sections: [
+      ["vulnerable", "Why travelers are vulnerable after landing", ["After a flight you may be tired, offline, carrying valuables, unfamiliar with prices, and eager to reach the hotel. Scams take advantage of that temporary imbalance.", "The solution is not suspicion toward everyone. It is using official processes and slowing down when someone pushes you away from them." ]],
+      ["fake-taxi", "Fake taxi offers", ["A common pattern is a person approaching before the signed taxi area and claiming to offer a cheaper, faster, or official ride. The vehicle may be unlicensed or the fare unclear.", "Use the signed rank, taxi counter, airport transport desk, hotel transfer, or recognized app pickup zone. If the official service is supposedly closed, verify at a staffed desk." ]],
+      ["overpriced", "Overpriced transport", ["Overpricing can happen through broken-meter claims, unnecessary detours, surprise luggage fees, fake tolls, or pressure to pay in a foreign currency.", "Know the fare system before departure where possible. Ask whether the fare is metered, fixed, app-based, or prepaid, and keep receipts or screenshots." ]],
+      ["exchange", "Unofficial money exchange", ["Avoid people offering cash exchange away from licensed counters or bank ATMs. Attractive rates can hide counterfeit notes, short-changing, or confusion over zeros.", "If you need money at the airport, use a bank ATM or licensed exchange counter and exchange only what you need for the first day." ]],
+      ["sim-overcharge", "SIM card overcharging", ["SIM desks can be legitimate, but travelers still overpay when they buy a plan they do not understand. Headline data, validity, hotspot use, calls, and registration can differ.", "Compare plans calmly and test service before leaving. If unsure, use airport Wi-Fi first and decide after reaching the city." ]],
+      ["helpers", "Fake helpers and luggage assistance", ["Some people create a service you did not request: grabbing bags, guiding you to a machine, or insisting they work with the airport. A tip or fee appears later.", "Accept help only from clearly identified airport staff or providers you choose. Keep control of your documents and bags." ]],
+      ["distraction", "Distraction scams", ["Distraction can be as simple as one person asking questions while another watches bags, phones, or wallets. Crowded arrivals areas are good environments for this.", "Stop before reorganizing. Put valuables away, close bags, and avoid leaving phones on trolleys, counters, or seats." ]],
+      ["payment", "Payment confusion", ["Payment confusion includes switching currencies, adding unexplained fees, claiming a card failed, or asking you to cancel an app ride and pay separately.", "Keep payments inside official systems where possible. Read terminal screens, choose a currency deliberately, and do not hand over a card where you cannot see it." ]],
+      ["official-services", "How to use official services", ["Official services usually leave a record: a receipt, booking, ticket, queue number, company name, license, app trip, or airport signage. Look for the process, not the personality.", "If lost, go to an airport information desk, airline counter, police point, or your accommodation's official phone number." ]],
+      ["feels-wrong", "What to do if something feels wrong", ["Pause, step back into a staffed public area, and verify through a channel you choose. You can say no without explaining your entire situation.", "If you are already in a vehicle or dispute, prioritize getting to a staffed public place. Document details once safe." ]]
+    ]
+  },
+  {
+    slug: "low-stress-first-day-new-city", title: "How to Plan a Low-Stress First Day in a New City", desc: "Plan a calm first day in a new city with realistic timing, one main goal, flexible meals, rest, local orientation, and simple backups.",
+    intro: "A good first day in a new city should make tomorrow easier. Keep the plan light enough that delays, jet lag, and ordinary confusion do not ruin it.",
+    sections: [
+      ["simple", "Why the first day should be simple", ["Arrival day contains hidden work: immigration, luggage, transport, check-in, food, money, and figuring out where you are. Treat that as the main itinerary.", "One easy neighborhood walk can teach you more useful first-day information than crossing the city for a landmark while exhausted." ]],
+      ["arrival-time", "Plan around arrival time", ["A morning arrival can still involve early check-in problems and sleepiness. An evening arrival can remove public transport, food, and reception options.", "Build the day around the real time you may reach the accommodation, not the scheduled landing time. Immigration, baggage, traffic, and weather all add variation." ]],
+      ["one-goal", "Choose one main goal", ["Choose one modest goal after check-in: a meal, a short walk, buying a transport card, or seeing one nearby viewpoint. Stop there if the day feels heavy.", "A single goal makes the day feel successful without forcing you to perform travel enthusiasm on low sleep." ]],
+      ["delays", "Leave space for delays", ["Avoid prepaid activities, tight restaurant reservations, or long onward transfers close to landing. Put anything expensive or time-sensitive on day two when possible.", "If a delay happens, remove plans rather than rushing. The trip does not need repayment through exhaustion." ]],
+      ["eat-rest", "Eat, rest, and get oriented", ["Drink water, eat something simple, shower, and charge devices. These ordinary tasks improve judgment more reliably than another hour of research.", "Locate the nearest useful transport stop, small shop, pharmacy, and a recognizable landmark. This gives the city a mental map before sightseeing begins." ]],
+      ["nearby-area", "Learn the nearby area first", ["Walk a short loop around your accommodation in daylight when possible. Notice entrances, busy streets, quiet streets, and where you would get a ride back.", "Save the accommodation as a favorite in your map app. If the city has confusing addresses, save a photo of the building entrance or nearby landmark." ]],
+      ["avoid-cross-city", "Avoid long cross-city trips", ["Long cross-city trips are more fragile on day one because you do not yet understand ticketing, traffic, platform changes, or late-night return options.", "If you do go farther, know exactly how you will return and what the backup is if the last train, bus, or ride app is unavailable." ]],
+      ["jet-lag", "Prepare for jet lag", ["Jet lag can affect appetite, patience, and decision-making. Plan around it rather than pretending it is only about sleep.", "Keep alcohol modest, avoid major purchases while exhausted, and set up tomorrow's essentials before lying down." ]],
+      ["examples", "Simple first-day plan examples", ["For an early arrival: airport to hotel, bag drop, simple lunch nearby, short orientation walk, early dinner, sleep. For a late arrival: official transport, check-in, water, snack, message home, sleep.", "For families: fewer transfers, playground or easy food nearby, and no hard evening plan. For business travelers: check-in, clothes reset, meeting route saved, and one calm meal." ]],
+      ["checklist-low-stress", "Low-stress first day checklist", ["Confirm transport, check-in, food, water, payment, mobile data, and tomorrow's first route. Everything else is optional.", "A low-stress day is not an empty day. It is a day designed to leave you rested, oriented, and ready for the trip you actually came to have." ]]
+    ]
   }
 ] as const;
 
@@ -562,6 +694,150 @@ function basicGuide(d: typeof basicBlueprints[number]): Guide {
         { question: "What if a driver says my hotel is closed?", answer: "Contact the hotel using the number in your own booking. Do not accept a replacement property, shop, or tour office suggested by the driver without independent verification." },
         { question: "Should I argue about an incorrect fare?", answer: "Prioritize safety. Move to a staffed public place, keep the receipt and vehicle details, then report the issue through the taxi regulator, airport, app, hotel, or police as appropriate." }
       ]
+    },
+    "airport-arrival-checklist": {
+      seoTitle: "Airport Arrival Checklist for First-Time Travelers | EZ Roam Guide",
+      description: "Use this airport arrival checklist for immigration, baggage, customs, internet, money, safe transport, and the first steps after landing.",
+      readingTime: "13 min read",
+      quick: ["Keep passport, arrival address, and entry documents ready before leaving the plane.", "Clear immigration, baggage reclaim, and customs before focusing on transport.", "Get enough internet and local money for the next few hours, not the whole trip.", "Use official airport transport channels and verify the vehicle or ticket.", "Pause before leaving the terminal so you are not solving basic tasks on the curb."],
+      mistakesHeading: "Common arrival mistakes",
+      checklistHeading: "Airport arrival checklist",
+      checklist: ["Passport and entry approval accessible", "Accommodation address saved offline", "All bags accounted for before customs exit", "Customs declaration completed if required", "Phone connection tested away from airport Wi-Fi", "Small amount of local money or working card ready", "Official transport route, fare, or pickup point confirmed", "Trusted contact updated after arrival", "Water, restroom, and battery check done before leaving"],
+      mistakes: ["Leaving the baggage area before reporting a missing bag", "Accepting the first transport offer because it sounds urgent", "Depending on live email or maps without offline backups", "Changing too much money before understanding the rate", "Walking out of the terminal before confirming where the pickup point is"],
+      faqs: [
+        { question: "What should I do first after landing internationally?", answer: "Prepare your passport, arrival documents, accommodation address, and any required forms, then follow the airport process through immigration, baggage reclaim, and customs." },
+        { question: "Should I buy a SIM before leaving the airport?", answer: "Buy one at the airport only if you need reliable data immediately and understand the plan. An eSIM, roaming, or airport Wi-Fi may be enough to reach your first accommodation." },
+        { question: "How much cash should I get at the airport?", answer: "Get enough for transport, water, small food purchases, and a short backup. Avoid withdrawing or exchanging more than you can comfortably protect on arrival day." },
+        { question: "Is airport transport always safe?", answer: "No transport type is automatically safe, but official airport systems reduce risk. Use signed ranks, counters, regulated services, recognized apps, or confirmed hotel transfers." },
+        { question: "What if the airport feels confusing?", answer: "Step aside, use a staffed information desk, open your offline notes, and solve one task at a time. Rushing usually creates more confusion than waiting a few minutes." }
+      ],
+      related: ["/travel-basics/first-international-trip-checklist/", "/travel-basics/how-to-leave-an-airport-safely/", "/travel-basics/sim-card-vs-esim/", "/travel-basics/money-first-24-hours-abroad/", "/travel-basics/best-airport-transport-new-country/"]
+    },
+    "best-airport-transport-new-country": {
+      seoTitle: "Best Airport Transport Abroad: How to Choose | EZ Roam Guide",
+      description: "Compare airport trains, buses, taxis, ride-hailing, hotel transfers, and private transfers to choose the best route into a new city.",
+      readingTime: "13 min read",
+      quick: ["Choose by the whole door-to-door journey, not only headline speed.", "Airport trains work best with light luggage and a nearby station.", "Official taxis and transfers are useful for late arrivals, families, and heavy bags.", "Ride-hailing apps still require data, battery, and careful vehicle matching.", "Have one backup if the first route is closed, delayed, or too confusing."],
+      mistakesHeading: "Airport transport mistakes to avoid",
+      checklistHeading: "Simple decision checklist",
+      checklist: ["Actual arrival time checked against transport operating hours", "Final walk from station or stop reviewed", "Luggage and family needs considered", "Fare method understood before boarding", "Official pickup point saved or screenshotted", "Backup route chosen", "Accommodation address written clearly", "Phone battery and data plan ready"],
+      mistakes: ["Choosing the fastest advertised route without checking transfers", "Assuming ride-hailing pickups work like they do at home", "Following unofficial drivers away from signed transport areas", "Forgetting that late arrivals remove many public transport options", "Booking accommodation far from the route you plan to use"],
+      faqs: [
+        { question: "What is the best way to get from airport to city?", answer: "The best option depends on arrival time, luggage, budget, destination, and comfort. Rail may be fastest, while an official taxi or transfer may be easier with bags or a late arrival." },
+        { question: "Are airport taxis better than ride-hailing apps?", answer: "Neither is always better. Official taxis can be simpler when pickup zones are confusing; ride apps provide trip records and fare estimates when data and battery are reliable." },
+        { question: "Should I pre-book airport transport?", answer: "Pre-book if you arrive late, travel with children, need accessibility support, or have a difficult destination. Use a provider you can verify and save the meeting details offline." },
+        { question: "Is public transport safe from airports?", answer: "Public transport can be a good choice where it is official, operating, and practical with your luggage. Check the final walk and avoid routes that leave you stranded late at night." },
+        { question: "What if my flight is delayed?", answer: "Know the last public transport time and keep a backup such as an official taxi, airport hotel, hotel transfer, or later bus. Avoid plans that depend on perfect arrival timing." }
+      ],
+      related: ["/travel-basics/how-to-leave-an-airport-safely/", "/travel-basics/arriving-late-at-night/", "/travel-basics/airport-taxi-scams/", "/travel-basics/airport-arrival-checklist/", "/travel-basics/how-to-use-public-transport-abroad/"]
+    },
+    "offline-travel-documents-checklist": {
+      seoTitle: "Offline Travel Documents Checklist Before You Fly | EZ Roam Guide",
+      description: "Save passport copies, visas, bookings, insurance, maps, emergency contacts, and payment backups offline before international travel.",
+      readingTime: "12 min read",
+      quick: ["Save the documents that help with entry, accommodation, transport, insurance, and emergencies.", "Test important files offline before leaving for the airport.", "Store sensitive copies securely, not in an unlocked photo roll only.", "Keep addresses in readable text, not just map pins.", "Use offline backups as support, not as replacements for original documents."],
+      mistakesHeading: "Offline document mistakes to avoid",
+      checklistHeading: "Offline travel checklist",
+      checklist: ["Passport identity page saved securely", "Visa or entry authorization saved", "Flight and baggage references saved", "Accommodation address and phone number saved", "Insurance policy and assistance number saved", "Emergency contacts and local emergency numbers saved", "Offline maps downloaded", "Useful phrases and address translation saved", "Payment backup instructions stored safely", "Files tested in airplane mode"],
+      mistakes: ["Saving links instead of actual offline files", "Keeping every backup on the same phone", "Saving an address only as a map pin", "Storing sensitive files without a passcode", "Forgetting to update files after changing hotels or flights"],
+      faqs: [
+        { question: "What travel documents should I save offline?", answer: "Save passport and visa copies, flight and baggage details, accommodation confirmation, insurance information, emergency contacts, maps, transport routes, and key payment backup details." },
+        { question: "Are digital passport copies accepted at borders?", answer: "Usually no. A copy can help with forms or reporting loss, but original documents and official entry requirements still apply." },
+        { question: "Where should I store offline travel documents?", answer: "Use secure device storage, reputable cloud storage with offline access, and a limited paper backup for essential details. Avoid keeping everything in one bag or unlocked app." },
+        { question: "Should I print travel documents?", answer: "Printing key details can be useful for visas, hotels, insurance, and transport, especially where battery, signal, or app access may fail." },
+        { question: "How do I protect sensitive travel files?", answer: "Use strong device locks, avoid public file sharing, name files discreetly, and do not store full card numbers or passwords in plain notes." }
+      ],
+      related: ["/travel-basics/first-international-trip-checklist/", "/travel-basics/no-phone-signal-after-landing/", "/travel-basics/plan-your-first-24-hours-abroad/", "/travel-basics/travel-safety-basics/", "/travel-basics/airport-arrival-checklist/"]
+    },
+    "first-night-abroad-where-to-stay": {
+      seoTitle: "Where to Stay First Night Abroad: Safe, Easy Areas | EZ Roam Guide",
+      description: "Choose a safe, easy first-night stay abroad with tips on airport access, check-in, food, walkability, transport, and late arrivals.",
+      readingTime: "12 min read",
+      quick: ["Choose first-night accommodation for ease, not only atmosphere.", "Prioritize reliable transport, simple check-in, and nearby food.", "An airport hotel can be sensible after a late flight or before an early connection.", "A city-center stay works best when the route is direct and operating.", "Avoid remote locations with unclear access until you are rested."],
+      mistakesHeading: "First-night stay mistakes to avoid",
+      checklistHeading: "First-night stay checklist",
+      checklist: ["Direct or simple airport route confirmed", "Late check-in instructions saved offline", "Accommodation phone number saved", "Food or water available nearby", "Final walk checked for luggage and timing", "Recent reviews checked for access and location comments", "Backup plan chosen if flight is delayed", "Address saved in local language where useful"],
+      mistakes: ["Choosing the cheapest room without checking the arrival route", "Assuming self-check-in will work without mobile data", "Booking far outside the city after a long flight", "Ignoring recent reviews about the entrance or neighborhood", "Planning sightseeing before basic recovery"],
+      faqs: [
+        { question: "Where should I stay the first night abroad?", answer: "Choose an area that is easy to reach from the airport, has reliable check-in, and gives you access to simple food, water, and transport for the next morning." },
+        { question: "Is it better to stay near the airport or city center?", answer: "Stay near the airport for late arrivals, early onward flights, or heavy fatigue. Choose the city center when the route is direct and you want a practical base for the next day." },
+        { question: "How can I check if an area is safe enough?", answer: "Read recent reviews, check lighting and transport access, look for staffed entrances, and avoid judging only by price or room photos." },
+        { question: "What matters most for late check-in?", answer: "Clear instructions, a working contact number, realistic arrival time, and a backup plan matter most. Save everything offline before departure." },
+        { question: "Should solo travelers choose differently?", answer: "Solo travelers may prefer staffed accommodation, a clearer route, and a well-lit arrival area, especially after dark or after a long flight." }
+      ],
+      related: ["/travel-basics/arriving-late-at-night/", "/travel-basics/best-airport-transport-new-country/", "/travel-basics/how-to-leave-an-airport-safely/", "/travel-basics/low-stress-first-day-new-city/", "/cities/tokyo-arrival-guide/"]
+    },
+    "money-first-24-hours-abroad": {
+      seoTitle: "Travel Money Tips for Your First 24 Hours Abroad | EZ Roam Guide",
+      description: "Handle money after landing with tips on cash, cards, airport ATMs, exchange counters, transport payment, backups, and first-day fees.",
+      readingTime: "12 min read",
+      quick: ["Arrival-day money only needs to cover transport, food, water, check-in, and one backup.", "Carry at least two payment methods and store them separately.", "Use airport ATMs carefully and withdraw a modest first amount.", "Read card and ATM currency conversion screens before approving.", "Know how your airport transport is paid before you leave the terminal."],
+      mistakesHeading: "Money mistakes to avoid",
+      checklistHeading: "First 24 hours money checklist",
+      checklist: ["Primary card working", "Backup card stored separately", "Small cash reserve available", "Airport ATM or exchange option identified", "Transport payment method confirmed", "Dynamic currency conversion screens understood", "Bank or card support contact saved", "Transaction alerts enabled", "Accommodation deposit or balance planned"],
+      mistakes: ["Keeping all cash and cards in one wallet", "Approving home-currency conversion without reading the rate", "Withdrawing too much cash while tired", "Assuming every airport taxi accepts cards", "Depending entirely on a phone wallet with low battery"],
+      faqs: [
+        { question: "Should I use cash or card after landing?", answer: "Use both where possible. Cards are convenient, but a small amount of local cash helps with transport, tips where appropriate, small shops, or payment outages." },
+        { question: "Is it bad to exchange money at the airport?", answer: "Not always. Airport exchange can be useful for immediate needs, but avoid exchanging your full budget without comparing rates and fees." },
+        { question: "How much money do I need for the first day abroad?", answer: "Plan for airport transport, food, water, mobile data if needed, accommodation balance or deposit, and one small backup. Confirm current prices close to travel." },
+        { question: "What is dynamic currency conversion?", answer: "It is when a terminal offers to charge in your home currency. The familiar amount can include a poor exchange rate, so read the screen carefully before choosing." },
+        { question: "What should I do if my card is declined?", answer: "Try a backup payment method, move away from pressure, and contact your bank through its official app or card number. Do not use a phone number supplied by a stranger." }
+      ],
+      related: ["/travel-basics/cash-vs-card-while-traveling/", "/travel-basics/airport-arrival-checklist/", "/travel-basics/best-airport-transport-new-country/", "/travel-basics/travel-safety-basics/", "/countries/singapore-first-24-hours/"]
+    },
+    "no-phone-signal-after-landing": {
+      seoTitle: "No Phone Signal After Landing Abroad? What to Do | EZ Roam Guide",
+      description: "If your phone has no signal after landing abroad, use these steps for settings, roaming, airport Wi-Fi, offline documents, SIMs, and help.",
+      readingTime: "12 min read",
+      quick: ["Check basic settings before assuming the phone or plan has failed.", "Use official airport Wi-Fi to recover maps, messages, and transport details.", "Open offline documents and saved addresses if mobile data is unavailable.", "Buy or activate SIM/eSIM service only through a source you can verify.", "For emergencies, ask airport staff or local authorities instead of waiting for signal."],
+      mistakesHeading: "No-signal mistakes to avoid",
+      checklistHeading: "No-signal checklist",
+      checklist: ["Step out of the passenger flow", "Check airplane mode and active SIM line", "Restart phone if needed", "Review roaming settings for the correct line", "Join official airport Wi-Fi", "Open offline hotel and transport details", "Message hotel or pickup provider", "Use official SIM/eSIM counter if needed", "Ask airport staff for urgent help"],
+      mistakes: ["Deleting an eSIM that cannot be reinstalled", "Turning on roaming for the wrong line without checking charges", "Walking to a remote pickup zone while offline", "Joining a suspicious Wi-Fi network", "Letting a phone problem delay emergency help"],
+      faqs: [
+        { question: "Why does my phone have no signal after landing abroad?", answer: "Common causes include airplane mode, roaming disabled, the wrong SIM line selected, carrier restrictions, incompatible bands, inactive eSIM setup, or temporary airport coverage issues." },
+        { question: "Should I turn on data roaming?", answer: "Only turn on data roaming when you understand which line will use it and what it costs. Some travel eSIMs require roaming on that line, while home carriers may charge heavily." },
+        { question: "Can airport Wi-Fi be enough?", answer: "Airport Wi-Fi can be enough to message accommodation, check transport, download maps, and reach your first hotel. Confirm the official network before connecting." },
+        { question: "Should I buy a SIM at the airport?", answer: "Buy one if you need service immediately and can verify the provider, plan, registration requirements, and activation. Otherwise, solve transport first and compare options later." },
+        { question: "What if I need urgent help with no signal?", answer: "Go to airport staff, police, airline counters, medical rooms, or information desks. In an emergency, use local services rather than waiting for personal mobile data." }
+      ],
+      related: ["/travel-basics/sim-card-vs-esim/", "/travel-basics/offline-travel-documents-checklist/", "/travel-basics/airport-arrival-checklist/", "/travel-basics/how-to-leave-an-airport-safely/", "/travel-basics/travel-safety-basics/"]
+    },
+    "arrival-scams-tourist-airports": {
+      seoTitle: "Airport Arrival Scams: How to Avoid Them Calmly | EZ Roam Guide",
+      description: "Avoid common airport arrival scams involving taxis, SIM cards, money exchange, luggage help, payment confusion, and unofficial offers.",
+      readingTime: "13 min read",
+      quick: ["Scams often start by creating urgency or steering you away from official services.", "Use airport-published transport, exchange, SIM, and information channels.", "Keep control of bags, passport, phone, and payment cards in crowded areas.", "Verify claims about closed hotels, broken meters, or unavailable transport independently.", "If something feels wrong, return to a staffed public area before deciding."],
+      mistakesHeading: "Arrival scam warning signs",
+      checklistHeading: "Arrival scam avoidance checklist",
+      checklist: ["Official transport area located", "Hotel address verified from your booking", "Fare system understood before riding", "Money exchanged only through bank ATM or licensed counter", "SIM plan checked before payment", "Bags and valuables kept under control", "Payment currency read before approval", "Receipts or screenshots kept", "Pressure tactics treated as a reason to pause"],
+      mistakes: ["Believing a stranger who says the official service is closed", "Letting someone take luggage before agreeing to help", "Changing accommodation because a driver suggests it", "Paying outside a ride app after being asked to cancel", "Assuming a friendly approach means an official role"],
+      faqs: [
+        { question: "What are common airport arrival scams?", answer: "Common patterns include fake taxis, inflated fares, unofficial money exchange, SIM overcharging, unwanted luggage help, distraction theft, and confusing payment currency switches." },
+        { question: "How do I know if a taxi offer is official?", answer: "Use the process shown by the airport: signed rank, staffed counter, queue ticket, app pickup zone, or regulated vehicle. A confident verbal claim is not enough." },
+        { question: "Are airport SIM cards a scam?", answer: "Not necessarily. Many are legitimate, but travelers can overpay for unsuitable plans. Compare data, validity, calls, hotspot use, registration, and activation before paying." },
+        { question: "What should I do if someone pressures me?", answer: "Pause, step back into a staffed area, and verify through an information desk, official app, airport website, or accommodation contact." },
+        { question: "Should I report an airport scam?", answer: "If safe, keep receipts, screenshots, vehicle details, and payment records. Report through the airport authority, transport regulator, app, card issuer, hotel, or police as appropriate." }
+      ],
+      related: ["/travel-basics/airport-taxi-scams/", "/travel-basics/how-to-leave-an-airport-safely/", "/travel-basics/best-airport-transport-new-country/", "/travel-basics/travel-safety-basics/", "/travel-basics/airport-arrival-checklist/"]
+    },
+    "low-stress-first-day-new-city": {
+      seoTitle: "Low-Stress First Day in a New City: Simple Plan | EZ Roam Guide",
+      description: "Plan a low-stress first day in a new city with realistic timing, one main goal, easy food, rest, orientation, and flexible backups.",
+      readingTime: "12 min read",
+      quick: ["Treat arrival, check-in, food, and rest as the real first-day itinerary.", "Choose one main goal instead of filling the day with attractions.", "Leave space for delays, jet lag, and getting lost.", "Learn the nearby area before taking long cross-city trips.", "Prepare tomorrow's first route before sleep."],
+      mistakesHeading: "First-day planning mistakes to avoid",
+      checklistHeading: "Low-stress first day checklist",
+      checklist: ["Arrival-to-hotel route confirmed", "Check-in time and bag-drop option reviewed", "One simple meal option chosen", "One modest first-day goal selected", "Nearby area downloaded offline", "Long cross-city trips avoided unless necessary", "Tomorrow's first route saved", "Devices charged before sleep", "Flexible backup plan kept"],
+      mistakes: ["Scheduling paid activities too close to landing", "Trying to compensate for delays by moving faster", "Crossing the city before understanding the local transport system", "Ignoring food, water, and rest because they feel too ordinary", "Turning the first day into proof that the trip is successful"],
+      faqs: [
+        { question: "What should I do on my first day in a new city?", answer: "Focus on reaching accommodation, eating, resting, getting oriented nearby, and preparing tomorrow. Add one small activity only if you have energy." },
+        { question: "Should I plan sightseeing on arrival day?", answer: "Keep sightseeing light and nearby. Avoid expensive, time-sensitive bookings close to landing because delays and fatigue are common." },
+        { question: "How do I avoid jet lag ruining the first day?", answer: "Hydrate, eat simply, get daylight if possible, avoid major decisions while exhausted, and keep the schedule flexible enough to sleep early if needed." },
+        { question: "Is it better to explore near the hotel first?", answer: "Yes for most travelers. Learning nearby streets, food options, transport stops, and landmarks makes the rest of the trip easier." },
+        { question: "What is a good first-day itinerary?", answer: "A calm plan is airport transfer, check-in or bag drop, simple food, short orientation walk, water and supplies, tomorrow's route check, and rest." }
+      ],
+      related: ["/travel-basics/plan-your-first-24-hours-abroad/", "/travel-basics/first-night-abroad-where-to-stay/", "/travel-basics/best-airport-transport-new-country/", "/travel-basics/offline-travel-documents-checklist/", "/cities/bangkok-arrival-guide/"]
     }
   };
   const enhancement = enhancements[guide.slug];
