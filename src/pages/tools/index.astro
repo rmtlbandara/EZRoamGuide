@@ -6,6 +6,11 @@ import { site } from "../../data/site";
 import { toolsIntro, travelTools } from "../../data/tools";
 
 const url = new URL("/tools/", site.url).toString();
+const toolGroups = [
+  { title: "Arrival day planning", description: "Start with a calm plan for the first few hours after landing.", slugs: ["first-24-hours-travel-planner", "late-night-arrival-planner", "first-day-itinerary-builder"] },
+  { title: "Transport, internet, and money", description: "Compare practical choices before you leave the airport.", slugs: ["airport-transport-helper", "sim-esim-roaming-finder", "first-day-travel-money-estimator"] },
+  { title: "Checklists before you fly", description: "Prepare the details and essentials that make arrival day easier.", slugs: ["offline-travel-documents-checklist", "first-day-packing-checklist"] }
+].map((group) => ({ ...group, tools: travelTools.filter((tool) => group.slugs.includes(tool.slug)) }));
 const breadcrumbSchema = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
@@ -31,7 +36,7 @@ const faqSchema = {
       <p class="eyebrow">Free travel tools</p>
       <h1>{toolsIntro.title}</h1>
       <p class="lede">{toolsIntro.intro}</p>
-      <div class="meta"><span>Last updated: June 27, 2026</span><span>No signup required</span></div>
+      <div class="meta"><span>Last updated: June 27, 2026</span><span>Quick, simple, and free to use</span></div>
     </div>
   </header>
 
@@ -39,14 +44,22 @@ const faqSchema = {
     <div class="container">
       <div class="section-heading">
         <div>
-          <p class="eyebrow">Open a tool</p>
-          <h2>Simple planning helpers for arrival day</h2>
+          <p class="eyebrow">Choose a tool</p>
+          <h2>Plan with more confidence</h2>
         </div>
-        <p>Each tool runs in your browser. No login, no payment, no saved personal answers, and no external travel API.</p>
+        <p>Use these simple tools to plan your trip with more confidence.</p>
       </div>
-      <div class="card-grid">
-        {travelTools.map((tool) => <ToolCard tool={tool} />)}
-      </div>
+      {toolGroups.map((group) => (
+        <section class="tool-group" aria-labelledby={`group-${group.title.toLowerCase().replaceAll(" ", "-")}`}>
+          <div class="tool-group-head">
+            <h3 id={`group-${group.title.toLowerCase().replaceAll(" ", "-")}`}>{group.title}</h3>
+            <p>{group.description}</p>
+          </div>
+          <div class="card-grid">
+            {group.tools.map((tool) => <ToolCard tool={tool} />)}
+          </div>
+        </section>
+      ))}
     </div>
   </section>
 

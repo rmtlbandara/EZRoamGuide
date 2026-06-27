@@ -12,7 +12,7 @@ const { tool } = Astro.props as { tool: TravelTool };
 const url = toolUrl(tool);
 const relatedGuides = tool.relatedGuides.map((href) => {
   const guide = findGuideByHref(href) as Guide | undefined;
-  return { href, title: guide ? guide.title : href.replaceAll("/", " ").trim() };
+  return { href, title: guide ? guide.title : href.replaceAll("/", " ").trim(), lastUpdated: guide?.lastUpdated, readingTime: guide?.readingTime };
 });
 const breadcrumbSchema = {
   "@context": "https://schema.org",
@@ -38,20 +38,27 @@ const appSchema = {
   name: tool.title,
   url,
   applicationCategory: "TravelApplication",
-  operatingSystem: "Any modern web browser",
+  operatingSystem: "Any modern device",
   offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
   description: tool.description,
   publisher: { "@type": "Organization", name: site.name, url: site.url }
 };
+const webPageSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: tool.title,
+  url,
+  description: tool.description
+};
 ---
-<BaseLayout title={tool.seoTitle} description={tool.description} canonical={hrefForTool(tool)} schema={[breadcrumbSchema, faqSchema, appSchema]}>
+<BaseLayout title={tool.seoTitle} description={tool.description} canonical={hrefForTool(tool)} schema={[breadcrumbSchema, faqSchema, webPageSchema, appSchema]}>
   <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Tools", href: "/tools/" }, { label: tool.title }]} />
   <header class="page-head">
     <div class="container">
       <p class="eyebrow">{tool.category}</p>
       <h1>{tool.title}</h1>
       <p class="lede">{tool.intro}</p>
-      <div class="meta"><span>Last updated: {tool.lastUpdated}</span><span>{tool.readingTime}</span><span>Works in your browser</span></div>
+      <div class="meta"><span>Last updated: {tool.lastUpdated}</span><span>{tool.readingTime}</span><span>Ready when you need it</span></div>
     </div>
   </header>
 
@@ -66,10 +73,11 @@ const appSchema = {
         <div class="tool-card-head">
           <div>
             <p class="eyebrow">Interactive tool</p>
-            <h2>Enter your details</h2>
+            <h2>Choose your travel situation</h2>
           </div>
-          <p>No signup. No saved answers. No external API.</p>
+          <p>Quick, simple, and free to use.</p>
         </div>
+        <p class="tool-intro">Answer a few simple questions and get a practical suggestion for your arrival day.</p>
 
         <form class="tool-form" data-tool-type={tool.toolType} novalidate>
           <div class="form-grid">
@@ -114,8 +122,8 @@ const appSchema = {
         </form>
 
         <div class="tool-result" data-result aria-live="polite" tabindex="-1">
-          <h3>Your result will appear here</h3>
-          <p>Choose the options above and click the button. If JavaScript is disabled, use the practical advice and related guides on this page as a static planning checklist.</p>
+          <h3>Your travel planning suggestion</h3>
+          <p>Choose your options and use the result as a simple starting point for your travel planning.</p>
         </div>
       </section>
 
@@ -134,7 +142,12 @@ const appSchema = {
       <section class="article-section" id="related">
         <h2>Related guides</h2>
         <div class="related">
-          {relatedGuides.map((item) => <a href={item.href}>{item.title} →</a>)}
+          {relatedGuides.map((item) => (
+            <a href={item.href}>
+              <span>{item.title} →</span>
+              {item.lastUpdated && <small>Updated: {item.lastUpdated} · {item.readingTime}</small>}
+            </a>
+          ))}
         </div>
       </section>
     </article>
@@ -158,7 +171,7 @@ const appSchema = {
     const textFromSections = (title, sections) => [title, "", ...sections.flatMap((section) => [section.heading, ...section.items.map((item) => `- ${item}`), ""])].join("\\n").trim();
     const render = (resultEl, title, sections) => {
       resultEl.dataset.resultText = textFromSections(title, sections);
-      resultEl.innerHTML = `<h3>${escapeHtml(title)}</h3>${sections.map((section) => sectionHtml(section.heading, section.items)).join("")}`;
+      resultEl.innerHTML = `<h3>Your travel planning suggestion</h3><p class="result-summary">${escapeHtml(title)}</p>${sections.map((section) => sectionHtml(section.heading, section.items)).join("")}<p class="result-reminder">Use this as a starting point and confirm local rules, prices, and transport details before you travel.</p>`;
       resultEl.focus({ preventScroll: true });
     };
     const get = (form, name) => new FormData(form).get(name)?.toString() || "";
@@ -243,7 +256,7 @@ const appSchema = {
         sections: [
           { heading: "Completed items", items: selected.length ? selected : ["No completed items selected yet."] },
           { heading: "Missing items", items: missing.length ? missing : ["Everything in this checklist is selected. Review file access while offline before departure."] },
-          { heading: "Final preparation note", items: ["Open key files once in airplane mode to confirm they are really available offline.", "Keep sensitive files protected with a device lock and avoid saving full card numbers or passwords.", "This browser tool does not save your selections."] }
+          { heading: "Final preparation note", items: ["Open key files once in airplane mode to confirm they are really available offline.", "Keep sensitive files protected with a device lock and avoid saving full card numbers or passwords.", "Your selections are only used to prepare this checklist."] }
         ]
       };
     }
@@ -348,7 +361,7 @@ const appSchema = {
           await navigator.clipboard.writeText(text);
           messageEl.textContent = "Copied to clipboard.";
         } catch {
-          messageEl.textContent = "Copy was not available in this browser. You can select the result text manually.";
+          messageEl.textContent = "Copy was not available on this device. You can select the result text manually.";
         }
       });
       form.querySelector("[data-print-result]")?.addEventListener("click", () => {
@@ -362,7 +375,7 @@ const appSchema = {
         setTimeout(() => {
           messageEl.textContent = "";
           resultEl.dataset.resultText = "";
-          resultEl.innerHTML = "<h3>Your result will appear here</h3><p>Choose the options above and click the button. If JavaScript is disabled, use the practical advice and related guides on this page as a static planning checklist.</p>";
+          resultEl.innerHTML = "<h3>Your travel planning suggestion</h3><p>Choose your options and use the result as a simple starting point for your travel planning.</p>";
         }, 0);
       });
     });

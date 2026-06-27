@@ -8,5 +8,6 @@ const { tool } = Astro.props as { tool: TravelTool };
   <span class="tag">{tool.category}</span>
   <h3>{tool.title}</h3>
   <p>{tool.description}</p>
+  {tool.bestFor && <p class="card-meta"><span>Best for: {tool.bestFor}</span></p>}
   <a class="card-link" href={hrefForTool(tool)}>Open Tool →</a>
 </article>

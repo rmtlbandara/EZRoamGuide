@@ -78,7 +78,12 @@ const checklistHeading = guide.checklistHeading ?? "First 24 hours checklist";
       <section class="article-section" id="related">
         <h2>Related guides</h2>
         <div class="related">
-          {related.length ? related.map((item) => <a href={hrefFor(item)}>{item.title} →</a>) : guide.related.map((href) => <a href={href}>{href.includes("countries") ? "Browse country guides" : "Browse city and travel guides"} →</a>)}
+          {related.length ? related.map((item) => (
+            <a href={hrefFor(item)}>
+              <span>{item.title} →</span>
+              <small>Updated: {item.lastUpdated} · {item.readingTime}</small>
+            </a>
+          )) : guide.related.map((href) => <a href={href}>{href.includes("countries") ? "Browse country guides" : "Browse city and travel guides"} →</a>)}
         </div>
       </section>
     </article>
