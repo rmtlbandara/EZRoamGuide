@@ -1,7 +1,9 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import GuideCard from "../components/GuideCard.astro";
+import ToolCard from "../components/ToolCard.astro";
 import { basicGuides, cityGuides, countryGuides, site } from "../data/site";
+import { travelTools } from "../data/tools";
 
 const schema = [
   { "@context": "https://schema.org", "@type": "WebSite", name: site.name, url: site.url, description: site.description },
@@ -66,6 +68,14 @@ const latestGuides = basicGuides.filter((guide) => latestGuideSlugs.includes(gui
 
   <section class="section">
     <div class="container">
+      <div class="section-heading"><div><p class="eyebrow">Free travel tools</p><h2>Plan your arrival day with simple browser tools</h2></div><p>Use simple, no-signup tools to plan your arrival day, airport transport, travel documents, internet setup, money, and first-day itinerary.</p></div>
+      <div class="card-grid">{travelTools.slice(0, 3).map((tool) => <ToolCard tool={tool} />)}</div>
+      <div class="actions"><a class="button secondary" href="/tools/">View all free travel tools</a></div>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="container">
       <div class="section-heading"><div><p class="eyebrow">Recently updated</p><h2>Latest guides</h2></div><p>Our latest practical reads, reviewed for clear steps and sensible first-day pacing.</p></div>
       <div class="card-grid">
         {latestGuides.map((guide) => <GuideCard guide={guide} />)}
@@ -73,10 +83,10 @@ const latestGuides = basicGuides.filter((guide) => latestGuideSlugs.includes(gui
     </div>
   </section>
 
-  <section class="section alt">
+  <section class="section">
     <div class="container feature-grid">
       <div><p class="eyebrow">Your arrival, simplified</p><h2>Start where your uncertainty is</h2></div>
-      <div><p>Choose a country for the big picture, a city for the airport-to-hotel plan, or Travel Basics for a skill you can use almost anywhere.</p><div class="actions"><a class="button" href="/countries/">Choose a country</a><a class="button secondary" href="/cities/">Choose a city</a></div></div>
+      <div><p>Choose a country for the big picture, a city for the airport-to-hotel plan, Travel Basics for deeper guidance, or Tools for a quick browser-only planning helper.</p><div class="actions"><a class="button" href="/countries/">Choose a country</a><a class="button secondary" href="/tools/">Open tools</a></div></div>
     </div>
   </section>
 </BaseLayout>

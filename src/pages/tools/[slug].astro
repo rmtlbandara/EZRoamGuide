@@ -1,0 +1,370 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Breadcrumb from "../../components/Breadcrumb.astro";
+import { findGuideByHref, hrefFor, site, type Guide } from "../../data/site";
+import { hrefForTool, toolUrl, travelTools, type TravelTool } from "../../data/tools";
+
+export function getStaticPaths() {
+  return travelTools.map((tool) => ({ params: { slug: tool.slug }, props: { tool } }));
+}
+
+const { tool } = Astro.props as { tool: TravelTool };
+const url = toolUrl(tool);
+const relatedGuides = tool.relatedGuides.map((href) => {
+  const guide = findGuideByHref(href) as Guide | undefined;
+  return { href, title: guide ? guide.title : href.replaceAll("/", " ").trim() };
+});
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: site.url },
+    { "@type": "ListItem", position: 2, name: "Tools", item: new URL("/tools/", site.url).toString() },
+    { "@type": "ListItem", position: 3, name: tool.title, item: url }
+  ]
+};
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: tool.faqs.map((faq) => ({
+    "@type": "Question",
+    name: faq.question,
+    acceptedAnswer: { "@type": "Answer", text: faq.answer }
+  }))
+};
+const appSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  name: tool.title,
+  url,
+  applicationCategory: "TravelApplication",
+  operatingSystem: "Any modern web browser",
+  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+  description: tool.description,
+  publisher: { "@type": "Organization", name: site.name, url: site.url }
+};
+---
+<BaseLayout title={tool.seoTitle} description={tool.description} canonical={hrefForTool(tool)} schema={[breadcrumbSchema, faqSchema, appSchema]}>
+  <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Tools", href: "/tools/" }, { label: tool.title }]} />
+  <header class="page-head">
+    <div class="container">
+      <p class="eyebrow">{tool.category}</p>
+      <h1>{tool.title}</h1>
+      <p class="lede">{tool.intro}</p>
+      <div class="meta"><span>Last updated: {tool.lastUpdated}</span><span>{tool.readingTime}</span><span>Works in your browser</span></div>
+    </div>
+  </header>
+
+  <div class="container tool-shell">
+    <article>
+      <section class="callout" aria-labelledby="how-this-tool-helps">
+        <h2 id="how-this-tool-helps">How this tool helps</h2>
+        <ul>{tool.howItHelps.map((item) => <li>{item}</li>)}</ul>
+      </section>
+
+      <section class="tool-card article-section" id="tool">
+        <div class="tool-card-head">
+          <div>
+            <p class="eyebrow">Interactive tool</p>
+            <h2>Enter your details</h2>
+          </div>
+          <p>No signup. No saved answers. No external API.</p>
+        </div>
+
+        <form class="tool-form" data-tool-type={tool.toolType} novalidate>
+          <div class="form-grid">
+            {tool.fields.map((field) => (
+              field.type === "checkbox" ? (
+                <fieldset class="field field-full">
+                  <legend>{field.label}</legend>
+                  {field.help && <p class="field-help">{field.help}</p>}
+                  <div class="check-grid">
+                    {field.options.map((option) => (
+                      <label class="check-option">
+                        <input type="checkbox" name={field.id} value={option} />
+                        <span>{option}</span>
+                      </label>
+                    ))}
+                  </div>
+                </fieldset>
+              ) : (
+                <label class="field">
+                  <span>{field.label}</span>
+                  {field.type === "select" ? (
+                    <select name={field.id} required={field.required}>
+                      {field.options.map((option) => <option value={option} selected={option === field.defaultValue}>{option}</option>)}
+                    </select>
+                  ) : field.type === "number" ? (
+                    <input type="number" name={field.id} value={field.defaultValue} min={field.min} step={field.step} required={field.required} />
+                  ) : (
+                    <input type="text" name={field.id} value={field.defaultValue} placeholder={field.placeholder} required={field.required} />
+                  )}
+                  {field.help && <small class="field-help">{field.help}</small>}
+                </label>
+              )
+            ))}
+          </div>
+          <p class="form-message" data-form-message aria-live="polite"></p>
+          <div class="actions">
+            <button class="button" type="submit">{tool.buttonLabel}</button>
+            <button class="button secondary" type="button" data-copy-result>Copy Result</button>
+            {tool.canPrint && <button class="button secondary" type="button" data-print-result>Print Checklist</button>}
+            <button class="button secondary" type="reset" data-reset-result>Reset</button>
+          </div>
+        </form>
+
+        <div class="tool-result" data-result aria-live="polite" tabindex="-1">
+          <h3>Your result will appear here</h3>
+          <p>Choose the options above and click the button. If JavaScript is disabled, use the practical advice and related guides on this page as a static planning checklist.</p>
+        </div>
+      </section>
+
+      <section class="article-section">
+        <h2>{tool.advice.heading}</h2>
+        {tool.advice.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+      </section>
+
+      <aside class="note"><strong>Planning note:</strong> This free tool gives general travel planning guidance. It does not check live prices, laws, visa rules, transport schedules, SIM availability, or local safety alerts. Confirm official information for your dates and circumstances.</aside>
+
+      <section class="faq article-section" id="faq">
+        <h2>Frequently asked questions</h2>
+        {tool.faqs.map((faq) => <details><summary>{faq.question}</summary><p>{faq.answer}</p></details>)}
+      </section>
+
+      <section class="article-section" id="related">
+        <h2>Related guides</h2>
+        <div class="related">
+          {relatedGuides.map((item) => <a href={item.href}>{item.title} →</a>)}
+        </div>
+      </section>
+    </article>
+    <aside class="toc" aria-label="Table of contents">
+      <strong>On this page</strong>
+      <ul>
+        <li><a href="#how-this-tool-helps">How this tool helps</a></li>
+        <li><a href="#tool">Interactive tool</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#related">Related guides</a></li>
+      </ul>
+    </aside>
+  </div>
+
+  <script is:inline>
+    const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" }[char]));
+    const titleCase = (value) => String(value || "").replace(/(^|\\s)\\S/g, (char) => char.toUpperCase());
+    const listHtml = (items) => `<ul>${items.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>`;
+    const sectionHtml = (heading, items) => `<h3>${escapeHtml(heading)}</h3>${Array.isArray(items) ? listHtml(items) : `<p>${escapeHtml(items)}</p>`}`;
+    const asMoney = (amount, currency) => `${Number(amount || 0).toLocaleString(undefined, { maximumFractionDigits: 2 })} ${String(currency || "").trim().toUpperCase()}`;
+    const textFromSections = (title, sections) => [title, "", ...sections.flatMap((section) => [section.heading, ...section.items.map((item) => `- ${item}`), ""])].join("\\n").trim();
+    const render = (resultEl, title, sections) => {
+      resultEl.dataset.resultText = textFromSections(title, sections);
+      resultEl.innerHTML = `<h3>${escapeHtml(title)}</h3>${sections.map((section) => sectionHtml(section.heading, section.items)).join("")}`;
+      resultEl.focus({ preventScroll: true });
+    };
+    const get = (form, name) => new FormData(form).get(name)?.toString() || "";
+    const checked = (form, name) => new FormData(form).getAll(name).map((item) => item.toString());
+    const yes = (value) => value === "yes";
+
+    function buildFirst24(form) {
+      const arrival = get(form, "arrivalTime");
+      const traveler = get(form, "travelerType");
+      const internet = get(form, "internetStatus");
+      const money = get(form, "moneyStatus");
+      const accommodation = get(form, "accommodation");
+      const energy = get(form, "energy");
+      const late = arrival === "late night";
+      const family = traveler === "family";
+      const low = energy === "low";
+      return {
+        title: "Your first 24 hours arrival plan",
+        sections: [
+          { heading: "Airport exit advice", items: [late ? "Move slowly and use staffed airport areas while arranging transport." : "Clear immigration, collect bags, use the restroom, and pause before entering the arrivals hall.", family ? "Keep the group together before handling SIM, cash, or transport decisions." : "Keep passport, wallet, phone, and first-night address easy to reach."] },
+          { heading: "Internet/SIM advice", items: [internet === "already have SIM/eSIM" ? "Test mobile data away from airport Wi-Fi before leaving." : internet === "need internet after landing" ? "Use official airport Wi-Fi or a verified SIM/eSIM counter, then test maps and messaging." : "Use airport Wi-Fi first, open offline documents, and decide whether roaming, eSIM, or local SIM fits the trip."] },
+          { heading: "Money advice", items: [money === "have local cash" ? "Keep small notes accessible and store backup cards separately." : money === "need ATM/exchange" ? "Use a bank ATM or licensed counter for a modest first amount." : "Confirm your card works for transport and keep a backup option ready."] },
+          { heading: "Transport and check-in", items: [late || accommodation === "near airport" ? "Favor official taxi, hotel transfer, airport hotel, or another direct verified option." : "Compare rail, airport bus, official taxi, and ride-hailing by the full door-to-door trip.", accommodation === "unknown" ? "Confirm your exact accommodation address before leaving the terminal." : `Use the route that best fits a ${accommodation} stay.`] },
+          { heading: "Food, rest, and safety", items: [low ? "Keep the evening minimal: water, simple food, shower, charge devices, sleep." : "Add only one light nearby task after check-in if you still feel steady.", "Message a trusted person after arrival and again after check-in.", "Prepare tomorrow's first route before sleeping."] },
+          { heading: "Simple checklist", items: ["Passport and bags secure", "Phone connection tested", "Small payment method ready", "Official transport chosen", "Accommodation address saved offline", "Water, food, rest, and tomorrow's route handled"] }
+        ]
+      };
+    }
+
+    function buildTransport(form) {
+      const arrival = get(form, "arrivalTime");
+      const luggage = get(form, "luggage");
+      const traveler = get(form, "travelerType");
+      const budget = get(form, "budget");
+      const comfort = get(form, "publicComfort");
+      const direct = yes(get(form, "directDrop"));
+      let options = [];
+      if (direct || arrival === "late night" || luggage === "heavy" || traveler === "family") options = budget === "flexible" ? ["Hotel transfer", "Private transfer", "Official taxi"] : ["Official taxi", "Ride-hailing app"];
+      else if (budget === "low" && comfort === "comfortable") options = ["Train/metro", "Airport bus"];
+      else if (comfort === "comfortable") options = ["Train/metro", "Airport bus", "Ride-hailing app"];
+      else options = ["Official taxi", "Ride-hailing app", "Hotel transfer"];
+      return {
+        title: "Recommended airport transport options",
+        sections: [
+          { heading: "Best fit", items: options.slice(0, 2) },
+          { heading: "Why this fits", items: [direct ? "You asked for direct hotel drop-off, so door-to-door options make sense." : "You can compare the full route instead of choosing only by price.", arrival === "late night" ? "Late-night arrivals reduce public transport choices, so verified road transport may be calmer." : "Your arrival time leaves more transport choices open.", luggage === "heavy" ? "Heavy luggage makes fewer transfers more valuable." : "Your luggage level leaves room for public transport if the route is simple."] },
+          { heading: "Check before leaving the airport", items: ["Exact pickup point or platform", "Fare method and whether cash/card/app is needed", "Final walk from stop to accommodation", "Last service time if using public transport", "Vehicle plate or booking receipt for road transport"] },
+          { heading: "What to avoid", items: ["Unofficial drivers inside the arrivals hall", "Cancelling app rides to pay outside the app", "Routes that require perfect timing", "Long unlit final walks with bags"] },
+          { heading: "Decision checklist", items: ["Route verified", "Payment method ready", "Address saved offline", "Backup option chosen"] }
+        ]
+      };
+    }
+
+    function buildInternet(form) {
+      const esim = get(form, "esim");
+      const trip = get(form, "tripLength");
+      const calls = yes(get(form, "calls"));
+      const maps = yes(get(form, "maps"));
+      const before = yes(get(form, "before"));
+      const buyAfter = yes(get(form, "buyAfter"));
+      let recommendation = "Use airport Wi-Fi first, then decide";
+      if (esim === "yes" && before && !calls) recommendation = "Use eSIM";
+      else if ((calls || trip === "more than 1 week") && buyAfter) recommendation = "Buy local SIM";
+      else if (trip === "1–3 days" && !buyAfter) recommendation = "Use roaming";
+      return {
+        title: recommendation,
+        sections: [
+          { heading: "Best for whom", items: [recommendation === "Use eSIM" ? "Travelers with eSIM phones who want data ready at landing." : recommendation === "Buy local SIM" ? "Travelers staying longer or needing local calls." : recommendation === "Use roaming" ? "Short-trip travelers whose home plan has reasonable travel roaming." : "Travelers who are unsure about compatibility, pricing, or setup."] },
+          { heading: "Pros", items: [recommendation === "Use eSIM" ? "Can be installed before departure and keeps the physical SIM slot free." : recommendation === "Buy local SIM" ? "May offer local calls and good longer-stay value." : recommendation === "Use roaming" ? "Keeps your normal number active with minimal setup." : "Lets you reach your hotel before making a rushed purchase."] },
+          { heading: "Watch-outs", items: [esim === "not sure" ? "Confirm phone compatibility before buying an eSIM." : "Check plan validity, coverage, hotspot rules, and activation timing.", calls ? "If you need local calls, many travel eSIMs may not be enough." : "If you only need maps and messaging, data-only plans may be fine.", "Do not rely on live prices from memory; confirm current plans before buying."] },
+          { heading: "Arrival-day tip", items: [maps ? "Test maps and messaging before leaving the airport." : "Confirm the apps or calls you actually need before paying.", "Keep offline documents ready in case setup takes longer than expected."] }
+        ]
+      };
+    }
+
+    function buildDocuments(form) {
+      const selected = checked(form, "documents");
+      const all = Array.from(form.querySelectorAll('input[name="documents"]')).map((input) => input.value);
+      const missing = all.filter((item) => !selected.includes(item));
+      return {
+        title: "Your offline travel documents checklist",
+        sections: [
+          { heading: "Completed items", items: selected.length ? selected : ["No completed items selected yet."] },
+          { heading: "Missing items", items: missing.length ? missing : ["Everything in this checklist is selected. Review file access while offline before departure."] },
+          { heading: "Final preparation note", items: ["Open key files once in airplane mode to confirm they are really available offline.", "Keep sensitive files protected with a device lock and avoid saving full card numbers or passwords.", "This browser tool does not save your selections."] }
+        ]
+      };
+    }
+
+    function buildMoney(form) {
+      const currency = get(form, "currency") || "USD";
+      const values = ["transport", "meal", "sim", "small", "backup"].map((name) => Number(get(form, name) || 0));
+      const [transport, meal, sim, small, backup] = values;
+      const total = values.reduce((sum, item) => sum + item, 0);
+      const cash = transport + meal * 0.4 + small + backup * 0.5;
+      const card = Math.max(total - cash, 0);
+      return {
+        title: "Your first-day travel money estimate",
+        sections: [
+          { heading: "Total first-day estimate", items: [asMoney(total, currency)] },
+          { heading: "Suggested cash portion", items: [asMoney(cash, currency), "Carry only what you can protect; smaller notes are useful for arrival day."] },
+          { heading: "Suggested card portion", items: [asMoney(card, currency), "Keep a backup card separate from your main wallet."] },
+          { heading: "Emergency backup reminder", items: [asMoney(backup, currency), "Do not treat this as spending money unless something changes."] },
+          { heading: "Money safety tips", items: ["Use bank ATMs or licensed exchange counters.", "Read currency conversion screens before approving.", "Confirm how airport transport is paid before leaving the terminal."] }
+        ]
+      };
+    }
+
+    function buildLateNight(form) {
+      const time = get(form, "arrivalTime");
+      const alone = yes(get(form, "alone"));
+      const confirmed = yes(get(form, "accommodation"));
+      const transport = yes(get(form, "transport"));
+      const internet = yes(get(form, "internet"));
+      const cash = yes(get(form, "cash"));
+      const address = yes(get(form, "address"));
+      return {
+        title: "Your late-night arrival plan",
+        sections: [
+          { heading: "Priority actions", items: [confirmed ? "Keep check-in details open and tell the property if delayed." : "Confirm accommodation before leaving the airport if possible.", transport ? "Use your booked transport and verify driver or vehicle details." : "Use an official taxi, hotel transfer, airport hotel, or staffed transport desk.", internet ? "Test messaging and maps before leaving airport Wi-Fi." : "Connect to official airport Wi-Fi and open offline details first."] },
+          { heading: "Things to avoid", items: ["Changing hotels because an unsolicited driver suggests it", "Following unofficial offers away from staffed areas", "Taking a long orientation walk after arrival", time === "after midnight" ? "Depending on public transport without confirming it still operates" : "Assuming evening services run as frequently as daytime services"] },
+          { heading: "Safety checklist", items: [alone ? "Share arrival and check-in updates privately with a trusted person." : "Keep the group together until check-in.", cash ? "Keep small cash accessible and the rest secure." : "Confirm card or app payment before entering a vehicle.", address ? "Show the saved address if needed." : "Save the hotel address offline before leaving the terminal."] },
+          { heading: "Emergency preparation reminder", items: ["Know the local emergency number.", "Move toward airport staff, police, airline counters, or hotel reception if something feels wrong.", "Confirm official information for your destination and date."] }
+        ]
+      };
+    }
+
+    function buildPacking(form) {
+      const selected = checked(form, "items");
+      const must = ["Documents", "Phone and charger", "Local cash or card", "Medication", "Hotel address", "Transport details"].filter((item) => selected.includes(item));
+      const nice = selected.filter((item) => !must.includes(item));
+      const carry = ["Documents", "Phone and charger", "Power bank", "Local cash or card", "Medication", "Hotel address", "Transport details", "Change of clothes"].filter((item) => selected.includes(item));
+      return {
+        title: "Your first-day packing mini checklist",
+        sections: [
+          { heading: "Must-have items", items: must.length ? must : ["Documents, payment, phone power, medication, hotel address, and transport details should be considered must-haves."] },
+          { heading: "Nice-to-have items", items: nice.length ? nice : ["No nice-to-have items selected yet."] },
+          { heading: "Keep in carry-on", items: carry.length ? carry : ["Keep essential documents, medicine, payment, phone, and first-night details in cabin baggage."] },
+          { heading: "Avoid relying on checked luggage for", items: ["Passport or entry documents", "Essential medication", "Payment cards or emergency cash", "Phone charger or power bank where airline rules allow", "First-night address and transport details"] }
+        ]
+      };
+    }
+
+    function buildItinerary(form) {
+      const arrival = get(form, "arrivalTime");
+      const checkin = get(form, "checkin");
+      const energy = get(form, "energy");
+      const confidence = get(form, "transportConfidence");
+      const activity = yes(get(form, "activity"));
+      const rest = yes(get(form, "rest"));
+      const light = energy === "low" || rest || arrival === "late night";
+      return {
+        title: "Your low-stress first-day itinerary",
+        sections: [
+          { heading: "Airport arrival", items: ["Clear immigration, collect bags, use the restroom, and confirm phone/payment basics before leaving.", confidence === "not comfortable" ? "Choose a verified direct transport option if the route feels unclear." : "Use the route you already understand and keep a backup."] },
+          { heading: "Transport to accommodation", items: [arrival === "late night" ? "Favor official taxi, hotel transfer, or airport hotel over complex public transport." : "Choose the easiest door-to-door route, not only the fastest one.", "Save the address offline and keep the booking visible."] },
+          { heading: "Check-in or luggage storage", items: [`Plan around check-in at ${checkin}.`, "If the room is not ready, use luggage storage if available and keep valuables with you."] },
+          { heading: "Food, rest, and orientation", items: [light ? "Eat simply, hydrate, shower, charge devices, and rest." : "Eat nearby, take a short orientation walk, and avoid overloading the afternoon.", activity && !light ? "Add one light nearby activity only." : "Skip optional activities if the day feels heavy."] },
+          { heading: "Prepare for next day", items: ["Check tomorrow's weather and first route.", "Set alarms, charge devices, and secure documents.", "Let the first day end early if your body asks for it."] }
+        ]
+      };
+    }
+
+    const builders = { first24: buildFirst24, transport: buildTransport, internet: buildInternet, documents: buildDocuments, money: buildMoney, lateNight: buildLateNight, packing: buildPacking, itinerary: buildItinerary };
+    document.querySelectorAll(".tool-form").forEach((form) => {
+      const resultEl = form.closest(".tool-card").querySelector("[data-result]");
+      const messageEl = form.querySelector("[data-form-message]");
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        messageEl.textContent = "";
+        const invalid = Array.from(form.querySelectorAll("[required]")).find((field) => !field.value.trim());
+        if (invalid) {
+          messageEl.textContent = "Please complete the required fields before generating a result.";
+          invalid.focus();
+          return;
+        }
+        const output = builders[form.dataset.toolType](form);
+        render(resultEl, output.title, output.sections);
+      });
+      form.querySelector("[data-copy-result]")?.addEventListener("click", async () => {
+        const text = resultEl.dataset.resultText || "";
+        if (!text) {
+          messageEl.textContent = "Generate a result first, then copy it.";
+          return;
+        }
+        try {
+          await navigator.clipboard.writeText(text);
+          messageEl.textContent = "Copied to clipboard.";
+        } catch {
+          messageEl.textContent = "Copy was not available in this browser. You can select the result text manually.";
+        }
+      });
+      form.querySelector("[data-print-result]")?.addEventListener("click", () => {
+        if (!resultEl.dataset.resultText) {
+          messageEl.textContent = "Generate a checklist first, then print it.";
+          return;
+        }
+        window.print();
+      });
+      form.addEventListener("reset", () => {
+        setTimeout(() => {
+          messageEl.textContent = "";
+          resultEl.dataset.resultText = "";
+          resultEl.innerHTML = "<h3>Your result will appear here</h3><p>Choose the options above and click the button. If JavaScript is disabled, use the practical advice and related guides on this page as a static planning checklist.</p>";
+        }, 0);
+      });
+    });
+  </script>
+</BaseLayout>

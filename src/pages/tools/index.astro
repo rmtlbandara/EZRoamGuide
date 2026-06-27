@@ -1,0 +1,77 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Breadcrumb from "../../components/Breadcrumb.astro";
+import ToolCard from "../../components/ToolCard.astro";
+import { site } from "../../data/site";
+import { toolsIntro, travelTools } from "../../data/tools";
+
+const url = new URL("/tools/", site.url).toString();
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: site.url },
+    { "@type": "ListItem", position: 2, name: "Tools", item: url }
+  ]
+};
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: toolsIntro.faqs.map((faq) => ({
+    "@type": "Question",
+    name: faq.question,
+    acceptedAnswer: { "@type": "Answer", text: faq.answer }
+  }))
+};
+---
+<BaseLayout title={toolsIntro.seoTitle} description={toolsIntro.description} canonical="/tools/" schema={[breadcrumbSchema, faqSchema]}>
+  <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Tools" }]} />
+  <header class="page-head">
+    <div class="container">
+      <p class="eyebrow">Free travel tools</p>
+      <h1>{toolsIntro.title}</h1>
+      <p class="lede">{toolsIntro.intro}</p>
+      <div class="meta"><span>Last updated: June 27, 2026</span><span>No signup required</span></div>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Open a tool</p>
+          <h2>Simple planning helpers for arrival day</h2>
+        </div>
+        <p>Each tool runs in your browser. No login, no payment, no saved personal answers, and no external travel API.</p>
+      </div>
+      <div class="card-grid">
+        {travelTools.map((tool) => <ToolCard tool={tool} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="container feature-grid">
+      <div>
+        <p class="eyebrow">How to use them</p>
+        <h2>Use tools for decisions, guides for context</h2>
+      </div>
+      <div>
+        <p>The tools are quick helpers for practical choices: which airport transport to use, what to save offline, how much money to prepare, or how to keep the first day light.</p>
+        <p>For deeper explanation, each tool links to related Travel Basics articles so you can understand the reasoning before you travel.</p>
+        <div class="actions">
+          <a class="button secondary" href="/travel-basics/">Read Travel Basics</a>
+          <a class="button secondary" href="/travel-basics/plan-your-first-24-hours-abroad/">Plan your first 24 hours</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container reading faq">
+      <p class="eyebrow">Questions</p>
+      <h2>FAQ</h2>
+      {toolsIntro.faqs.map((faq) => <details><summary>{faq.question}</summary><p>{faq.answer}</p></details>)}
+    </div>
+  </section>
+</BaseLayout>

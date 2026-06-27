@@ -1,0 +1,12 @@
+---
+import type { TravelTool } from "../data/tools";
+import { hrefForTool } from "../data/tools";
+
+const { tool } = Astro.props as { tool: TravelTool };
+---
+<article class="card">
+  <span class="tag">{tool.category}</span>
+  <h3>{tool.title}</h3>
+  <p>{tool.description}</p>
+  <a class="card-link" href={hrefForTool(tool)}>Open Tool →</a>
+</article>
