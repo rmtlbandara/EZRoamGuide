@@ -14,13 +14,44 @@ const latestGuides = basicGuides.filter((guide) => latestGuideSlugs.includes(gui
 ---
 <BaseLayout title="EZ Roam Guide | First 24 Hours Travel Guides" description="Practical first-day travel guides for airport arrivals, transport, SIMs, money, safety, etiquette, and planning your first 24 hours abroad." schema={schema}>
   <section class="hero">
-    <div class="container">
-      <p class="eyebrow">First 24 hours travel guides</p>
-      <h1>Simple Travel Guides for Your First Day in a New Place</h1>
-      <p class="hero-copy">EZ Roam Guide helps international travelers understand what to do after arriving in a new country or city — from airport transport and SIM cards to money, safety, etiquette, and first-day planning.</p>
-      <div class="actions">
-        <a class="button" href="/countries/">Browse Country Guides</a>
-        <a class="button secondary" href="/travel-basics/">Read Travel Basics</a>
+    <div class="container hero-inner">
+      <div class="hero-text">
+        <p class="eyebrow">First 24 hours travel guides</p>
+        <h1>Simple Travel Guides for Your First Day in a New Place</h1>
+        <p class="hero-copy">EZ Roam Guide helps international travelers understand what to do after arriving in a new country or city — from airport transport and SIM cards to money, safety, etiquette, and first-day planning.</p>
+        <div class="actions">
+          <a class="button" href="/countries/">Browse Country Guides</a>
+          <a class="button secondary" href="/travel-basics/">Read Travel Basics</a>
+        </div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <svg viewBox="0 0 420 360" role="img" focusable="false">
+          <defs>
+            <linearGradient id="hero-card" x1="0" x2="1" y1="0" y2="1">
+              <stop offset="0%" stop-color="#ffffff" />
+              <stop offset="100%" stop-color="#f1f7f5" />
+            </linearGradient>
+            <linearGradient id="hero-globe" x1="0" x2="1" y1="0" y2="1">
+              <stop offset="0%" stop-color="#dff3ee" />
+              <stop offset="100%" stop-color="#b9ded5" />
+            </linearGradient>
+          </defs>
+          <path d="M72 256 C132 198 184 286 252 205 S344 118 374 154" fill="none" stroke="#9bbdb5" stroke-width="3" stroke-linecap="round" stroke-dasharray="8 12" />
+          <rect x="86" y="68" width="214" height="246" rx="28" fill="url(#hero-card)" stroke="#d9e2df" stroke-width="2" />
+          <rect x="112" y="108" width="88" height="12" rx="6" fill="#087f6b" opacity=".82" />
+          <rect x="112" y="138" width="142" height="10" rx="5" fill="#9bbdb5" opacity=".75" />
+          <rect x="112" y="162" width="112" height="10" rx="5" fill="#d9e2df" />
+          <rect x="112" y="212" width="124" height="46" rx="14" fill="#f7efe0" stroke="#e8d7b8" />
+          <path d="M130 235 l10 10 22 -24" fill="none" stroke="#087f6b" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+          <circle cx="284" cy="130" r="66" fill="url(#hero-globe)" stroke="#087f6b" stroke-width="3" />
+          <path d="M230 130 h108 M284 64 c-24 25 -24 108 0 132 M284 64 c24 25 24 108 0 132" fill="none" stroke="#087f6b" stroke-width="2.4" opacity=".75" />
+          <path d="M244 93 c28 16 57 16 82 0 M244 167 c28 -16 57 -16 82 0" fill="none" stroke="#087f6b" stroke-width="2.4" opacity=".65" />
+          <path d="M322 228 c0 30 -38 68 -38 68 s-38 -38 -38 -68 a38 38 0 1 1 76 0Z" fill="#087f6b" />
+          <circle cx="284" cy="228" r="13" fill="#fbfaf6" />
+          <path d="M59 100 l82 -24 -35 38 58 20 -82 24 35 -38Z" fill="#ffffff" stroke="#087f6b" stroke-width="3" stroke-linejoin="round" />
+          <circle cx="66" cy="256" r="9" fill="#087f6b" />
+          <circle cx="374" cy="154" r="9" fill="#f2b84b" />
+        </svg>
       </div>
     </div>
   </section>
