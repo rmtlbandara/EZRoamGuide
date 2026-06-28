@@ -2,6 +2,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Breadcrumb from "./Breadcrumb.astro";
 import { findGuideByHref, hrefFor, site, type Guide } from "../data/site";
+import { hrefForTool, travelTools } from "../data/tools";
 
 const { guide } = Astro.props as { guide: Guide };
 const sectionName = guide.kind === "country" ? "Countries" : guide.kind === "city" ? "Cities" : "Travel Basics";
@@ -30,6 +31,9 @@ const faqSchema = {
   }))
 };
 const related = guide.related.map(findGuideByHref).filter(Boolean) as Guide[];
+const relatedTools = (guide.relatedTools ?? [])
+  .map((href) => travelTools.find((tool) => hrefForTool(tool) === href))
+  .filter(Boolean);
 const schemas = [breadcrumbSchema, articleSchema, faqSchema];
 const midpoint = Math.ceil(guide.sections.length / 2);
 const firstSections = guide.sections.slice(0, midpoint);
@@ -86,6 +90,19 @@ const checklistHeading = guide.checklistHeading ?? "First 24 hours checklist";
           )) : guide.related.map((href) => <a href={href}>{href.includes("countries") ? "Browse country guides" : "Browse city and travel guides"} →</a>)}
         </div>
       </section>
+      {relatedTools.length > 0 && (
+        <section class="article-section" id="related-tools">
+          <h2>Helpful travel tools</h2>
+          <div class="related">
+            {relatedTools.map((tool) => (
+              <a href={hrefForTool(tool)}>
+                <span>{tool.title} →</span>
+                <small>{tool.category} · {tool.readingTime}</small>
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
     </article>
     <aside class="toc" aria-label="Table of contents">
       <strong>On this page</strong>
@@ -97,6 +114,7 @@ const checklistHeading = guide.checklistHeading ?? "First 24 hours checklist";
         {guide.officialSources && <li><a href="#official-sources">Official sources</a></li>}
         <li><a href="#faq">FAQ</a></li>
         <li><a href="#related">Related guides</a></li>
+        {relatedTools.length > 0 && <li><a href="#related-tools">Helpful tools</a></li>}
       </ul>
     </aside>
   </div>

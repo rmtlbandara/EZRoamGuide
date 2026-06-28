@@ -11,6 +11,8 @@ const schema = [
 ];
 const latestGuideSlugs = ["airport-arrival-checklist", "best-airport-transport-new-country", "low-stress-first-day-new-city"];
 const latestGuides = basicGuides.filter((guide) => latestGuideSlugs.includes(guide.slug));
+const homepageToolSlugs = ["first-24-hours-travel-planner", "hotel-address-card-generator", "first-time-traveler-confidence-checker"];
+const homepageTools = homepageToolSlugs.map((slug) => travelTools.find((tool) => tool.slug === slug)).filter(Boolean);
 ---
 <BaseLayout title="EZ Roam Guide | First 24 Hours Travel Guides" description="Practical first-day travel guides for airport arrivals, transport, SIMs, money, safety, etiquette, and planning your first 24 hours abroad." schema={schema}>
   <section class="hero">
@@ -100,7 +102,7 @@ const latestGuides = basicGuides.filter((guide) => latestGuideSlugs.includes(gui
   <section class="section">
     <div class="container">
       <div class="section-heading"><div><p class="eyebrow">Free travel tools</p><h2>Plan your arrival day with simple travel tools</h2></div><p>Use simple travel tools to plan your arrival day, airport transport, travel documents, internet setup, money, and first-day itinerary.</p></div>
-      <div class="card-grid">{travelTools.slice(0, 3).map((tool) => <ToolCard tool={tool} />)}</div>
+      <div class="card-grid">{homepageTools.map((tool) => <ToolCard tool={tool} />)}</div>
       <div class="actions"><a class="button secondary" href="/tools/">View all free travel tools</a></div>
     </div>
   </section>

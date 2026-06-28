@@ -1,11 +1,28 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import GuideCard from "../../components/GuideCard.astro";
+import ToolCard from "../../components/ToolCard.astro";
 import Breadcrumb from "../../components/Breadcrumb.astro";
 import { basicGuides } from "../../data/site";
+import { travelTools } from "../../data/tools";
+
+const helpfulToolSlugs = ["first-time-traveler-confidence-checker", "hotel-address-card-generator", "arrival-day-walking-distance-helper"];
+const helpfulTools = helpfulToolSlugs.map((slug) => travelTools.find((tool) => tool.slug === slug)).filter(Boolean);
 ---
 <BaseLayout title="Travel Basics for International Travelers | EZ Roam Guide" description="Clear travel basics for first-time international travelers: airport safety, SIMs, money, public transport, etiquette, scams, and first-day planning.">
   <Breadcrumb items={[{label:"Home",href:"/"},{label:"Travel Basics"}]} />
   <header class="page-head"><div class="container"><p class="eyebrow">Travel basics</p><h1>Skills that travel well</h1><p class="lede">Straightforward guides to the decisions that follow you across borders, written for global readers and first-time international travelers.</p></div></header>
   <section class="section"><div class="container card-grid">{basicGuides.map((guide) => <GuideCard guide={guide} />)}</div></section>
+  <section class="section alt">
+    <div class="container">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Helpful travel tools</p>
+          <h2>Turn the basics into a simple plan</h2>
+        </div>
+        <p>Use these free tools when you want a quick readiness check, hotel address card, or arrival-day walking decision.</p>
+      </div>
+      <div class="card-grid">{helpfulTools.map((tool) => <ToolCard tool={tool} />)}</div>
+    </div>
+  </section>
 </BaseLayout>

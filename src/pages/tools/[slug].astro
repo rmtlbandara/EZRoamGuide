@@ -12,7 +12,12 @@ const { tool } = Astro.props as { tool: TravelTool };
 const url = toolUrl(tool);
 const relatedGuides = tool.relatedGuides.map((href) => {
   const guide = findGuideByHref(href) as Guide | undefined;
-  return { href, title: guide ? guide.title : href.replaceAll("/", " ").trim(), lastUpdated: guide?.lastUpdated, readingTime: guide?.readingTime };
+  const relatedTool = travelTools.find((candidate) => hrefForTool(candidate) === href);
+  return {
+    href,
+    title: guide?.title ?? relatedTool?.title ?? href.replaceAll("/", " ").trim(),
+    meta: guide ? `Updated: ${guide.lastUpdated} · ${guide.readingTime}` : relatedTool ? `${relatedTool.category} · ${relatedTool.readingTime}` : undefined
+  };
 });
 const breadcrumbSchema = {
   "@context": "https://schema.org",
@@ -78,6 +83,7 @@ const webPageSchema = {
           <p>Quick, simple, and free to use.</p>
         </div>
         <p class="tool-intro">Answer a few simple questions and get a practical suggestion for your arrival day.</p>
+        <aside class="note tool-privacy"><strong>Privacy note:</strong> These tools are free to use and do not require sign-up. Your answers are not saved or sent anywhere.</aside>
 
         <form class="tool-form" data-tool-type={tool.toolType} novalidate>
           <div class="form-grid">
@@ -115,8 +121,8 @@ const webPageSchema = {
           <p class="form-message" data-form-message aria-live="polite"></p>
           <div class="actions">
             <button class="button" type="submit">{tool.buttonLabel}</button>
-            <button class="button secondary" type="button" data-copy-result>Copy Result</button>
-            {tool.canPrint && <button class="button secondary" type="button" data-print-result>Print Checklist</button>}
+            <button class="button secondary" type="button" data-copy-result>{tool.toolType === "addressCard" ? "Copy Card" : "Copy Result"}</button>
+            {tool.canPrint && <button class="button secondary" type="button" data-print-result>{tool.toolType === "addressCard" ? "Print Card" : "Print Checklist"}</button>}
             <button class="button secondary" type="reset" data-reset-result>Reset</button>
           </div>
         </form>
@@ -140,12 +146,12 @@ const webPageSchema = {
       </section>
 
       <section class="article-section" id="related">
-        <h2>Related guides</h2>
+        <h2>Related guides and tools</h2>
         <div class="related">
           {relatedGuides.map((item) => (
             <a href={item.href}>
               <span>{item.title} →</span>
-              {item.lastUpdated && <small>Updated: {item.lastUpdated} · {item.readingTime}</small>}
+              {item.meta && <small>{item.meta}</small>}
             </a>
           ))}
         </div>
@@ -157,7 +163,7 @@ const webPageSchema = {
         <li><a href="#how-this-tool-helps">How this tool helps</a></li>
         <li><a href="#tool">Interactive tool</a></li>
         <li><a href="#faq">FAQ</a></li>
-        <li><a href="#related">Related guides</a></li>
+        <li><a href="#related">Related guides and tools</a></li>
       </ul>
     </aside>
   </div>
@@ -335,7 +341,146 @@ const webPageSchema = {
       };
     }
 
-    const builders = { first24: buildFirst24, transport: buildTransport, internet: buildInternet, documents: buildDocuments, money: buildMoney, lateNight: buildLateNight, packing: buildPacking, itinerary: buildItinerary };
+    function buildLayover(form) {
+      const length = get(form, "layoverLength");
+      const connection = get(form, "connectionType");
+      const baggage = get(form, "baggage");
+      const energy = get(form, "energy");
+      const leave = get(form, "leaveAirport");
+      const need = get(form, "mainNeed");
+      const traveler = get(form, "travelType");
+      const short = length === "under 3 hours";
+      const long = length === "6–10 hours" || length === "over 10 hours";
+      const carryingBags = baggage === "carrying luggage";
+      const considerLeaving = long && leave === "yes" && !carryingBags && connection !== "not sure";
+      const stayInside = short || carryingBags || leave === "no" || connection === "not sure";
+      return {
+        title: stayInside ? "Stay inside the airport and protect your connection" : considerLeaving ? "You may consider leaving only after official checks" : "Keep the layover flexible and close to the airport",
+        sections: [
+          { heading: "Stay inside vs consider leaving", items: [stayInside ? "Staying inside the airport is the safer default for this layover." : "Leaving may be possible only if official transit, immigration, visa, baggage, and re-entry rules allow it.", short ? "A short layover should focus on the next gate, restroom, water, and simple food." : "Use the extra time, but keep boarding and security timing visible.", carryingBags ? "Carrying luggage makes airport exits and city visits less comfortable." : "Checked-through baggage gives you more flexibility, but rules still decide what is possible."] },
+          { heading: "Good layover activities", items: [need === "rest" ? "Find a quiet gate area, lounge, sleep pod, or airport hotel option if available." : need === "food" ? "Eat a simple meal after confirming your next gate or terminal." : need === "shower" ? "Look for official lounge, transit hotel, or shower facilities before wandering." : need === "work" ? "Choose a staffed, well-lit area near power and Wi-Fi, then set a boarding alarm." : need === "walking" ? "Take a light terminal walk, but avoid leaving the secure area without official confirmation." : "Look for quiet zones, prayer rooms, lounges, libraries, or calmer gate areas if available.", traveler === "family" ? "For families, choose fewer moves and keep snacks, restrooms, and seating close." : "Set alarms for boarding, gate changes, and the time you need to start moving again."] },
+          { heading: "Checks before you relax or exit", items: ["Next flight gate or terminal", "Boarding time, not only departure time", "Whether security or passport control is needed again", "Baggage status and pickup requirements", "Official immigration, visa, airline, and airport transit rules", "How long it takes to return to the gate from where you plan to wait"] },
+          { heading: "Comfort tips", items: [energy === "tired" ? "Choose rest, food, hydration, and charging over sightseeing." : energy === "energetic" ? "Use energy for a controlled walk or errand, not a rushed city detour." : "Keep activity light enough that you still board calmly.", "Keep documents, wallet, phone, chargers, medication, and boarding details with you.", "Do not sleep so deeply that you miss gate changes or boarding."] },
+          { heading: "Mistakes to avoid", items: ["Leaving transit because another traveler says it is fine", "Forgetting visa, immigration, or re-entry rules", "Sitting far from your gate with no alarm", "Assuming checked baggage always follows automatically", "Making a city plan that depends on perfect traffic and timing"] },
+          { heading: "Layover checklist", items: ["Next gate checked", "Boarding alarm set", "Phone charged", "Food/water handled", "Baggage situation confirmed", "Official rules checked before any airport exit"] }
+        ]
+      };
+    }
+
+    function buildCharging(form) {
+      const devices = checked(form, "devices");
+      const tripType = get(form, "tripType");
+      const airportWait = yes(get(form, "airportWait"));
+      const powerBank = get(form, "powerBank");
+      const stayType = get(form, "stayType");
+      const workNeeds = get(form, "workNeeds");
+      const travelers = get(form, "travelers");
+      const hasLaptop = devices.includes("laptop");
+      const manyTravelers = travelers === "3" || travelers === "4+";
+      const must = ["Destination-compatible travel adapter", "Phone charging cable", "Wall charger", "Power bank where airline rules allow"].concat(hasLaptop ? ["Laptop charger"] : []).concat(devices.includes("camera") ? ["Camera charger or spare camera battery"] : []);
+      const nice = ["Short cable for airport charging", "Cable pouch or small zip bag", "Spare cable for your main phone"].concat(manyTravelers ? ["Small multi-port charger for shared use"] : []).concat(stayType === "hostel" ? ["Longer cable for awkward outlets near bunks"] : []);
+      return {
+        title: "Your travel charging checklist",
+        sections: [
+          { heading: "Devices selected", items: devices.length ? devices : ["No devices selected yet. At minimum, plan for your phone and any device used for tickets, maps, or messages."] },
+          { heading: "Must-have charging items", items: must },
+          { heading: "Nice-to-have items", items: nice },
+          { heading: "Carry-on essentials", items: ["Phone cable and wall charger", airportWait || powerBank !== "no" ? "Power bank in cabin baggage if airline rules allow" : "Enough phone battery for airport arrival and transport", "Any charger needed for boarding passes, maps, hotel messages, medication apps, or work", "Do not place essential charging items only in checked luggage."] },
+          { heading: "Power bank reminder", items: [powerBank === "yes" || airportWait ? "Charge your power bank before departure and confirm airline capacity rules." : powerBank === "not sure" ? "A small approved power bank is useful if you depend on your phone for arrival details." : "If you skip a power bank, protect phone battery during the flight and airport wait.", "Power banks and spare lithium batteries are commonly restricted to cabin baggage; confirm rules for your airline."] },
+          { heading: "Cable organization", items: ["Pack cables in one small pouch.", "Label similar cables if traveling with multiple people.", workNeeds === "heavy work" ? "Keep work chargers separate from general family chargers so one missing item does not stop work." : "Avoid packing every cable loose across different bags."] },
+          { heading: "Check before departure", items: [`Confirm destination plug type and voltage for your ${tripType}.`, "Check device charger labels for voltage compatibility.", "Confirm adapter quality and fit before airport day.", "Charge phone, headphones, and power bank the night before travel."] }
+        ]
+      };
+    }
+
+    function buildAddressCard(form) {
+      const name = get(form, "accommodationName");
+      const address = get(form, "accommodationAddress");
+      const phone = get(form, "phone");
+      const checkin = get(form, "checkin");
+      const booking = get(form, "bookingRef");
+      const landmark = get(form, "landmark");
+      const city = get(form, "city");
+      const notes = get(form, "driverNotes");
+      const emergencyName = get(form, "emergencyContactName");
+      const emergencyPhone = get(form, "emergencyContactPhone");
+      const optional = [
+        city && `Destination city: ${city}`,
+        phone && `Accommodation phone: ${phone}`,
+        landmark && `Nearby landmark: ${landmark}`,
+        checkin && `Check-in time: ${checkin}`,
+        booking && `Booking reference: ${booking}`,
+        notes && `Notes for driver/staff: ${notes}`,
+        emergencyName && `Emergency contact name: ${emergencyName}`,
+        emergencyPhone && `Emergency contact phone: ${emergencyPhone}`
+      ].filter(Boolean);
+      return {
+        title: "Your airport-to-hotel address card",
+        sections: [
+          { heading: "Show this address if needed", items: [`Accommodation: ${name}`, `Address: ${address}`, "Show this address to official airport transport staff if needed."] },
+          { heading: "Extra arrival details", items: optional.length ? optional : ["No optional details added. The accommodation name and address are enough for a simple card."] },
+          { heading: "Use it safely", items: ["Copy, screenshot, or print this card before travel.", "Keep the card private when you no longer need to show it.", "Avoid adding passport, payment, or sensitive personal details.", "Confirm the address and entrance with your accommodation before departure."] }
+        ]
+      };
+    }
+
+    function buildConfidence(form) {
+      const selected = checked(form, "readiness");
+      const all = Array.from(form.querySelectorAll('input[name="readiness"]')).map((input) => input.value);
+      const missing = all.filter((item) => !selected.includes(item));
+      const score = Math.round((selected.length / all.length) * 100);
+      const status = score >= 85 ? "Ready" : score >= 60 ? "Almost Ready" : "Needs More Preparation";
+      const priorityOrder = ["Passport checked", "Visa/ETA/entry rule checked", "Flight details saved", "Accommodation confirmed", "Airport transport planned", "Travel documents saved offline", "Money plan ready", "Internet plan ready", "Emergency contacts saved", "Important medication packed", "Phone charger and adapter packed", "First-day plan prepared", "Travel insurance considered", "Local customs reviewed"];
+      const priorities = priorityOrder.filter((item) => missing.includes(item)).slice(0, 5);
+      return {
+        title: `${status}: ${score}/100 travel readiness score`,
+        sections: [
+          { heading: "Readiness result", items: [`Status: ${status}`, `Score: ${score}/100`, score >= 85 ? "Your basics look strong. Use the final days to confirm official details and keep copies accessible." : score >= 60 ? "You have a good base, but a few missing items could create airport or arrival stress." : "Focus on the essentials before adding optional trip details."] },
+          { heading: "Completed items", items: selected.length ? selected : ["No completed items selected yet."] },
+          { heading: "Missing items", items: missing.length ? missing : ["Everything in this checklist is selected. Review official requirements again close to departure."] },
+          { heading: "Priority actions", items: priorities.length ? priorities.map((item) => `Handle: ${item}`) : ["Confirm passport, entry rules, flight, accommodation, transport, money, internet, and offline documents shortly before travel."] },
+          { heading: "First-day advice", items: ["Keep the first day simple: airport exit, phone connection, money/payment, official transport, check-in, food, water, rest.", "Confirm official visa, entry, transit, health, and immigration requirements for your nationality and route.", "Save important details offline before leaving for the airport."] }
+        ]
+      };
+    }
+
+    function buildWalking(form) {
+      const distance = get(form, "distance");
+      const luggage = get(form, "luggage");
+      const time = get(form, "arrivalTime");
+      const weather = get(form, "weather");
+      const traveler = get(form, "travelerType");
+      const energy = get(form, "energy");
+      const familiarity = get(form, "familiarity");
+      let risk = 0;
+      if (distance === "500m–1km") risk += 1;
+      if (distance === "1–2km") risk += 2;
+      if (distance === "over 2km") risk += 4;
+      if (luggage === "small suitcase") risk += 1;
+      if (luggage === "large suitcase") risk += 2;
+      if (luggage === "multiple bags") risk += 3;
+      if (time === "evening") risk += 1;
+      if (time === "late night") risk += 3;
+      if (weather !== "normal") risk += weather === "not sure" ? 1 : 2;
+      if (traveler === "family" || traveler === "senior traveler") risk += 1;
+      if (energy === "low") risk += 2;
+      if (energy === "high") risk -= 1;
+      if (familiarity !== "know the area") risk += 1;
+      const recommendation = risk <= 3 ? "Walking seems reasonable" : risk <= 7 ? "Consider transport" : "Avoid walking if possible";
+      return {
+        title: recommendation,
+        sections: [
+          { heading: "Recommendation", items: [recommendation, risk <= 3 ? "Your plan looks manageable if the actual route has sidewalks, safe crossings, and a clear entrance." : risk <= 7 ? "The walk may work, but luggage, timing, weather, or unfamiliarity make a backup transport option sensible." : "The walk has enough friction that verified transport is likely the calmer arrival-day choice."] },
+          { heading: "Why this result fits", items: [`Distance: ${distance}`, `Luggage: ${luggage}`, `Time: ${time}`, `Weather/conditions: ${weather}`, `Energy: ${energy}`, familiarity === "know the area" ? "The area is familiar, which makes walking easier." : "An unfamiliar final route makes small problems harder while carrying bags."] },
+          { heading: "Luggage comfort", items: [luggage === "multiple bags" ? "Multiple bags make stairs, curbs, rain, and crowds much harder." : luggage === "large suitcase" ? "A large suitcase can turn a short route into a tiring route if there are stairs or rough pavements." : luggage === "small suitcase" ? "A small suitcase is manageable on smooth, flat, short routes." : "A backpack gives you the most walking flexibility.", "Check for elevators, escalators, cobblestones, steep streets, and station exits before deciding."] },
+          { heading: "Safety reminders", items: ["Keep the tone practical: the goal is comfort and clarity, not fear.", "Avoid walking while distracted by a phone at the roadside.", "If the route feels wrong, move to a staffed public place and choose transport.", time === "late night" ? "Late-night walks should be short, clear, and well lit; otherwise use verified transport." : "Daytime still deserves route checking when you are tired or carrying bags."] },
+          { heading: "Checks before walking", items: ["Exact entrance saved", "Offline map available", "Phone battery enough", "Weather checked", "Route lighting and sidewalks reviewed", "One backup transport option known"] },
+          { heading: "Alternatives", items: ["Official taxi for the final leg", "Ride-hailing from a signed pickup area", "One more public transport stop if it reduces walking", "Hotel transfer or staffed transport desk", "Luggage storage before exploring"] }
+        ]
+      };
+    }
+
+    const builders = { first24: buildFirst24, transport: buildTransport, internet: buildInternet, documents: buildDocuments, money: buildMoney, lateNight: buildLateNight, packing: buildPacking, itinerary: buildItinerary, layover: buildLayover, charging: buildCharging, addressCard: buildAddressCard, confidence: buildConfidence, walking: buildWalking };
     document.querySelectorAll(".tool-form").forEach((form) => {
       const resultEl = form.closest(".tool-card").querySelector("[data-result]");
       const messageEl = form.querySelector("[data-form-message]");

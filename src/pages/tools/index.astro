@@ -7,9 +7,10 @@ import { toolsIntro, travelTools } from "../../data/tools";
 
 const url = new URL("/tools/", site.url).toString();
 const toolGroups = [
-  { title: "Arrival day planning", description: "Start with a calm plan for the first few hours after landing.", slugs: ["first-24-hours-travel-planner", "late-night-arrival-planner", "first-day-itinerary-builder"] },
-  { title: "Transport, internet, and money", description: "Compare practical choices before you leave the airport.", slugs: ["airport-transport-helper", "sim-esim-roaming-finder", "first-day-travel-money-estimator"] },
-  { title: "Checklists before you fly", description: "Prepare the details and essentials that make arrival day easier.", slugs: ["offline-travel-documents-checklist", "first-day-packing-checklist"] }
+  { title: "Arrival planning tools", description: "Start with a calm plan for the first few hours after landing.", slugs: ["first-24-hours-travel-planner", "first-day-itinerary-builder", "hotel-address-card-generator", "late-night-arrival-planner"] },
+  { title: "Airport and transport tools", description: "Compare practical choices before you leave the airport or walk with luggage.", slugs: ["airport-transport-helper", "airport-layover-comfort-planner", "arrival-day-walking-distance-helper"] },
+  { title: "Travel preparation tools", description: "Prepare documents, chargers, packing, and first-trip readiness before you fly.", slugs: ["offline-travel-documents-checklist", "travel-adapter-charging-checklist", "first-day-packing-checklist", "first-time-traveler-confidence-checker"] },
+  { title: "Internet and money tools", description: "Plan the phone setup and first-day money buffer that keep arrival day moving.", slugs: ["sim-esim-roaming-finder", "first-day-travel-money-estimator"] }
 ].map((group) => ({ ...group, tools: travelTools.filter((tool) => group.slugs.includes(tool.slug)) }));
 const breadcrumbSchema = {
   "@context": "https://schema.org",

@@ -28,6 +28,7 @@ export type Guide = {
   mistakesHeading?: string;
   faqs: FAQ[];
   related: string[];
+  relatedTools?: string[];
   officialSources?: OfficialSource[];
 };
 
@@ -669,6 +670,7 @@ function basicGuide(d: typeof basicBlueprints[number]): Guide {
       seoTitle: "First International Trip Checklist: Before You Fly | EZ Roam Guide",
       description: "Planning your first international trip? Use this practical checklist for documents, money, phone setup, packing, airport arrival, safety, and day one.",
       related: ["/travel-basics/plan-your-first-24-hours-abroad/", "/travel-basics/sim-card-vs-esim/", "/travel-basics/cash-vs-card-while-traveling/", "/travel-basics/travel-safety-basics/"],
+      relatedTools: ["/tools/first-time-traveler-confidence-checker/", "/tools/travel-adapter-charging-checklist/"],
       faqs: [
         { question: "What should I check first for an international trip?", answer: "Start with passport validity, destination entry requirements, transit rules, and health requirements. These can take the longest to correct." },
         { question: "What belongs in cabin baggage?", answer: "Carry travel documents, essential medicine, valuables, chargers, one change of clothes, and anything you cannot safely replace during the first day." },
@@ -694,6 +696,15 @@ function basicGuide(d: typeof basicBlueprints[number]): Guide {
         { question: "What if a driver says my hotel is closed?", answer: "Contact the hotel using the number in your own booking. Do not accept a replacement property, shop, or tour office suggested by the driver without independent verification." },
         { question: "Should I argue about an incorrect fare?", answer: "Prioritize safety. Move to a staffed public place, keep the receipt and vehicle details, then report the issue through the taxi regulator, airport, app, hotel, or police as appropriate." }
       ]
+    },
+    "how-to-leave-an-airport-safely": {
+      relatedTools: ["/tools/airport-layover-comfort-planner/", "/tools/airport-transport-helper/"]
+    },
+    "how-to-use-public-transport-abroad": {
+      relatedTools: ["/tools/arrival-day-walking-distance-helper/"]
+    },
+    "arriving-late-at-night": {
+      relatedTools: ["/tools/arrival-day-walking-distance-helper/", "/tools/late-night-arrival-planner/", "/tools/hotel-address-card-generator/"]
     },
     "airport-arrival-checklist": {
       seoTitle: "Airport Arrival Checklist for First-Time Travelers | EZ Roam Guide",
@@ -747,7 +758,8 @@ function basicGuide(d: typeof basicBlueprints[number]): Guide {
         { question: "Should I print travel documents?", answer: "Printing key details can be useful for visas, hotels, insurance, and transport, especially where battery, signal, or app access may fail." },
         { question: "How do I protect sensitive travel files?", answer: "Use strong device locks, avoid public file sharing, name files discreetly, and do not store full card numbers or passwords in plain notes." }
       ],
-      related: ["/travel-basics/first-international-trip-checklist/", "/travel-basics/no-phone-signal-after-landing/", "/travel-basics/plan-your-first-24-hours-abroad/", "/travel-basics/travel-safety-basics/", "/travel-basics/airport-arrival-checklist/"]
+      related: ["/travel-basics/first-international-trip-checklist/", "/travel-basics/no-phone-signal-after-landing/", "/travel-basics/plan-your-first-24-hours-abroad/", "/travel-basics/travel-safety-basics/", "/travel-basics/airport-arrival-checklist/"],
+      relatedTools: ["/tools/hotel-address-card-generator/", "/tools/offline-travel-documents-checklist/"]
     },
     "first-night-abroad-where-to-stay": {
       seoTitle: "Where to Stay First Night Abroad: Safe, Easy Areas | EZ Roam Guide",
@@ -801,7 +813,8 @@ function basicGuide(d: typeof basicBlueprints[number]): Guide {
         { question: "Should I buy a SIM at the airport?", answer: "Buy one if you need service immediately and can verify the provider, plan, registration requirements, and activation. Otherwise, solve transport first and compare options later." },
         { question: "What if I need urgent help with no signal?", answer: "Go to airport staff, police, airline counters, medical rooms, or information desks. In an emergency, use local services rather than waiting for personal mobile data." }
       ],
-      related: ["/travel-basics/sim-card-vs-esim/", "/travel-basics/offline-travel-documents-checklist/", "/travel-basics/airport-arrival-checklist/", "/travel-basics/how-to-leave-an-airport-safely/", "/travel-basics/travel-safety-basics/"]
+      related: ["/travel-basics/sim-card-vs-esim/", "/travel-basics/offline-travel-documents-checklist/", "/travel-basics/airport-arrival-checklist/", "/travel-basics/how-to-leave-an-airport-safely/", "/travel-basics/travel-safety-basics/"],
+      relatedTools: ["/tools/travel-adapter-charging-checklist/", "/tools/hotel-address-card-generator/"]
     },
     "arrival-scams-tourist-airports": {
       seoTitle: "Airport Arrival Scams: How to Avoid Them Calmly | EZ Roam Guide",
