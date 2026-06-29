@@ -1,8 +1,11 @@
 ---
 const nav = [
   ["Home", "/"], ["Countries", "/countries/"], ["Cities", "/cities/"],
-  ["Travel Basics", "/travel-basics/"], ["Tools", "/tools/"], ["Search", "/search/"], ["About", "/about/"], ["Contact", "/contact/"]
+  ["Travel Basics", "/travel-basics/"], ["Tools", "/tools/"], ["About", "/about/"], ["Contact", "/contact/"], ["Search", "/search/"]
 ];
+
+const currentPath = Astro.url.pathname;
+const isActive = (href: string) => href === "/" ? currentPath === "/" : currentPath.startsWith(href);
 ---
 <a class="skip-link" href="#main-content">Skip to content</a>
 <header class="site-header">
@@ -12,7 +15,9 @@ const nav = [
       <span>EZ Roam Guide</span>
     </a>
     <nav class="nav-links" aria-label="Main navigation">
-      {nav.map(([label, href]) => <a href={href}>{label}</a>)}
+      {nav.map(([label, href]) => (
+        <a class:list={[label === "Search" && "nav-search", isActive(href) && "is-active"]} href={href} aria-current={isActive(href) ? "page" : undefined}>{label}</a>
+      ))}
     </nav>
   </div>
 </header>

@@ -1,7 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Breadcrumb from "../components/Breadcrumb.astro";
-import SearchBox from "../components/SearchBox.astro";
 import { searchIndex } from "../data/search";
 import { site } from "../data/site";
 
@@ -14,27 +13,93 @@ const breadcrumbSchema = {
     { "@type": "ListItem", position: 2, name: "Search", item: url }
   ]
 };
-const suggestedSearches = ["Airport transport", "SIM and eSIM", "Cash vs card", "Late-night arrival", "Taxi scams", "First international trip", "South Korea", "Paris", "New York City", "First 24 hours planner"];
+
+const popularSearches = ["Airport transport", "SIM vs eSIM", "Cash vs card", "Late-night arrival", "First international trip checklist", "Travel safety", "Tokyo arrival", "Dubai arrival"];
+const recentItems = searchIndex.filter((item) => item.lastUpdated).slice(0, 6);
 ---
-<BaseLayout title="Search EZ Roam Guide | Find Travel Guides and Tools" description="Search EZ Roam Guide for country arrival guides, city arrival guides, travel basics, and free travel tools for your first 24 hours abroad." canonical="/search/" schema={breadcrumbSchema}>
+<BaseLayout title="Search Travel Guides and Tools | EZ Roam Guide" description="Search EZ Roam Guide for country arrival guides, city guides, travel basics articles, and free travel tools for your first day abroad." canonical="/search/" schema={breadcrumbSchema}>
   <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Search" }]} />
-  <header class="page-head">
+  <header class="page-head search-hero">
     <div class="container">
       <p class="eyebrow">Search</p>
       <h1>Search EZ Roam Guide</h1>
-      <p class="lede">Search for countries, cities, airport arrival topics, SIM/eSIM, money, transport, safety, and free travel tools for your first 24 hours abroad.</p>
+      <p class="lede">Find country guides, city arrival guides, travel basics articles, and free tools to help plan your first 24 hours in a new place.</p>
     </div>
   </header>
 
   <section class="section">
     <div class="container search-page">
-      <SearchBox id="search-page-input" label="What are you looking for?" buttonText="Search" />
+      <form class="search-panel" action="/search/" method="get" role="search" aria-describedby="search-help">
+        <label for="search-page-input">Search guides and tools</label>
+        <div class="search-row search-row-large">
+          <input id="search-page-input" name="q" type="search" placeholder="Search countries, cities, travel basics, or tools..." autocomplete="off" />
+          <button class="button" type="submit">Search</button>
+          <button class="button secondary clear-search" type="button" data-clear-search hidden>Clear</button>
+        </div>
+        <p id="search-help" class="field-help">Try simple terms like Japan, airport, SIM, cash, taxi, safety, itinerary, checklist, Seoul, Paris, or Dubai.</p>
+      </form>
+
+      <div class="search-controls" aria-label="Search filters and sorting">
+        <fieldset class="filter-pills">
+          <legend>Filter by category</legend>
+          <button type="button" data-filter-value="all" aria-pressed="true">All</button>
+          <button type="button" data-filter-value="Country Guide" aria-pressed="false">Countries</button>
+          <button type="button" data-filter-value="City Guide" aria-pressed="false">Cities</button>
+          <button type="button" data-filter-value="Travel Basics" aria-pressed="false">Travel Basics</button>
+          <button type="button" data-filter-value="Tool" aria-pressed="false">Tools</button>
+        </fieldset>
+
+        <label class="sort-control" for="search-sort">
+          <span>Sort results</span>
+          <select id="search-sort" data-search-sort>
+            <option value="best">Best match</option>
+            <option value="latest">Latest updated</option>
+            <option value="category">Category</option>
+          </select>
+        </label>
+      </div>
+
       <p class="note search-note"><strong>Privacy note:</strong> Search is provided to help you find guides and tools faster. Your search terms are not saved by EZ Roam Guide.</p>
 
-      <section class="suggested-searches" aria-labelledby="suggested-searches-heading">
-        <h2 id="suggested-searches-heading">Suggested searches</h2>
+      <section class="suggested-searches" aria-labelledby="popular-searches-heading" data-default-search-content>
+        <h2 id="popular-searches-heading">Popular searches</h2>
         <div class="suggestion-list">
-          {suggestedSearches.map((term) => <button type="button" data-search-suggestion={term}>{term}</button>)}
+          {popularSearches.map((term) => <button type="button" data-search-suggestion={term}>{term}</button>)}
+        </div>
+      </section>
+
+      <section class="browse-links" aria-labelledby="browse-category-heading" data-default-search-content>
+        <h2 id="browse-category-heading">Browse by category</h2>
+        <div class="actions">
+          <a class="button secondary" href="/countries/">Countries</a>
+          <a class="button secondary" href="/cities/">Cities</a>
+          <a class="button secondary" href="/travel-basics/">Travel Basics</a>
+          <a class="button secondary" href="/tools/">Tools</a>
+        </div>
+      </section>
+
+      <section class="recent-search-list" aria-labelledby="recent-search-heading" data-default-search-content>
+        <div class="section-heading compact-heading">
+          <div>
+            <p class="eyebrow">Recently updated</p>
+            <h2 id="recent-search-heading">Fresh guides and tools</h2>
+          </div>
+          <p>Useful starting points if you are not sure what to search yet.</p>
+        </div>
+        <div class="search-results search-results-compact">
+          {recentItems.map((item) => (
+            <article class="search-result-card">
+              <span class="tag">{item.type}</span>
+              <h3><a href={item.url}>{item.title}</a></h3>
+              <p>{item.description}</p>
+              <p class="card-meta">
+                <span>{item.category}</span>
+                {item.lastUpdated && <span>Updated: {item.lastUpdated}</span>}
+                {item.readingTime && <span>{item.readingTime}</span>}
+              </p>
+              <a class="card-link" href={item.url}>{item.type === "Tool" ? "Open tool" : "Open guide"} →</a>
+            </article>
+          ))}
         </div>
       </section>
 
@@ -47,17 +112,17 @@ const suggestedSearches = ["Airport transport", "SIM and eSIM", "Cash vs card", 
           <p data-result-count aria-live="polite">Start by searching for a country, city, travel topic, or tool.</p>
         </div>
         <div class="search-results" data-search-results></div>
-        <button class="button secondary show-more" type="button" data-show-more hidden>Show more results</button>
-      </section>
-
-      <section class="browse-links" aria-labelledby="browse-links-heading">
-        <h2 id="browse-links-heading">Browse instead</h2>
-        <div class="actions">
-          <a class="button secondary" href="/countries/">Countries</a>
-          <a class="button secondary" href="/cities/">Cities</a>
-          <a class="button secondary" href="/travel-basics/">Travel Basics</a>
-          <a class="button secondary" href="/tools/">Tools</a>
+        <div class="no-results-panel" data-no-results hidden>
+          <h3>No exact results found.</h3>
+          <p>No exact results found. Try searching for a country, city, airport transport, SIM, money, safety, or travel checklist.</p>
+          <div class="actions">
+            <a class="button secondary" href="/countries/">Browse Countries</a>
+            <a class="button secondary" href="/cities/">Browse Cities</a>
+            <a class="button secondary" href="/travel-basics/">Browse Travel Basics</a>
+            <a class="button secondary" href="/tools/">Browse Tools</a>
+          </div>
         </div>
+        <button class="button secondary show-more" type="button" data-show-more hidden>Show more results</button>
       </section>
     </div>
   </section>
@@ -66,14 +131,21 @@ const suggestedSearches = ["Airport transport", "SIM and eSIM", "Cash vs card", 
   <script is:inline>
     const dataEl = document.getElementById("search-index-data");
     const searchIndex = dataEl ? JSON.parse(dataEl.textContent || "[]") : [];
-    const form = document.querySelector(".search-page .search-form");
+    const form = document.querySelector(".search-page .search-panel");
     const input = document.getElementById("search-page-input");
     const resultsEl = document.querySelector("[data-search-results]");
     const countEl = document.querySelector("[data-result-count]");
     const showMoreButton = document.querySelector("[data-show-more]");
+    const clearButton = document.querySelector("[data-clear-search]");
+    const noResultsEl = document.querySelector("[data-no-results]");
+    const defaultContent = document.querySelectorAll("[data-default-search-content]");
+    const filterButtons = document.querySelectorAll("[data-filter-value]");
+    const sortSelect = document.querySelector("[data-search-sort]");
     const initialLimit = 20;
     let currentResults = [];
     let visibleLimit = initialLimit;
+    let activeFilter = "all";
+    let debounceTimer;
 
     if (new URLSearchParams(window.location.search).has("q")) {
       const robots = document.createElement("meta");
@@ -92,6 +164,7 @@ const suggestedSearches = ["Airport transport", "SIM and eSIM", "Cash vs card", 
       if (q.includes(" ")) return value.includes(q);
       return value.split(" ").some((word) => word === q || word.startsWith(q));
     };
+    const parseDate = (value) => value ? Date.parse(value) || 0 : 0;
 
     const scoreItem = (item, query) => {
       const q = normalize(query);
@@ -103,24 +176,33 @@ const suggestedSearches = ["Airport transport", "SIM and eSIM", "Cash vs card", 
       const keywords = normalize((item.keywords || []).join(" "));
       const excerpt = normalize(item.excerpt);
       let score = 0;
-      if (title === q) score += 80;
-      if (hasMatch(title, q)) score += 45;
+      if (title === q) score += 90;
+      if (hasMatch(title, q)) score += 50;
+      if (hasMatch(category, q)) score += 26;
+      if (hasMatch(keywords, q)) score += 24;
       if (hasMatch(description, q)) score += 22;
-      if (hasMatch(keywords, q)) score += 22;
-      if (hasMatch(category, q)) score += 18;
       if (hasMatch(excerpt, q)) score += 10;
       terms.forEach((term) => {
         if (hasMatch(title, term)) score += 16;
+        if (hasMatch(category, term)) score += 10;
         if (hasMatch(keywords, term)) score += 10;
         if (hasMatch(description, term)) score += 8;
-        if (hasMatch(category, term)) score += 6;
         if (hasMatch(excerpt, term)) score += 3;
       });
       return score;
     };
 
+    const sortResults = (results) => {
+      const mode = sortSelect?.value || "best";
+      return [...results].sort((a, b) => {
+        if (mode === "latest") return parseDate(b.item.lastUpdated) - parseDate(a.item.lastUpdated) || b.score - a.score || a.item.title.localeCompare(b.item.title);
+        if (mode === "category") return a.item.type.localeCompare(b.item.type) || a.item.title.localeCompare(b.item.title);
+        return b.score - a.score || a.item.title.localeCompare(b.item.title);
+      });
+    };
+
     const render = () => {
-      if (!resultsEl || !countEl || !showMoreButton) return;
+      if (!resultsEl || !countEl || !showMoreButton || !noResultsEl) return;
       const visible = currentResults.slice(0, visibleLimit);
       resultsEl.innerHTML = visible.map(({ item }) => `
         <article class="search-result-card">
@@ -135,28 +217,50 @@ const suggestedSearches = ["Airport transport", "SIM and eSIM", "Cash vs card", 
           <a class="card-link" href="${escapeHtml(item.url)}">${linkText(item.type)} →</a>
         </article>
       `).join("");
+      noResultsEl.hidden = currentResults.length > 0;
       showMoreButton.hidden = currentResults.length <= visibleLimit;
+    };
+
+    const setDefaultContent = (isVisible) => {
+      defaultContent.forEach((section) => {
+        section.hidden = !isVisible;
+      });
+    };
+
+    const updateFilterButtons = () => {
+      filterButtons.forEach((button) => {
+        button.setAttribute("aria-pressed", button.getAttribute("data-filter-value") === activeFilter ? "true" : "false");
+      });
     };
 
     const runSearch = (query, updateUrl = true) => {
       const clean = String(query || "").replace(/\s+/g, " ").trim();
       visibleLimit = initialLimit;
       if (input) input.value = clean;
+      if (clearButton) clearButton.hidden = !clean && activeFilter === "all";
       if (!clean) {
         currentResults = [];
         if (resultsEl) resultsEl.innerHTML = "";
         if (countEl) countEl.textContent = "Start by searching for a country, city, travel topic, or tool.";
         if (showMoreButton) showMoreButton.hidden = true;
+        if (noResultsEl) noResultsEl.hidden = true;
+        setDefaultContent(true);
         if (updateUrl) history.replaceState(null, "", "/search/");
         return;
       }
-      currentResults = searchIndex
+      setDefaultContent(false);
+      currentResults = sortResults(searchIndex
+        .filter((item) => activeFilter === "all" || item.type === activeFilter)
         .map((item) => ({ item, score: scoreItem(item, clean) }))
-        .filter((result) => result.score > 0)
-        .sort((a, b) => b.score - a.score || a.item.title.localeCompare(b.item.title));
-      if (countEl) countEl.textContent = currentResults.length ? `${currentResults.length} result${currentResults.length === 1 ? "" : "s"} for “${clean}”.` : "No exact match found. Try a broader search such as airport, SIM, money, safety, transport, or first day.";
+        .filter((result) => result.score > 0));
+      if (countEl) countEl.textContent = currentResults.length ? `${currentResults.length} result${currentResults.length === 1 ? "" : "s"} found for “${clean}”.` : "No exact results found. Try searching for a country, city, airport transport, SIM, money, safety, or travel checklist.";
       render();
       if (updateUrl) history.replaceState(null, "", `/search/?q=${encodeURIComponent(clean)}`);
+    };
+
+    const runSearchSoon = () => {
+      window.clearTimeout(debounceTimer);
+      debounceTimer = window.setTimeout(() => runSearch(input?.value || ""), 180);
     };
 
     form?.addEventListener("submit", (event) => {
@@ -164,8 +268,35 @@ const suggestedSearches = ["Airport transport", "SIM and eSIM", "Cash vs card", 
       runSearch(input?.value || "");
     });
 
+    input?.addEventListener("input", runSearchSoon);
+
+    clearButton?.addEventListener("click", () => {
+      activeFilter = "all";
+      if (sortSelect) sortSelect.value = "best";
+      updateFilterButtons();
+      runSearch("");
+      input?.focus();
+    });
+
+    filterButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        activeFilter = button.getAttribute("data-filter-value") || "all";
+        updateFilterButtons();
+        runSearch(input?.value || "");
+      });
+    });
+
+    sortSelect?.addEventListener("change", () => {
+      currentResults = sortResults(currentResults);
+      render();
+    });
+
     document.querySelectorAll("[data-search-suggestion]").forEach((button) => {
-      button.addEventListener("click", () => runSearch(button.getAttribute("data-search-suggestion") || ""));
+      button.addEventListener("click", () => {
+        activeFilter = "all";
+        updateFilterButtons();
+        runSearch(button.getAttribute("data-search-suggestion") || "");
+      });
     });
 
     showMoreButton?.addEventListener("click", () => {
@@ -174,6 +305,7 @@ const suggestedSearches = ["Airport transport", "SIM and eSIM", "Cash vs card", 
       if (countEl && currentResults.length) countEl.textContent = `Showing ${Math.min(visibleLimit, currentResults.length)} of ${currentResults.length} results.`;
     });
 
+    updateFilterButtons();
     runSearch(new URLSearchParams(window.location.search).get("q") || "", false);
   </script>
 </BaseLayout>
