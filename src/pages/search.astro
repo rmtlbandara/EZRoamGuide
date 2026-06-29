@@ -1,0 +1,179 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
+import SearchBox from "../components/SearchBox.astro";
+import { searchIndex } from "../data/search";
+import { site } from "../data/site";
+
+const url = new URL("/search/", site.url).toString();
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: site.url },
+    { "@type": "ListItem", position: 2, name: "Search", item: url }
+  ]
+};
+const suggestedSearches = ["Airport transport", "SIM and eSIM", "Cash vs card", "Late-night arrival", "Taxi scams", "First international trip", "South Korea", "Paris", "New York City", "First 24 hours planner"];
+---
+<BaseLayout title="Search EZ Roam Guide | Find Travel Guides and Tools" description="Search EZ Roam Guide for country arrival guides, city arrival guides, travel basics, and free travel tools for your first 24 hours abroad." canonical="/search/" schema={breadcrumbSchema}>
+  <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Search" }]} />
+  <header class="page-head">
+    <div class="container">
+      <p class="eyebrow">Search</p>
+      <h1>Search EZ Roam Guide</h1>
+      <p class="lede">Search for countries, cities, airport arrival topics, SIM/eSIM, money, transport, safety, and free travel tools for your first 24 hours abroad.</p>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="container search-page">
+      <SearchBox id="search-page-input" label="What are you looking for?" buttonText="Search" />
+      <p class="note search-note"><strong>Privacy note:</strong> Search is provided to help you find guides and tools faster. Your search terms are not saved by EZ Roam Guide.</p>
+
+      <section class="suggested-searches" aria-labelledby="suggested-searches-heading">
+        <h2 id="suggested-searches-heading">Suggested searches</h2>
+        <div class="suggestion-list">
+          {suggestedSearches.map((term) => <button type="button" data-search-suggestion={term}>{term}</button>)}
+        </div>
+      </section>
+
+      <section class="search-results-wrap" aria-labelledby="search-results-heading">
+        <div class="section-heading compact-heading">
+          <div>
+            <p class="eyebrow">Results</p>
+            <h2 id="search-results-heading">Search results</h2>
+          </div>
+          <p data-result-count aria-live="polite">Start by searching for a country, city, travel topic, or tool.</p>
+        </div>
+        <div class="search-results" data-search-results></div>
+        <button class="button secondary show-more" type="button" data-show-more hidden>Show more results</button>
+      </section>
+
+      <section class="browse-links" aria-labelledby="browse-links-heading">
+        <h2 id="browse-links-heading">Browse instead</h2>
+        <div class="actions">
+          <a class="button secondary" href="/countries/">Countries</a>
+          <a class="button secondary" href="/cities/">Cities</a>
+          <a class="button secondary" href="/travel-basics/">Travel Basics</a>
+          <a class="button secondary" href="/tools/">Tools</a>
+        </div>
+      </section>
+    </div>
+  </section>
+
+  <script type="application/json" id="search-index-data" set:html={JSON.stringify(searchIndex)} />
+  <script is:inline>
+    const dataEl = document.getElementById("search-index-data");
+    const searchIndex = dataEl ? JSON.parse(dataEl.textContent || "[]") : [];
+    const form = document.querySelector(".search-page .search-form");
+    const input = document.getElementById("search-page-input");
+    const resultsEl = document.querySelector("[data-search-results]");
+    const countEl = document.querySelector("[data-result-count]");
+    const showMoreButton = document.querySelector("[data-show-more]");
+    const initialLimit = 20;
+    let currentResults = [];
+    let visibleLimit = initialLimit;
+
+    if (new URLSearchParams(window.location.search).has("q")) {
+      const robots = document.createElement("meta");
+      robots.name = "robots";
+      robots.content = "noindex, follow";
+      document.head.appendChild(robots);
+    }
+
+    const normalize = (value) => String(value || "").toLowerCase().replace(/[^a-z0-9\s/-]/g, " ").replace(/\s+/g, " ").trim();
+    const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" }[char]));
+    const linkText = (type) => type === "Tool" ? "Open tool" : type === "Page" ? "Read page" : "Open guide";
+    const hasMatch = (field, query) => {
+      const value = normalize(field);
+      const q = normalize(query);
+      if (!value || !q) return false;
+      if (q.includes(" ")) return value.includes(q);
+      return value.split(" ").some((word) => word === q || word.startsWith(q));
+    };
+
+    const scoreItem = (item, query) => {
+      const q = normalize(query);
+      const terms = q.split(" ").filter(Boolean);
+      if (!q || !terms.length) return 0;
+      const title = normalize(item.title);
+      const description = normalize(item.description);
+      const category = normalize(`${item.type} ${item.category}`);
+      const keywords = normalize((item.keywords || []).join(" "));
+      const excerpt = normalize(item.excerpt);
+      let score = 0;
+      if (title === q) score += 80;
+      if (hasMatch(title, q)) score += 45;
+      if (hasMatch(description, q)) score += 22;
+      if (hasMatch(keywords, q)) score += 22;
+      if (hasMatch(category, q)) score += 18;
+      if (hasMatch(excerpt, q)) score += 10;
+      terms.forEach((term) => {
+        if (hasMatch(title, term)) score += 16;
+        if (hasMatch(keywords, term)) score += 10;
+        if (hasMatch(description, term)) score += 8;
+        if (hasMatch(category, term)) score += 6;
+        if (hasMatch(excerpt, term)) score += 3;
+      });
+      return score;
+    };
+
+    const render = () => {
+      if (!resultsEl || !countEl || !showMoreButton) return;
+      const visible = currentResults.slice(0, visibleLimit);
+      resultsEl.innerHTML = visible.map(({ item }) => `
+        <article class="search-result-card">
+          <span class="tag">${escapeHtml(item.type)}</span>
+          <h3><a href="${escapeHtml(item.url)}">${escapeHtml(item.title)}</a></h3>
+          <p>${escapeHtml(item.description)}</p>
+          <p class="card-meta">
+            <span>${escapeHtml(item.category)}</span>
+            ${item.lastUpdated ? `<span>Updated: ${escapeHtml(item.lastUpdated)}</span>` : ""}
+            ${item.readingTime ? `<span>${escapeHtml(item.readingTime)}</span>` : ""}
+          </p>
+          <a class="card-link" href="${escapeHtml(item.url)}">${linkText(item.type)} →</a>
+        </article>
+      `).join("");
+      showMoreButton.hidden = currentResults.length <= visibleLimit;
+    };
+
+    const runSearch = (query, updateUrl = true) => {
+      const clean = String(query || "").replace(/\s+/g, " ").trim();
+      visibleLimit = initialLimit;
+      if (input) input.value = clean;
+      if (!clean) {
+        currentResults = [];
+        if (resultsEl) resultsEl.innerHTML = "";
+        if (countEl) countEl.textContent = "Start by searching for a country, city, travel topic, or tool.";
+        if (showMoreButton) showMoreButton.hidden = true;
+        if (updateUrl) history.replaceState(null, "", "/search/");
+        return;
+      }
+      currentResults = searchIndex
+        .map((item) => ({ item, score: scoreItem(item, clean) }))
+        .filter((result) => result.score > 0)
+        .sort((a, b) => b.score - a.score || a.item.title.localeCompare(b.item.title));
+      if (countEl) countEl.textContent = currentResults.length ? `${currentResults.length} result${currentResults.length === 1 ? "" : "s"} for “${clean}”.` : "No exact match found. Try a broader search such as airport, SIM, money, safety, transport, or first day.";
+      render();
+      if (updateUrl) history.replaceState(null, "", `/search/?q=${encodeURIComponent(clean)}`);
+    };
+
+    form?.addEventListener("submit", (event) => {
+      event.preventDefault();
+      runSearch(input?.value || "");
+    });
+
+    document.querySelectorAll("[data-search-suggestion]").forEach((button) => {
+      button.addEventListener("click", () => runSearch(button.getAttribute("data-search-suggestion") || ""));
+    });
+
+    showMoreButton?.addEventListener("click", () => {
+      visibleLimit += initialLimit;
+      render();
+      if (countEl && currentResults.length) countEl.textContent = `Showing ${Math.min(visibleLimit, currentResults.length)} of ${currentResults.length} results.`;
+    });
+
+    runSearch(new URLSearchParams(window.location.search).get("q") || "", false);
+  </script>
+</BaseLayout>

@@ -1,0 +1,60 @@
+---
+interface Props {
+  targetId: string;
+  label: string;
+  placeholder: string;
+  noResults?: string;
+}
+
+const { targetId, label, placeholder, noResults = "No matching results in this section yet. Try a broader word." } = Astro.props;
+---
+<div class="section-filter" data-filter-control={targetId}>
+  <label for={`${targetId}-filter`}>{label}</label>
+  <input id={`${targetId}-filter`} type="search" placeholder={placeholder} autocomplete="off" data-filter-input />
+  <p class="filter-message" data-filter-message hidden>{noResults}</p>
+</div>
+
+<script is:inline>
+  const initSectionFilters = () => {
+    document.querySelectorAll("[data-filter-control]").forEach((control) => {
+      const scopeId = control.getAttribute("data-filter-control");
+      const scope = document.getElementById(scopeId);
+      const input = control.querySelector("[data-filter-input]");
+      const message = control.querySelector("[data-filter-message]");
+      if (!scope || !input || !message || control.dataset.filterReady) return;
+      control.dataset.filterReady = "true";
+
+      const cards = Array.from(scope.querySelectorAll("[data-filter-card]"));
+      const groups = Array.from(scope.querySelectorAll("[data-filter-group]"));
+      const normalize = (value) => String(value || "").toLowerCase().replace(/\s+/g, " ").trim();
+
+      const applyFilter = () => {
+        const query = normalize(input.value);
+        let visibleCount = 0;
+
+        cards.forEach((card) => {
+          const haystack = normalize(card.getAttribute("data-search-text") || card.textContent);
+          const visible = !query || query.split(" ").every((term) => haystack.includes(term));
+          card.hidden = !visible;
+          if (visible) visibleCount += 1;
+        });
+
+        groups.forEach((group) => {
+          const groupCards = Array.from(group.querySelectorAll("[data-filter-card]"));
+          group.hidden = groupCards.length > 0 && groupCards.every((card) => card.hidden);
+        });
+
+        message.hidden = visibleCount !== 0 || !query;
+      };
+
+      input.addEventListener("input", applyFilter);
+      applyFilter();
+    });
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initSectionFilters);
+  } else {
+    initSectionFilters();
+  }
+</script>

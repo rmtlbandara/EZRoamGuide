@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import GuideCard from "../components/GuideCard.astro";
+import SearchBox from "../components/SearchBox.astro";
 import ToolCard from "../components/ToolCard.astro";
 import { basicGuides, cityGuides, countryGuides, site } from "../data/site";
 import { travelTools } from "../data/tools";
@@ -80,6 +81,17 @@ const homepageTools = homepageToolSlugs.map((slug) => travelTools.find((tool) =>
   </section>
 
   <section class="section alt">
+    <div class="container feature-grid">
+      <div>
+        <p class="eyebrow">Search</p>
+        <h2>Find the right guide faster</h2>
+        <p>Search countries, cities, travel basics, and free tools for your first 24 hours abroad.</p>
+      </div>
+      <SearchBox id="home-search" label="Search guides and tools" buttonText="Search guides" compact />
+    </div>
+  </section>
+
+  <section class="section">
     <div class="container">
       <div class="section-heading"><div><p class="eyebrow">Start with the country</p><h2>Popular country arrival guides</h2></div><p>Understand the broad arrival system, money, connectivity, customs, and transport before narrowing down to a city.</p></div>
       <div class="card-grid">{featuredCountries.map((guide) => <GuideCard guide={guide} />)}</div>
@@ -87,7 +99,7 @@ const homepageTools = homepageToolSlugs.map((slug) => travelTools.find((tool) =>
     </div>
   </section>
 
-  <section class="section">
+  <section class="section alt">
     <div class="container">
       <div class="section-heading"><div><p class="eyebrow">Plan the transfer</p><h2>Popular city arrival guides</h2></div><p>Airport choices, first-night neighborhoods, local transport, and a low-stress plan for the hours after check-in.</p></div>
       <div class="card-grid">{featuredCities.map((guide) => <GuideCard guide={guide} />)}</div>
@@ -95,7 +107,7 @@ const homepageTools = homepageToolSlugs.map((slug) => travelTools.find((tool) =>
     </div>
   </section>
 
-  <section class="section alt">
+  <section class="section">
     <div class="container">
       <div class="section-heading"><div><p class="eyebrow">Build confidence</p><h2>Travel basics for first-time travelers</h2></div><p>Evergreen explanations for the decisions that repeat across borders, from getting connected to avoiding taxi scams.</p></div>
       <div class="card-grid">{basicGuides.slice(0, 6).map((guide) => <GuideCard guide={guide} />)}</div>
@@ -103,7 +115,7 @@ const homepageTools = homepageToolSlugs.map((slug) => travelTools.find((tool) =>
     </div>
   </section>
 
-  <section class="section">
+  <section class="section alt">
     <div class="container">
       <div class="section-heading"><div><p class="eyebrow">Free travel tools</p><h2>Plan your arrival day with simple travel tools</h2></div><p>Use simple travel tools to plan your arrival day, airport transport, travel documents, internet setup, money, and first-day itinerary.</p></div>
       <div class="card-grid">{homepageTools.map((tool) => <ToolCard tool={tool} />)}</div>
@@ -111,7 +123,7 @@ const homepageTools = homepageToolSlugs.map((slug) => travelTools.find((tool) =>
     </div>
   </section>
 
-  <section class="section alt">
+  <section class="section">
     <div class="container">
       <div class="section-heading"><div><p class="eyebrow">Recently updated</p><h2>Latest guides</h2></div><p>Our latest practical reads, reviewed for clear steps and sensible first-day pacing.</p></div>
       <div class="card-grid">

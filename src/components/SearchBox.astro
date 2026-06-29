@@ -1,0 +1,24 @@
+---
+interface Props {
+  id?: string;
+  label?: string;
+  placeholder?: string;
+  buttonText?: string;
+  compact?: boolean;
+}
+
+const {
+  id = "site-search",
+  label = "Search EZ Roam Guide",
+  placeholder = "Search countries, cities, travel basics, or tools",
+  buttonText = "Search",
+  compact = false
+} = Astro.props;
+---
+<form class:list={["search-form", compact && "search-form-compact"]} action="/search/" method="get" role="search">
+  <label for={id}>{label}</label>
+  <div class="search-row">
+    <input id={id} name="q" type="search" placeholder={placeholder} autocomplete="off" />
+    <button class="button" type="submit">{buttonText}</button>
+  </div>
+</form>

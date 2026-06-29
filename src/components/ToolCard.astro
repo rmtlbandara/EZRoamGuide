@@ -3,8 +3,9 @@ import type { TravelTool } from "../data/tools";
 import { hrefForTool } from "../data/tools";
 
 const { tool } = Astro.props as { tool: TravelTool };
+const searchText = [tool.title, tool.description, tool.bestFor, tool.category, tool.howItHelps, tool.advice.heading, tool.advice.paragraphs].flat().filter(Boolean).join(" ");
 ---
-<article class="card">
+<article class="card" data-filter-card data-search-text={searchText}>
   <span class="tag">{tool.category}</span>
   <h3>{tool.title}</h3>
   <p>{tool.description}</p>

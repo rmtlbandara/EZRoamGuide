@@ -58,6 +58,12 @@ li + li { margin-top: .55rem; }
 .button:hover { background: var(--accent-dark); color: white; }
 .button.secondary { background: transparent; color: var(--accent-dark); }
 .button.secondary:hover { background: var(--accent-soft); }
+.search-form { display: grid; gap: .55rem; width: 100%; }
+.search-form label, .section-filter label { color: var(--ink); font-size: .95rem; font-weight: 750; }
+.search-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: .75rem; align-items: center; }
+.search-form input, .section-filter input { width: 100%; min-height: 50px; padding: .72rem .9rem; border: 1px solid var(--line); border-radius: 999px; background: #fff; color: var(--ink); font: inherit; }
+.search-form input:focus, .section-filter input:focus { outline: 3px solid #f2b84b; outline-offset: 2px; border-color: var(--accent); }
+.search-form-compact { align-self: center; padding: 1.2rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); box-shadow: 0 10px 30px rgba(23,32,30,.035); }
 .section { padding: 4.5rem 0; }
 .section.alt { background: var(--surface-alt); border-block: 1px solid var(--line); }
 .section-heading { display: flex; justify-content: space-between; align-items: end; gap: 2rem; margin-bottom: 1.5rem; }
@@ -71,6 +77,21 @@ li + li { margin-top: .55rem; }
 .card .card-meta { display: flex; flex-wrap: wrap; gap: .35rem .8rem; margin: .1rem 0 1rem; color: var(--muted); font-size: .82rem; font-weight: 700; }
 .card .card-link { margin-top: auto; font-weight: 750; }
 .tag { color: var(--accent-dark); font-size: .72rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+[hidden] { display: none !important; }
+.section-filter { margin: 0 0 1.4rem; display: grid; gap: .55rem; max-width: 680px; }
+.filter-message { margin: .2rem 0 0; color: var(--muted); font-weight: 650; }
+.search-page { display: grid; gap: 2rem; }
+.search-note { margin: 0; }
+.suggested-searches h2, .browse-links h2 { margin-top: 0; font-size: 1.35rem; }
+.suggestion-list { display: flex; flex-wrap: wrap; gap: .6rem; }
+.suggestion-list button { min-height: 40px; padding: .45rem .85rem; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); color: var(--accent-dark); font: inherit; font-weight: 750; cursor: pointer; }
+.suggestion-list button:hover { border-color: #9bbdb5; background: var(--accent-soft); }
+.compact-heading { margin-bottom: 1rem; }
+.search-results { display: grid; gap: .85rem; }
+.search-result-card { display: grid; gap: .45rem; padding: 1.15rem; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); box-shadow: 0 10px 30px rgba(23,32,30,.025); }
+.search-result-card h3 { margin: 0; }
+.search-result-card p { margin: 0; color: var(--muted); }
+.show-more { justify-self: start; margin-top: 1rem; }
 .feature-grid { display: grid; grid-template-columns: 1.05fr 1fr; gap: clamp(2rem, 6vw, 6rem); align-items: start; }
 .feature-grid h2 { margin-top: 0; }
 .plain-list { margin: 0; padding: 0; list-style: none; display: grid; gap: .8rem; }
@@ -166,6 +187,7 @@ li + li { margin-top: .55rem; }
   .nav-links { width: 100%; overflow-x: auto; padding-bottom: .2rem; gap: 1rem; }
   .nav-links a { white-space: nowrap; }
   .card-grid, .related, .form-grid, .check-grid { grid-template-columns: 1fr; }
+  .search-row { grid-template-columns: 1fr; }
   .section { padding: 3.3rem 0; }
   .section-heading { display: block; }
   .section-heading p { margin-top: .6rem; }

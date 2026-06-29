@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Breadcrumb from "../../components/Breadcrumb.astro";
+import SectionFilter from "../../components/SectionFilter.astro";
 import ToolCard from "../../components/ToolCard.astro";
 import { site } from "../../data/site";
 import { toolsIntro, travelTools } from "../../data/tools";
@@ -50,8 +51,10 @@ const faqSchema = {
         </div>
         <p>Use these simple tools to plan your trip with more confidence.</p>
       </div>
+      <SectionFilter targetId="tool-list" label="Filter this section" placeholder="Filter tools such as SIM, checklist, hotel address, or transport" noResults="No tool matches yet. Try a broader word such as airport, SIM, checklist, money, or first day." />
+      <div id="tool-list" data-filter-scope>
       {toolGroups.map((group) => (
-        <section class="tool-group" aria-labelledby={`group-${group.title.toLowerCase().replaceAll(" ", "-")}`}>
+        <section class="tool-group" data-filter-group aria-labelledby={`group-${group.title.toLowerCase().replaceAll(" ", "-")}`}>
           <div class="tool-group-head">
             <h3 id={`group-${group.title.toLowerCase().replaceAll(" ", "-")}`}>{group.title}</h3>
             <p>{group.description}</p>
@@ -61,6 +64,7 @@ const faqSchema = {
           </div>
         </section>
       ))}
+      </div>
     </div>
   </section>
 

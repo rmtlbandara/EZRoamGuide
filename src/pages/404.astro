@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import SearchBox from "../components/SearchBox.astro";
 ---
 <BaseLayout title="Page Not Found | EZ Roam Guide" description="The requested page could not be found. Browse country guides, city guides, or travel basics.">
-  <section class="not-found"><div class="container"><p class="eyebrow">404 error</p><h1>This route wandered off</h1><p class="lede" style="margin-inline:auto">The page may have moved, or the address may be incomplete. Choose a dependable route below.</p><div class="actions" style="justify-content:center"><a class="button" href="/countries/">Country Guides</a><a class="button secondary" href="/cities/">City Guides</a><a class="button secondary" href="/travel-basics/">Travel Basics</a></div></div></section>
+  <section class="not-found"><div class="container reading"><p class="eyebrow">404 error</p><h1>This route wandered off</h1><p class="lede" style="margin-inline:auto">The page may have moved, or the address may be incomplete. Try searching for a country, city, travel topic, or tool.</p><SearchBox id="not-found-search" label="Search EZ Roam Guide" buttonText="Search guides" compact /><div class="actions" style="justify-content:center"><a class="button" href="/countries/">Country Guides</a><a class="button secondary" href="/cities/">City Guides</a><a class="button secondary" href="/travel-basics/">Travel Basics</a></div></div></section>
 </BaseLayout>

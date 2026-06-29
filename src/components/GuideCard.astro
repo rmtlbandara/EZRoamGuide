@@ -2,8 +2,9 @@
 import type { Guide } from "../data/site";
 import { hrefFor } from "../data/site";
 const { guide } = Astro.props as { guide: Guide };
+const searchText = [guide.title, guide.description, guide.label, guide.eyebrow, guide.quick, guide.checklist, guide.mistakes].flat().filter(Boolean).join(" ");
 ---
-<article class="card">
+<article class="card" data-filter-card data-search-text={searchText}>
   <span class="tag">{guide.eyebrow}</span>
   <h3>{guide.title}</h3>
   <p>{guide.description}</p>
