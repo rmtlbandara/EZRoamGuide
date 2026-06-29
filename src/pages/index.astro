@@ -9,8 +9,12 @@ const schema = [
   { "@context": "https://schema.org", "@type": "WebSite", name: site.name, url: site.url, description: site.description },
   { "@context": "https://schema.org", "@type": "Organization", name: site.name, url: site.url, email: site.email }
 ];
-const latestGuideSlugs = ["airport-arrival-checklist", "best-airport-transport-new-country", "low-stress-first-day-new-city"];
-const latestGuides = basicGuides.filter((guide) => latestGuideSlugs.includes(guide.slug));
+const featuredCountrySlugs = ["south-korea-first-24-hours", "france-first-24-hours", "australia-first-24-hours", "united-states-first-24-hours", "japan-first-24-hours", "singapore-first-24-hours"];
+const featuredCountries = featuredCountrySlugs.map((slug) => countryGuides.find((guide) => guide.slug === slug)).filter(Boolean);
+const featuredCitySlugs = ["seoul-arrival-guide", "paris-arrival-guide", "london-arrival-guide", "new-york-city-arrival-guide", "tokyo-arrival-guide", "dubai-arrival-guide"];
+const featuredCities = featuredCitySlugs.map((slug) => cityGuides.find((guide) => guide.slug === slug)).filter(Boolean);
+const latestGuideSlugs = ["south-korea-first-24-hours", "france-first-24-hours", "seoul-arrival-guide"];
+const latestGuides = latestGuideSlugs.map((slug) => [...countryGuides, ...cityGuides, ...basicGuides].find((guide) => guide.slug === slug)).filter(Boolean);
 const homepageToolSlugs = ["first-24-hours-travel-planner", "hotel-address-card-generator", "first-time-traveler-confidence-checker"];
 const homepageTools = homepageToolSlugs.map((slug) => travelTools.find((tool) => tool.slug === slug)).filter(Boolean);
 ---
@@ -78,7 +82,7 @@ const homepageTools = homepageToolSlugs.map((slug) => travelTools.find((tool) =>
   <section class="section alt">
     <div class="container">
       <div class="section-heading"><div><p class="eyebrow">Start with the country</p><h2>Popular country arrival guides</h2></div><p>Understand the broad arrival system, money, connectivity, customs, and transport before narrowing down to a city.</p></div>
-      <div class="card-grid">{countryGuides.slice(0, 6).map((guide) => <GuideCard guide={guide} />)}</div>
+      <div class="card-grid">{featuredCountries.map((guide) => <GuideCard guide={guide} />)}</div>
       <div class="actions"><a class="button secondary" href="/countries/">View all countries</a></div>
     </div>
   </section>
@@ -86,7 +90,7 @@ const homepageTools = homepageToolSlugs.map((slug) => travelTools.find((tool) =>
   <section class="section">
     <div class="container">
       <div class="section-heading"><div><p class="eyebrow">Plan the transfer</p><h2>Popular city arrival guides</h2></div><p>Airport choices, first-night neighborhoods, local transport, and a low-stress plan for the hours after check-in.</p></div>
-      <div class="card-grid">{cityGuides.slice(0, 6).map((guide) => <GuideCard guide={guide} />)}</div>
+      <div class="card-grid">{featuredCities.map((guide) => <GuideCard guide={guide} />)}</div>
       <div class="actions"><a class="button secondary" href="/cities/">View all cities</a></div>
     </div>
   </section>

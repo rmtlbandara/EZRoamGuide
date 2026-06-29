@@ -174,6 +174,62 @@ const countryBlueprints = [
     safety: "Ignore unsolicited helpers at ticket machines and transport hubs. Solo travelers should share arrival details and use well-reviewed transport after dark.",
     etiquette: "Dress modestly at religious places, remove shoes where requested, and use the right hand for food and exchanges when practical.",
     mistake: "Trying to solve transport, SIM, currency, sightseeing, and an onward journey all within a few hours of a long flight."
+  },
+  {
+    slug: "south-korea-first-24-hours",
+    name: "South Korea",
+    city: "Seoul",
+    airport: "Incheon, Gimpo, or another South Korean arrival airport",
+    transport: "For Seoul-bound arrivals, compare airport rail, limousine buses, official taxis, and booked rides by your exact district and luggage. Incheon is well connected but still far enough from central Seoul that the final stop matters.",
+    internet: "Airport Wi-Fi can handle the first checks, while eSIMs, roaming, local SIMs, and portable Wi-Fi each suit different trips. Confirm phone compatibility and whether you need calls, data, or hotspot use.",
+    money: "Cards are widely useful in South Korea, but a small amount of won can help with minor purchases, older machines, markets, or backup situations. Use bank ATMs and keep a second payment method separate.",
+    local: "Seoul and other large cities have strong metro and bus networks. A transit card or compatible payment setup reduces friction, but you still need to check station exits and last services.",
+    food: "A simple first meal near your stay is better than crossing the city while tired. Convenience stores, food courts, and busy local restaurants are practical first-day options.",
+    safety: "South Korea is organized for travelers, but arrival mistakes still happen around last trains, wrong station exits, unofficial rides, and tired phone navigation.",
+    etiquette: "Queue calmly, keep voices moderate on public transport, use both hands or a polite gesture when giving and receiving, and observe local cues in restaurants and shared spaces.",
+    mistake: "Assuming Seoul airport transport ends near your hotel; the wrong station exit or final walk can be the hardest part with luggage."
+  },
+  {
+    slug: "france-first-24-hours",
+    name: "France",
+    city: "Paris",
+    airport: "Paris Charles de Gaulle, Orly, or another French arrival airport",
+    transport: "Choose airport transport by your arrival airport, luggage, time of day, and exact first-night area. Rail, official taxis, airport buses, and booked transfers can all be sensible in the right context.",
+    internet: "Airport Wi-Fi may be enough to reach your accommodation, but compare roaming, eSIM, and local SIM options if you need reliable data for maps, translation, and messaging.",
+    money: "Cards are useful in many places, but carry a modest euro cash backup for small purchases, tips where appropriate, or payment outages. Avoid withdrawing more than you want to protect on day one.",
+    local: "French cities often combine metro, tram, bus, regional rail, walking, and taxis. Learn the ticket or contactless rules for your city before assuming every line works the same way.",
+    food: "Start with an easy nearby café, bakery, supermarket, or casual restaurant rather than turning the first meal into a cross-city mission. Hydrate and keep plans gentle after the flight.",
+    safety: "Watch luggage and phones around stations, ticket machines, and crowded tourist corridors. Use official taxi ranks or verified bookings and be cautious around urgent street offers.",
+    etiquette: "A simple greeting before asking for help matters. Keep your tone calm, learn a few polite phrases, and avoid blocking doors, platforms, and pavements while checking your phone.",
+    mistake: "Booking a first-night stay or dinner plan without checking the real airport route, final metro/RER leg, luggage, and late-arrival timing."
+  },
+  {
+    slug: "australia-first-24-hours",
+    name: "Australia",
+    city: "Sydney",
+    airport: "Sydney, Melbourne, Brisbane, Perth, or another Australian gateway",
+    transport: "Australian airport transport varies by city: rail, buses, taxis, ride-hailing, shuttles, and hotel transfers each serve different routes. Choose by your first-night area and energy after a long-haul flight.",
+    internet: "Airport Wi-Fi helps you recover bookings and messages. For the trip itself, compare roaming, eSIM, and local SIM options based on coverage, trip length, and whether you will leave major cities.",
+    money: "Cards and contactless payments are common, but a small cash reserve is still useful for backup. Check card fees before travel and keep one alternative payment method separate.",
+    local: "Large Australian cities use different local transport systems and payment rules. Learn the basics for your arrival city before the first ride, especially if you are changing from airport rail to buses or trams.",
+    food: "Long-haul travelers often need water, a light meal, daylight, and a shower more than sightseeing. Choose something easy near your accommodation and avoid overloading the first afternoon.",
+    safety: "Arrival safety is mostly about fatigue, sun, distance, road awareness, and keeping bags controlled. Outdoor conditions can change quickly, so check weather before walking far.",
+    etiquette: "Keep shared spaces orderly, queue where expected, respect smoking and alcohol rules, and use a friendly but concise tone with staff and drivers.",
+    mistake: "Treating Australian city distances as small because they look simple on a map; airport-to-suburb trips and cross-city rides can take real time."
+  },
+  {
+    slug: "united-states-first-24-hours",
+    name: "United States",
+    city: "New York City",
+    airport: "JFK, Newark, LaGuardia, or another U.S. arrival airport",
+    transport: "U.S. airport transport is highly city-specific. Compare official taxis, ride-hailing pickup zones, airport rail links, shuttles, buses, and hotel transfers before leaving the terminal.",
+    internet: "Airport Wi-Fi is useful for first messages and bookings. For the rest of the trip, compare roaming, eSIM, and local SIM options based on coverage, data needs, and whether you need a U.S. number.",
+    money: "Cards are widely used, but a little cash can help with tips, small purchases, or backup. Understand tipping expectations before the first restaurant, taxi, or hotel service interaction.",
+    local: "Public transport quality and payment systems vary widely by city. In some places rail is practical; in others, ride-hailing, taxis, or rental cars may be more realistic.",
+    food: "After a long immigration and baggage process, choose an easy meal near your accommodation. Portion sizes, taxes, and tips may make final bills look different from menu prices.",
+    safety: "Use official pickup areas, verify ride-hailing plates, keep luggage close, and avoid making big decisions while tired in crowded arrival zones.",
+    etiquette: "Personal space, queueing, tipping, and direct service interactions may feel different from home. Ask clearly, read signs, and keep documents ready at checkpoints.",
+    mistake: "Assuming every U.S. airport has a simple train into the city; many arrivals require a city-specific mix of rail, shuttle, taxi, or ride-hailing."
   }
 ];
 
@@ -235,7 +291,7 @@ const countryEnhancements: Record<string, Partial<Guide>> = {
       { id: "first-night", heading: "Choosing a sensible first-night area", paragraphs: ["Choose a district with a direct or simple route from your arrival airport. Ueno and Tokyo Station can be convenient from Narita; Shinagawa and central southern districts can work well from Haneda. The best choice still depends on the service operating when you land.", "A hotel beside the correct station is often more useful on night one than a famous neighborhood requiring two transfers and a long walk through a large interchange."] },
       { id: "late-arrival", heading: "Late-night arrival in Japan", paragraphs: ["Last trains and airport buses do not wait for delayed flights. Check the official timetable for your date and keep a late-arrival option: an airport hotel, a confirmed night bus, or a taxi budget you are genuinely prepared to pay.", "If you miss the last practical service, stay in a staffed airport area while reorganizing. Do not rush onto an unfamiliar train simply because it is the final departure shown."] }
     ],
-    related: ["/cities/tokyo-arrival-guide/", "/travel-basics/sim-card-vs-esim/", "/travel-basics/how-to-use-public-transport-abroad/", "/travel-basics/arriving-late-at-night/"],
+    related: ["/cities/tokyo-arrival-guide/", "/countries/south-korea-first-24-hours/", "/travel-basics/sim-card-vs-esim/", "/travel-basics/how-to-use-public-transport-abroad/", "/travel-basics/arriving-late-at-night/"],
     officialSources: [
       { label: "Narita International Airport", href: "https://www.narita-airport.jp/en/" },
       { label: "Haneda Airport Passenger Terminal", href: "https://tokyo-haneda.com/en/" },
@@ -269,7 +325,7 @@ const countryEnhancements: Record<string, Partial<Guide>> = {
       { id: "first-night", heading: "Where to stay on the first night", paragraphs: ["Choose for transport convenience, not only the lowest room rate. City Hall, Bugis, Lavender, and other central MRT-connected areas can make a short visit simple, while an airport-area hotel may suit a late arrival or early onward flight.", "Check the walking route from the station. Tropical rain, heat, road crossings, and luggage can turn a short map distance into an awkward final leg."] },
       { id: "late-arrival", heading: "Late-night arrival at Changi", paragraphs: ["Confirm the final MRT departure for your date before relying on rail. Official taxis and licensed ride services remain the practical fallback, but pickup points and surcharges can vary.", "If you have a long overnight layover, check Changi's current transit and landside rules before booking a room or leaving the secure area."] }
     ],
-    related: ["/cities/singapore-arrival-guide/", "/travel-basics/sim-card-vs-esim/", "/travel-basics/cash-vs-card-while-traveling/", "/travel-basics/arriving-late-at-night/"],
+    related: ["/cities/singapore-arrival-guide/", "/countries/australia-first-24-hours/", "/countries/france-first-24-hours/", "/countries/united-states-first-24-hours/", "/travel-basics/sim-card-vs-esim/", "/travel-basics/cash-vs-card-while-traveling/"],
     officialSources: [
       { label: "Changi Airport arrival guide", href: "https://www.changiairport.com/en/fly/arrival-guide.html" },
       { label: "Immigration & Checkpoints Authority", href: "https://www.ica.gov.sg/" },
@@ -277,6 +333,116 @@ const countryEnhancements: Record<string, Partial<Guide>> = {
       { label: "Visit Singapore", href: "https://www.visitsingapore.com/" },
       { label: "Land Transport Authority", href: "https://www.lta.gov.sg/" }
     ]
+  },
+  "united-arab-emirates-first-24-hours": {
+    related: ["/cities/dubai-arrival-guide/", "/countries/france-first-24-hours/", "/countries/australia-first-24-hours/", "/countries/united-states-first-24-hours/", "/travel-basics/arriving-late-at-night/"]
+  },
+  "south-korea-first-24-hours": {
+    title: "First 24 Hours in South Korea: Arrival Guide for First-Time Travelers",
+    seoTitle: "First 24 Hours in South Korea: Arrival Guide for First-Time Travelers",
+    description: "Plan your first 24 hours in South Korea with simple tips for airport arrival, transport, SIM/eSIM, money, etiquette, safety, and first-day comfort.",
+    intro: "Your first day in South Korea is easier when you separate the important arrival tasks from the excitement of being there. Focus first on getting connected, choosing the right airport route, handling payment basics, and reaching your first stay with enough energy left to eat and rest.",
+    readingTime: "13 min read",
+    quick: ["Confirm whether you arrive at Incheon, Gimpo, or another airport before choosing transport.", "Set up enough internet for maps, translation, and accommodation messages.", "Keep one card and a small won cash backup available.", "Check the final station exit or bus stop, not only the city name.", "Keep the first evening simple and save ambitious plans for the next day."],
+    sections: [
+      { id: "arrival-flow", heading: "Before you leave the airport", paragraphs: ["After immigration, baggage, and customs, pause before entering the public arrivals area. Open your accommodation address, check the transport route, use the restroom, and make sure your phone has enough battery for the ride into the city.", "At Incheon or Gimpo, the easiest route depends on your district, luggage, and arrival time. A train may look fastest on a map, while an airport bus can be easier when it stops near your hotel. Rules, prices, transport options, and local requirements can change. Confirm official information before your trip."] },
+      { id: "phone-korea", heading: "Internet, SIM, eSIM, and Wi-Fi basics", paragraphs: ["Airport Wi-Fi is useful for first checks, but do not leave the terminal relying only on a connection you cannot keep. Compare roaming, eSIM, local SIM, and portable Wi-Fi based on phone compatibility, trip length, hotspot needs, and whether you need calls.", "Test maps, messaging, translation, and the accommodation address before walking away from a staffed counter or official Wi-Fi area. Keep installation details for any eSIM and do not delete a plan unless the provider confirms it can be restored."] },
+      { id: "seoul-route", heading: "Airport to city transport", paragraphs: ["For Seoul, compare airport rail, airport limousine buses, official taxis, and booked rides by the final stop. The right choice is often the one that reduces transfers and the final walk, especially after a long flight.", "If your accommodation is outside Seoul or you are connecting to another city, check whether your route starts from the airport, a city station, or a bus terminal. Do not assume every intercity route is convenient with luggage on arrival day."] },
+      { id: "first-night-korea", heading: "First-night area planning", paragraphs: ["A practical first-night area is one with a clear airport route, simple food nearby, and a final walk you can manage with luggage. Famous nightlife or shopping districts are not automatically the best first stop after an international flight.", "If you arrive late, confirm reception or self-check-in instructions before boarding. Keep the accommodation phone number and address saved offline in a format you can show to staff or a driver."] },
+      { id: "arrival-pacing-korea", heading: "How to pace your first evening", paragraphs: ["South Korea can make a traveler feel productive quickly because transport, shops, and food are often convenient in major cities. That does not mean the first night should become a full itinerary. Choose one useful task after check-in: food, a short walk, or buying a small essential.", "If you are tempted to go across Seoul immediately, check the return route first. A journey that feels easy at 7 PM can become more awkward when you are tired, carrying purchases, or navigating a station you have not used before."] }
+    ],
+    checklist: ["Confirm airport and terminal", "Save accommodation address offline", "Test data, maps, and messaging", "Choose train, bus, taxi, or booked ride by final stop", "Prepare card plus small cash backup", "Eat near your stay and hydrate", "Check tomorrow's first route before sleep"],
+    mistakes: ["Choosing a route only by headline speed", "Forgetting that station exits can be far apart", "Waiting until the curb to solve phone data", "Planning a busy first night after a long flight", "Assuming every payment terminal or transit setup works like home"],
+    faqs: [
+      { question: "What should I do first after landing in South Korea?", answer: "Clear arrival formalities, collect bags, connect to official Wi-Fi, open your accommodation address, and choose a verified airport route before leaving the terminal." },
+      { question: "Is it better to take train, bus, or taxi from Incheon to Seoul?", answer: "It depends on your district, luggage, arrival time, and final walk. Rail can be efficient, airport buses can be easier near hotels, and official taxis or booked rides suit late arrivals or heavy bags." },
+      { question: "Do I need cash on my first day in South Korea?", answer: "Cards are widely useful, but a small amount of won is sensible for backup, older machines, markets, or small purchases." },
+      { question: "Should I buy a SIM or eSIM at the airport?", answer: "Airport setup is convenient when you need data immediately. Compare roaming, eSIM, SIM, and portable Wi-Fi based on phone compatibility and trip length." },
+      { question: "What should I avoid on my first day in Korea?", answer: "Avoid complex transfers, unverified rides, a long cross-city meal plan, and leaving the airport without working maps or an offline address." }
+    ],
+    related: ["/cities/seoul-arrival-guide/", "/countries/japan-first-24-hours/", "/travel-basics/first-international-trip-checklist/", "/travel-basics/sim-card-vs-esim/", "/travel-basics/cash-vs-card-while-traveling/", "/travel-basics/how-to-leave-an-airport-safely/"],
+    relatedTools: ["/tools/first-24-hours-travel-planner/", "/tools/sim-esim-roaming-finder/"]
+  },
+  "france-first-24-hours": {
+    title: "First 24 Hours in France: Airport, Transport, Money and Etiquette Guide",
+    seoTitle: "First 24 Hours in France: Airport, Transport, Money and Etiquette Guide",
+    description: "A simple first-day France arrival guide covering airport transport, money, SIM/eSIM, local etiquette, safety, food, and first-night planning.",
+    intro: "Arriving in France feels smoother when you solve the ordinary things first: the route from the airport, a working phone, a payment backup, a calm first meal, and enough rest to make better decisions tomorrow.",
+    readingTime: "13 min read",
+    quick: ["Choose airport transport by the exact airport and first-night area.", "Set up maps and messaging before leaving terminal Wi-Fi.", "Use cards where practical but keep a modest euro cash backup.", "Learn the local ticket or contactless rules before your first transport ride.", "Start with a polite greeting when asking for help."],
+    sections: [
+      { id: "airport-france", heading: "What to do before leaving the airport", paragraphs: ["Before you leave the controlled airport area, make sure you have your bags, accommodation address, phone battery, and a route you understand. France has several major gateways, and the right onward route depends heavily on the airport and destination city.", "If you are arriving into Paris, do not treat Charles de Gaulle, Orly, and Beauvais as interchangeable. If you arrive elsewhere in France, confirm whether the airport has rail, tram, bus, taxi, or shuttle service for your actual arrival hour."] },
+      { id: "phone-france", heading: "Internet, SIM, eSIM, and public Wi-Fi", paragraphs: ["Airport and café Wi-Fi can help with short tasks, but a first-day plan should not depend on finding public Wi-Fi every time you need a map. Compare roaming, eSIM, and local SIM options before travel.", "If you use a travel eSIM, install it on trusted Wi-Fi and test it before depending on it. If you buy locally, confirm data allowance, validity, hotspot use, and whether the plan includes calls or only data."] },
+      { id: "transport-france", heading: "Airport to city transport", paragraphs: ["Rail, metro, tram, bus, official taxi, and booked transfer options vary by city. Choose the route that is easiest to complete with luggage, not just the one that looks cheapest in isolation.", "For taxis, use official ranks or verified bookings. If using public transport, check the ticket type, zones, last service, and final walk from the stop to your accommodation."] },
+      { id: "first-night-france", heading: "First-night stay planning", paragraphs: ["For the first night, choose a stay with a route you can explain in one sentence. A charming district is less useful if the arrival path requires a confusing transfer, a long late walk, or check-in instructions that depend on mobile data.", "If your flight lands late, confirm reception hours and nearby food before departure. A simple supermarket, bakery, or casual restaurant near the room can be more valuable than a reservation across town."] },
+      { id: "etiquette-france-arrival", heading: "French etiquette for new arrivals", paragraphs: ["A simple “bonjour” or polite greeting before asking a question can change the tone of an interaction. Keep requests clear and brief, especially at counters, cafés, and busy stations.", "Do not block ticket gates, shop entrances, or pavements while checking your phone. Step aside, prepare your payment or ticket, and rejoin the flow when ready."] },
+      { id: "arrival-pacing-france", heading: "How to pace your first day", paragraphs: ["France rewards slower first-day decisions. Handle the transport, check-in, food, and a small orientation walk before adding museums, shopping, or a long dinner plan. You will enjoy those more when you are not negotiating every small system for the first time.", "If the arrival goes smoothly, use the extra energy to learn the nearby streets: the closest transit stop, pharmacy, bakery, small supermarket, and a landmark that helps you find the accommodation again. Save the first longer outing for a day when you understand ticketing, opening hours, and how your body feels after the journey."] }
+    ],
+    checklist: ["Confirm airport-to-stay route", "Save address and booking offline", "Set up phone data or a backup", "Prepare card plus small euro cash reserve", "Check public transport ticket rules", "Eat close to your accommodation", "Confirm tomorrow's first route"],
+    mistakes: ["Choosing accommodation without checking the airport route", "Following unofficial transport offers", "Assuming every small purchase takes card", "Skipping greetings when asking for help", "Trying to visit several distant neighborhoods on day one"],
+    faqs: [
+      { question: "What is the best airport transport in France?", answer: "There is no single best option. It depends on the airport, destination city, arrival time, luggage, and how close the stop is to your accommodation." },
+      { question: "Do I need cash in France on arrival day?", answer: "Cards are widely useful, but a modest cash backup can help with small purchases, tips where appropriate, or payment problems." },
+      { question: "Is public Wi-Fi enough for a first day in France?", answer: "It can help briefly, but travelers who rely on maps and messages should arrange roaming, eSIM, or a SIM option." },
+      { question: "What etiquette matters most when arriving in France?", answer: "Greet people politely before requests, keep your tone calm, and avoid blocking busy shared spaces while checking directions." },
+      { question: "What should I avoid after landing in France?", answer: "Avoid unverified rides, complex cross-city plans, large cash withdrawals while tired, and first-night bookings with unclear access." }
+    ],
+    related: ["/cities/paris-arrival-guide/", "/travel-basics/how-to-leave-an-airport-safely/", "/travel-basics/cash-vs-card-while-traveling/", "/travel-basics/travel-etiquette-mistakes/", "/travel-basics/airport-taxi-scams/"],
+    relatedTools: ["/tools/airport-transport-helper/", "/tools/first-day-travel-money-estimator/"]
+  },
+  "australia-first-24-hours": {
+    title: "First 24 Hours in Australia: Arrival Guide for Long-Haul Travelers",
+    seoTitle: "First 24 Hours in Australia: Arrival Guide for Long-Haul Travelers",
+    description: "Plan your first 24 hours in Australia with practical tips for airport arrival, transport, money, phone setup, jet lag, safety, and first-day planning.",
+    intro: "Australia often begins with a long flight, a tired body, and a city that may be larger than it looks on a map. The first day should protect your energy: clear the airport, reach your stay, eat, hydrate, and leave major decisions until you are rested.",
+    readingTime: "13 min read",
+    quick: ["Expect long-haul fatigue and keep the first plan deliberately light.", "Check airport biosecurity and customs guidance through official sources before packing.", "Choose transport by city, final suburb, luggage, and time of day.", "Cards are common, but keep a backup payment method.", "Use daylight, water, and a simple meal to reset after the flight."],
+    sections: [
+      { id: "airport-australia", heading: "Before you leave the airport", paragraphs: ["Australia has strict border and biosecurity processes, so packing and declaration questions deserve attention before you fly. Use official sources for current rules and answer arrival questions carefully.", "After baggage and customs, pause to check weather, transport, phone connection, and the distance to your first stay. Australian cities can spread out quickly, and a route that looks simple may involve a long ride or a poor final walk."] },
+      { id: "jet-lag-australia", heading: "Managing jet lag on day one", paragraphs: ["For many visitors, the main arrival challenge is not the airport; it is the body clock. Keep the first day practical: daylight when possible, water, a normal meal, shower, device charging, and a reasonable bedtime.", "Avoid major purchases, long drives, and complicated onward travel when you are badly sleep-deprived. A quiet first afternoon can make the whole trip better."] },
+      { id: "transport-australia", heading: "Airport to city transport", paragraphs: ["Sydney, Melbourne, Brisbane, Perth, and other gateways each have different airport transport patterns. Some routes are rail-friendly, while others work better by official taxi, ride-hailing, shuttle, or hotel transfer.", "Check the route to your exact suburb, not only the city center. If your first stay is outside the central area, the easiest route may involve a transfer or a direct road option."] },
+      { id: "comfort-australia", heading: "Food, water, and first-day comfort", paragraphs: ["A simple café, supermarket, or casual meal near your accommodation is enough for the first day. Hydration matters after long flights, especially if you arrive into heat, dry air, or a long outdoor walk.", "Check the weather before leaving the hotel for an orientation walk. Sun, rain, wind, and distance can change a plan that looked easy from the room."] },
+      { id: "first-night-australia", heading: "First-night planning after a long flight", paragraphs: ["Choose the first stay by transport clarity and recovery, not only by attractions. A central hotel can be useful, but only if the airport route is realistic and the check-in process works with your arrival time.", "If you have an onward domestic flight, long drive, or regional connection, build a generous buffer. A rested morning transfer is often safer and calmer than forcing another major journey after a long-haul arrival."] },
+      { id: "arrival-pacing-australia", heading: "A realistic first-day rhythm", paragraphs: ["A good first Australian day might be airport, accommodation, food, daylight, shower, a short walk, and sleep. That may sound ordinary, but it protects your judgement for driving, swimming, hiking, or navigating a new city later.", "If you arrive early and cannot check in, ask about luggage storage and choose a nearby, low-effort activity. Avoid falling asleep in a public place with bags or carrying valuables around all day while exhausted. Keep sunscreen, a refillable water bottle, and weather-appropriate layers easy to reach if you plan to spend time outside."] }
+    ],
+    checklist: ["Confirm official arrival and customs requirements", "Save accommodation address offline", "Set up phone data and maps", "Choose transport by exact suburb", "Keep card plus backup payment ready", "Hydrate, eat, shower, and rest", "Plan tomorrow after sleep"],
+    mistakes: ["Planning a long drive immediately after a long-haul flight", "Ignoring biosecurity and customs rules before packing", "Assuming all airport routes are rail-friendly", "Underestimating city distances", "Skipping rest because the first day feels too valuable"],
+    faqs: [
+      { question: "What should I do first after landing in Australia?", answer: "Complete arrival formalities, collect bags, confirm phone access, check the route to your exact accommodation, and keep the rest of the day simple." },
+      { question: "How should I handle jet lag on the first day?", answer: "Use daylight, hydration, a simple meal, a shower, and an early relaxed evening. Avoid demanding plans until you know how you feel." },
+      { question: "Do I need cash in Australia?", answer: "Cards and contactless payments are common, but a small backup and a second payment method are still sensible." },
+      { question: "Should I buy a SIM or eSIM for Australia?", answer: "Compare roaming, eSIM, and local SIM options based on trip length and whether you will travel outside major cities." },
+      { question: "What should long-haul travelers avoid on day one?", answer: "Avoid long drives, tight connections, expensive timed activities, and decisions that require perfect focus after little sleep." }
+    ],
+    related: ["/travel-basics/plan-your-first-24-hours-abroad/", "/travel-basics/sim-card-vs-esim/", "/travel-basics/cash-vs-card-while-traveling/", "/travel-basics/low-stress-first-day-new-city/", "/countries/singapore-first-24-hours/", "/countries/united-states-first-24-hours/"],
+    relatedTools: ["/tools/first-day-itinerary-builder/", "/tools/travel-adapter-charging-checklist/", "/tools/first-24-hours-travel-planner/"]
+  },
+  "united-states-first-24-hours": {
+    title: "First 24 Hours in the United States: Arrival Guide for International Visitors",
+    seoTitle: "First 24 Hours in the United States: Arrival Guide for International Visitors",
+    description: "A practical first-day USA arrival guide for international visitors, covering airport exits, transport, money, phone setup, tipping, safety, and planning.",
+    intro: "The United States is not one arrival system. A first day in New York, Los Angeles, Chicago, Miami, or Dallas can feel completely different, so your best preparation is city-specific transport, a working phone, card readiness, and a basic understanding of tipping.",
+    readingTime: "13 min read",
+    quick: ["Use official airport signs for taxis, ride-hailing, shuttles, and public transport.", "Check whether your arrival city has practical rail or needs a road transfer.", "Prepare for card payments plus tipping awareness.", "Set up phone data before leaving airport Wi-Fi.", "Choose a first-night area with a clear route and simple food nearby."],
+    sections: [
+      { id: "airport-usa", heading: "Before you leave the airport", paragraphs: ["After immigration, baggage, and customs, take a moment to confirm your terminal, pickup zone, accommodation address, and payment method. U.S. airports can be large, and ride-hailing or shuttle pickup areas may not be beside the arrivals door.", "If something is unclear, use airport information desks, official signs, airline staff, or your accommodation's published contact details. Avoid being redirected by someone who approaches you with urgency."] },
+      { id: "transport-usa", heading: "Airport to city transport", paragraphs: ["Some U.S. airports have useful rail links; others rely more on taxis, ride-hailing, shuttles, buses, rental cars, or hotel transfers. Check the best option for your airport and neighborhood, not for the country in general.", "For ride-hailing, confirm the pickup zone, license plate, driver, and app record before entering. For taxis, use official ranks and understand whether tolls, airport fees, or tips may affect the final cost."] },
+      { id: "money-tipping-usa", heading: "Money, cards, and tipping basics", paragraphs: ["Cards are widely used, and many travelers can manage mostly cashless. Still, a small cash reserve is useful for tips, vending, small businesses, or backup.", "Tipping norms can affect taxis, restaurants, bars, hotel services, and deliveries. The exact amount depends on service and context, so learn the category before you land rather than trying to decode it while exhausted."] },
+      { id: "first-night-usa", heading: "First-night stay planning", paragraphs: ["Choose the first-night stay by route clarity, check-in reliability, and safe arrival logistics. A cheaper room far from transit may become expensive or tiring after airport fees, tolls, late-night rides, or a long final walk.", "If arriving late, confirm reception hours, entry instructions, and food options. Save the address and booking offline because phone verification and roaming can fail at exactly the wrong time."] },
+      { id: "phone-verification-usa", heading: "Phone setup and account verification", paragraphs: ["A U.S. arrival often depends on phone access: ride-hailing, hotel messages, bank alerts, map apps, and sometimes two-factor authentication. Before travel, make sure important accounts have backup access that does not rely on a single SIM or one phone number.", "If you plan to use a U.S. SIM or eSIM, confirm phone compatibility and whether the plan includes data only or a number for calls and texts. Test it before leaving the airport if your first transport depends on it."] },
+      { id: "arrival-pacing-usa", heading: "How to keep the first day manageable", paragraphs: ["The first day in the United States can include long airport corridors, immigration queues, baggage waits, road traffic, and a new tipping/payment rhythm. Do not schedule an expensive event close to landing unless missing it would not matter.", "Once checked in, choose one nearby meal and one small orientation loop. Learn where you would get transport back, where to buy water or basic supplies, and how long tomorrow's first trip will take. If you need to drive later in the trip, leave that decision for a rested day whenever possible."] }
+    ],
+    checklist: ["Confirm airport pickup or public transport route", "Save hotel address offline", "Set up data before leaving Wi-Fi", "Prepare card and small cash backup", "Understand basic tipping categories", "Verify ride or taxi before entering", "Eat, hydrate, and keep day one light"],
+    mistakes: ["Assuming every airport has easy rail into the city", "Going to the wrong ride-hailing pickup zone", "Forgetting that tax, fees, and tips can change final costs", "Depending on phone wallet only with low battery", "Booking a first night with a difficult late check-in"],
+    faqs: [
+      { question: "What should international visitors do first after landing in the United States?", answer: "Finish arrival formalities, collect bags, confirm your phone connection, open your accommodation address, and choose transport through official airport channels." },
+      { question: "Is ride-hailing easy at U.S. airports?", answer: "It can be useful, but pickup zones may be separate from arrivals. Verify the vehicle, plate, driver, and app record before entering." },
+      { question: "Do I need cash in the USA?", answer: "Cards are widely used, but small cash can help with tips, small purchases, or backup if a card or phone wallet fails." },
+      { question: "How should I think about tipping on arrival day?", answer: "Learn the basic tipping categories before travel. Tipping can apply to taxis, restaurants, bars, hotel services, and deliveries depending on context." },
+      { question: "What should I avoid on my first day in the United States?", answer: "Avoid unverified rides, overcomplicated cross-city plans, driving while exhausted, and relying on a phone connection you have not tested." }
+    ],
+    related: ["/cities/new-york-city-arrival-guide/", "/travel-basics/how-to-leave-an-airport-safely/", "/travel-basics/cash-vs-card-while-traveling/", "/travel-basics/travel-safety-basics/", "/travel-basics/airport-taxi-scams/", "/countries/australia-first-24-hours/"],
+    relatedTools: ["/tools/airport-transport-helper/", "/tools/first-time-traveler-confidence-checker/"]
   }
 };
 
@@ -296,7 +462,11 @@ const cityBlueprints = [
   ["bali-arrival-guide", "Bali", "Indonesia", "I Gusti Ngurah Rai International Airport", "Official taxis, arranged drivers, and designated app pickup areas serve the airport. Traffic to beach and inland areas varies greatly.", "There is no island-wide rail system. Drivers and ride apps are practical; scooters carry meaningful legal and injury risks.", "Do not schedule a distant temple or ferry connection after landing. Bali traffic rewards generous buffers."],
   ["istanbul-arrival-guide", "Istanbul", "Turkey", "Istanbul Airport or Sabiha Gökçen", "Both airports are distant from central districts and from each other. Metro, airport coaches, taxis, and transfers depend on the side of the city.", "Metro, tram, ferry, and bus networks are extensive. A transport card reduces friction, and ferries can bypass road congestion.", "Check whether your hotel is on the European or Asian side before choosing any onward route."],
   ["delhi-arrival-guide", "Delhi", "India", "Indira Gandhi International Airport", "Airport metro, prepaid taxis, app rides, and hotel transfers are the main options. Confirm your terminal and exact hotel address.", "Delhi Metro is often the most predictable way around. For road trips, verify the car and avoid accepting substitute drivers.", "Keep arrival day geographically small. Noise, weather, traffic, and jet lag can make ordinary tasks feel bigger."],
-  ["ho-chi-minh-city-arrival-guide", "Ho Chi Minh City", "Vietnam", "Tan Son Nhat International Airport", "Official taxis, ride apps, buses, and transfers serve the airport. Keep your address visible and verify the vehicle before loading bags.", "Ride apps and taxis are practical; buses suit confident travelers. Walk carefully and treat road crossing as a predictable, attentive process.", "Keep your phone away from the traffic side of the pavement, particularly while waiting for a ride."]
+  ["ho-chi-minh-city-arrival-guide", "Ho Chi Minh City", "Vietnam", "Tan Son Nhat International Airport", "Official taxis, ride apps, buses, and transfers serve the airport. Keep your address visible and verify the vehicle before loading bags.", "Ride apps and taxis are practical; buses suit confident travelers. Walk carefully and treat road crossing as a predictable, attentive process.", "Keep your phone away from the traffic side of the pavement, particularly while waiting for a ride."],
+  ["seoul-arrival-guide", "Seoul", "South Korea", "Incheon or Gimpo", "Incheon has rail, airport buses, official taxis, and booked-ride options; Gimpo is closer for many city routes. Choose by district, final stop, luggage, and arrival time.", "Metro and buses are strong, but station exits matter. A transit card or compatible setup helps, and a direct airport bus may beat a faster-looking route with stairs.", "A late first-night plan in Seoul can be tempting, but solve the airport-to-bed route first and leave nightlife for a rested evening."],
+  ["paris-arrival-guide", "Paris", "France", "Charles de Gaulle, Orly, or Beauvais", "Paris airport choices are not interchangeable. Rail, official taxis, buses, trams, and transfers fit different airports and neighborhoods.", "Metro, RER, tram, bus, and walking can combine well once you understand tickets, zones, and the final walk. Keep luggage in mind around stairs and transfers.", "Paris rewards slow first-day pacing. A nearby meal and short orientation walk are better than chasing a distant landmark while tired."],
+  ["london-arrival-guide", "London", "United Kingdom", "Heathrow, Gatwick, Stansted, Luton, City, or Southend", "London has several airports with different rail, coach, taxi, and transfer routes. The airport name alone does not tell you the easiest first-night route.", "Public transport is extensive, and contactless-style payment is useful where accepted. Still, airport rail, Tube, buses, and national rail have different patterns.", "A hotel beside the right station can save more energy than a famous postcode with a complicated final transfer."],
+  ["new-york-city-arrival-guide", "New York City", "United States", "JFK, Newark, or LaGuardia", "JFK, Newark, and LaGuardia each require different planning. Rail links, airport buses, official taxis, ride-hailing, and shuttles all depend on your borough and luggage.", "Subway, commuter rail, buses, ferries, taxis, and walking each solve different New York journeys. The easiest first route is often the one with fewer changes.", "New York is stimulating immediately. Keep the first evening local so you do not turn jet lag, bags, and a new transit system into one big puzzle."]
 ] as const;
 
 function cityGuide(d: typeof cityBlueprints[number]): Guide {
@@ -355,7 +525,7 @@ const cityEnhancements: Record<string, Partial<Guide>> = {
       { id: "stay", heading: "Where to stay on the first night", paragraphs: ["Stay near a station served directly from the airport or with one clear transfer. Ueno, Tokyo Station, Shinagawa, Shinjuku, and Asakusa each suit different airport routes; none is universally best.", "Check the station exit number and hotel entrance before arrival. Tokyo stations can cover several blocks, and choosing the wrong exit with luggage is a tiring way to begin the trip."] },
       { id: "late", heading: "If your Tokyo flight lands late", paragraphs: ["Look up the final airport train and bus on the operator's official timetable. Immigration and baggage delays can consume a connection that looked comfortable on the flight schedule.", "Keep an airport-area hotel or confirmed taxi plan as a real fallback. Sleeping near the airport and starting early can cost less—and feel much better—than a long taxi ride across Tokyo."] }
     ],
-    related: ["/countries/japan-first-24-hours/", "/travel-basics/how-to-use-public-transport-abroad/", "/travel-basics/sim-card-vs-esim/", "/travel-basics/arriving-late-at-night/"],
+    related: ["/countries/japan-first-24-hours/", "/cities/seoul-arrival-guide/", "/travel-basics/how-to-use-public-transport-abroad/", "/travel-basics/sim-card-vs-esim/", "/travel-basics/arriving-late-at-night/"],
     officialSources: [
       { label: "Narita International Airport access information", href: "https://www.narita-airport.jp/en/access/" },
       { label: "Haneda Airport access information", href: "https://tokyo-haneda.com/en/access/" },
@@ -377,6 +547,112 @@ const cityEnhancements: Record<string, Partial<Guide>> = {
       { label: "Tourism Authority of Thailand", href: "https://www.tourismthailand.org/" },
       { label: "BTS Skytrain", href: "https://www.bts.co.th/eng/" }
     ]
+  },
+  "singapore-arrival-guide": {
+    related: ["/countries/singapore-first-24-hours/", "/cities/london-arrival-guide/", "/cities/new-york-city-arrival-guide/", "/travel-basics/sim-card-vs-esim/", "/travel-basics/cash-vs-card-while-traveling/"]
+  },
+  "dubai-arrival-guide": {
+    related: ["/countries/united-arab-emirates-first-24-hours/", "/cities/london-arrival-guide/", "/cities/new-york-city-arrival-guide/", "/travel-basics/arriving-late-at-night/", "/travel-basics/how-to-leave-an-airport-safely/"]
+  },
+  "seoul-arrival-guide": {
+    title: "Seoul Arrival Guide: Your First 24 Hours in South Korea",
+    seoTitle: "Seoul Arrival Guide: Your First 24 Hours in South Korea",
+    description: "Plan your first 24 hours in Seoul with simple tips for airport transport, SIM/eSIM, T-money-style transit planning, money, food, safety, and rest.",
+    intro: "Seoul is organized, fast, and large enough that a first arrival works best with a simple sequence: land, connect, choose the right airport route, reach your district, eat nearby, and learn tomorrow's first transport step.",
+    readingTime: "12 min read",
+    quick: ["Confirm whether you arrive through Incheon or Gimpo.", "Choose airport transport by district and final stop, not only speed.", "Set up data before leaving airport Wi-Fi.", "Prepare a card setup plus a small won backup.", "Keep the first meal and first walk close to your accommodation."],
+    sections: [
+      { id: "seoul-airport-basics", heading: "Airport arrival basics", paragraphs: ["Incheon is the main international gateway for many travelers, while Gimpo can be convenient for some regional and domestic routes. Before buying a ticket or requesting a ride, confirm your airport, terminal, district, and check-in time.", "The first useful task is not sightseeing research. It is opening your hotel address, checking the final station exit or bus stop, and making sure your phone can keep maps and messages working after you leave Wi-Fi."] },
+      { id: "airport-to-seoul", heading: "Getting from the airport to Seoul", paragraphs: ["Airport rail can be efficient for some districts, while airport buses can be easier when they stop near hotels and reduce stairs. Official taxis or booked rides may be calmer for late arrivals, families, or heavy luggage.", "Compare the full route: waiting time, transfers, lift access, final walk, and whether you can still complete it if the flight is delayed. A direct option that takes a little longer can be the better first-day route."] },
+      { id: "seoul-transit", heading: "Local transport basics", paragraphs: ["Seoul's metro and bus system is extensive. A transit-card-style setup or compatible payment method can reduce friction, but the details can change, so confirm current options before travel.", "Station exits matter in Seoul. A hotel can be close to a station but far from the wrong exit, especially with luggage, rain, stairs, or crowded transfers."] },
+      { id: "seoul-first-meal", heading: "First meal and water tips", paragraphs: ["Choose a simple first meal near your accommodation: a food court, convenience store, casual restaurant, or café. Seoul has plenty of good food, but day one is not the time to chase a hard-to-find place across town.", "Keep water with you after the airport ride, especially if you arrive in summer or after a long flight. A small snack in your bag helps if check-in takes longer than expected."] },
+      { id: "seoul-etiquette", heading: "Etiquette for your first day in Seoul", paragraphs: ["Keep voices moderate on public transport, queue neatly, and watch how people handle payment, trays, and shared spaces. In restaurants, a little observation often solves more than a rushed question.", "When giving or receiving items, a two-hand gesture or supporting the arm can feel more polite. You do not need perfect etiquette on day one, but patience and attention help." ] }
+    ],
+    checklist: ["Airport and terminal confirmed", "Hotel address saved offline", "Phone data tested", "Airport route chosen by final stop", "Payment and small cash backup ready", "Nearby first meal chosen", "Tomorrow's first route checked"],
+    mistakes: ["Choosing the wrong airport route for your district", "Ignoring station exits", "Leaving data setup until the street", "Planning a late cross-city night out after landing", "Assuming every transit or payment rule is unchanged"],
+    faqs: [
+      { question: "What is the easiest way from Incheon Airport to Seoul?", answer: "It depends on your district and luggage. Airport rail can be efficient, airport buses can reduce transfers, and official taxis or booked rides can suit late arrivals or heavy bags." },
+      { question: "Should I get phone data at the airport in Seoul?", answer: "If you need maps and messages immediately, airport setup can be convenient. Compare eSIM, SIM, roaming, and portable Wi-Fi based on your phone and trip length." },
+      { question: "Do I need cash in Seoul on day one?", answer: "Cards are widely useful, but a small won backup is sensible for minor purchases, older machines, markets, or payment problems." },
+      { question: "Where should I stay the first night in Seoul?", answer: "Choose an area with a clear airport route, reliable check-in, nearby food, and a manageable final walk from the stop or station." }
+    ],
+    related: ["/countries/south-korea-first-24-hours/", "/cities/tokyo-arrival-guide/", "/travel-basics/how-to-use-public-transport-abroad/", "/travel-basics/sim-card-vs-esim/", "/travel-basics/arriving-late-at-night/"],
+    relatedTools: ["/tools/airport-transport-helper/", "/tools/first-day-itinerary-builder/"]
+  },
+  "paris-arrival-guide": {
+    title: "Paris Arrival Guide: Your First 24 Hours in France",
+    seoTitle: "Paris Arrival Guide: Your First 24 Hours in France",
+    description: "A simple Paris arrival guide for first-time visitors, covering airport transport, money, SIM/eSIM, public transport, safety, food, and first-night planning.",
+    intro: "Paris is easier on day one when you resist the urge to prove you have arrived. Get from the airport to your stay, understand the local transport basics, eat something simple, and save the big Paris moment for when your body has caught up.",
+    readingTime: "12 min read",
+    quick: ["Check whether you arrive at CDG, Orly, or another airport before planning the route.", "Choose public transport, official taxi, or transfer by final address and luggage.", "Keep cards ready but carry a modest euro backup.", "Watch phones and bags in crowded station areas.", "Use a polite greeting before asking for help."],
+    sections: [
+      { id: "paris-airport-basics", heading: "Airport arrival basics", paragraphs: ["Paris arrivals can involve Charles de Gaulle, Orly, Beauvais, or another route. Each has different onward transport, travel time, and late-night considerations, so check the airport code before you build the first-day plan.", "Before leaving the terminal, open your accommodation address, check the route, and confirm whether you need a ticket, official taxi rank, app pickup, or transfer meeting point."] },
+      { id: "airport-to-paris", heading: "Getting from the airport to Paris", paragraphs: ["Rail and public transport can be useful, but luggage, stairs, service changes, and the final walk matter. Official taxis or transfers can be better for late arrivals, groups, or stays far from a convenient station.", "If using a taxi, use official ranks or verified bookings. If using rail or bus, confirm tickets, zones, operating hours, and whether the stop is actually close to your accommodation entrance."] },
+      { id: "paris-first-night", heading: "Where to keep the first night simple", paragraphs: ["The best first-night area is not always the most romantic district. Choose a place with a clear airport route, reliable check-in, nearby food, and a walk you can manage with luggage.", "Avoid stacking a museum, dinner reservation, and viewpoint after landing. A short neighborhood loop, bakery or café stop, and early sleep can be the smarter Paris arrival."] },
+      { id: "paris-food-comfort", heading: "Food, water, and first-day comfort", paragraphs: ["A bakery, supermarket, café, or casual neighborhood restaurant is enough for the first meal. If you arrive hungry and tired, choose clear opening hours and a nearby location over a famous recommendation.", "Drink water, charge your phone, and check tomorrow's route before you fall asleep. Paris is easier to enjoy when the first morning starts with a working map and a rested traveler. Keep the first evening close to your room if you are still learning the metro, RER, and neighborhood layout."] },
+      { id: "paris-etiquette", heading: "Etiquette for first-time visitors", paragraphs: ["A greeting before a request matters. Use a simple polite opening, keep your question short, and be ready to show the address or ticket rather than explaining everything in a crowded line.", "Step aside before checking your phone in stations or narrow pavements. Paris is busy, and blocking movement while searching for directions is an easy first-day frustration."] }
+    ],
+    checklist: ["Airport code confirmed", "Accommodation address saved", "Transport ticket or pickup plan understood", "Phone data tested", "Card and euro backup ready", "Nearby food option chosen", "Tomorrow's first route checked"],
+    mistakes: ["Treating all Paris airports as the same", "Choosing the fastest-looking route with too many stairs", "Using unofficial transport offers", "Planning a packed sightseeing route after landing", "Forgetting polite greetings in service interactions"],
+    faqs: [
+      { question: "What is the best way from CDG to Paris for a first-time visitor?", answer: "It depends on your district, luggage, and arrival time. Rail can work well for some routes, while official taxis or transfers may be easier with heavy bags or late arrivals." },
+      { question: "Do I need cash in Paris?", answer: "Cards are widely useful, but a modest euro cash backup can help with small purchases, tips where appropriate, or payment issues." },
+      { question: "Is Paris public transport hard with luggage?", answer: "It can be manageable, but stairs, transfers, and crowded platforms matter. Check the final station and walk before choosing the route." },
+      { question: "What should I avoid on my first day in Paris?", answer: "Avoid unofficial rides, complex cross-city plans, crowded phone use with loose bags, and time-sensitive bookings close to landing." }
+    ],
+    related: ["/countries/france-first-24-hours/", "/travel-basics/how-to-leave-an-airport-safely/", "/travel-basics/cash-vs-card-while-traveling/", "/travel-basics/travel-etiquette-mistakes/", "/travel-basics/airport-taxi-scams/"],
+    relatedTools: ["/tools/arrival-day-walking-distance-helper/", "/tools/airport-transport-helper/"]
+  },
+  "london-arrival-guide": {
+    title: "London Arrival Guide: Your First 24 Hours in the UK",
+    seoTitle: "London Arrival Guide: Your First 24 Hours in the UK",
+    description: "Plan your first 24 hours in London with airport transport tips, public transport basics, money advice, phone setup, safety reminders, and first-day planning.",
+    intro: "London arrival planning begins with one question: which airport? Once that is clear, the city becomes much easier to handle. Pick the route that gets you to the right area with the least first-day friction.",
+    readingTime: "12 min read",
+    quick: ["Check the exact airport before booking airport transport.", "Choose rail, Tube, coach, taxi, or transfer by final area and luggage.", "Contactless-style payment is useful where accepted, but keep a backup.", "Set up phone data before leaving airport Wi-Fi.", "Avoid a complicated cross-city first evening."],
+    sections: [
+      { id: "london-airport-basics", heading: "Airport arrival basics", paragraphs: ["Heathrow, Gatwick, Stansted, Luton, City, and Southend serve different sides of the region. Your airport route should be built around the first-night address, not a generic idea of central London.", "Before leaving the airport, confirm terminal, rail or coach station, taxi rank, ride pickup point, and whether your accommodation check-in works if the flight is delayed."] },
+      { id: "airport-to-london", heading: "Getting from the airport to London", paragraphs: ["Some airport rail services are fast but may arrive at a station far from your stay. Coaches can be economical but slower. Taxis and transfers can be calmer with bags, but distance and traffic matter.", "Compare total effort: ticket purchase, platform changes, stairs, service frequency, final walk, and what happens if you arrive late. The simplest first route is not always the fastest advertised route."] },
+      { id: "london-payment", heading: "Money, cards, and contactless payment basics", paragraphs: ["Card and contactless-style payment is common in London, including much of the transport system where accepted. Still, bring a backup card and know what fees your bank applies.", "Use the same card or device consistently where fare systems require it. Keep a little backup cash if you are uncomfortable relying entirely on phones and foreign cards."] },
+      { id: "london-first-night", heading: "First-night area planning", paragraphs: ["A good first-night London area is one with a direct or simple airport route and a final walk that works with your luggage. A famous neighborhood is less useful if it requires multiple changes after a delayed flight.", "Check whether your accommodation is near the station you think it is. London place names, rail stations, and boroughs can be confusing to newcomers, and a short map line can hide a busy road or stairs."] },
+      { id: "london-habits", heading: "Local etiquette and practical tips", paragraphs: ["Stand clear of doors, let passengers off first, and avoid stopping suddenly at ticket gates or escalator exits. London moves quickly in transport spaces, but staff can be helpful when asked clearly.", "Keep bags controlled in busy stations and pubs, and avoid letting a first-day phone problem turn into a pavement obstacle. Step aside, solve it, and rejoin the flow."] }
+    ],
+    checklist: ["Airport and terminal confirmed", "First-night area route checked", "Phone data or Wi-Fi backup ready", "Card and backup payment prepared", "Final walk reviewed", "Simple nearby food plan chosen", "Tomorrow's first journey saved"],
+    mistakes: ["Booking transport from the wrong London airport", "Choosing accommodation without checking the final rail or Tube leg", "Relying only on a phone wallet with low battery", "Dragging heavy luggage through complex transfers unnecessarily", "Planning a distant evening after a long flight"],
+    faqs: [
+      { question: "Which London airport is easiest for first-time visitors?", answer: "The easiest airport depends on your airline and where you are staying. Heathrow may suit some areas, Gatwick others, and the smaller airports can be much farther from your first-night plan." },
+      { question: "Should I use public transport from the airport to London?", answer: "Often yes, but check luggage, transfers, final walk, and late-night timing. A taxi or transfer can be easier for some arrivals." },
+      { question: "Do I need cash in London?", answer: "Many payments are card-based, but a backup payment method and a small cash reserve are still sensible for arrival day." },
+      { question: "What should I do first after checking in?", answer: "Eat nearby, hydrate, learn your nearest transport stop, and save tomorrow's first route before planning anything ambitious." }
+    ],
+    related: ["/travel-basics/how-to-use-public-transport-abroad/", "/travel-basics/how-to-leave-an-airport-safely/", "/travel-basics/cash-vs-card-while-traveling/", "/travel-basics/low-stress-first-day-new-city/", "/cities/dubai-arrival-guide/", "/cities/singapore-arrival-guide/"],
+    relatedTools: ["/tools/airport-transport-helper/", "/tools/first-day-itinerary-builder/", "/tools/first-day-travel-money-estimator/"]
+  },
+  "new-york-city-arrival-guide": {
+    title: "New York City Arrival Guide: Your First 24 Hours in the USA",
+    seoTitle: "New York City Arrival Guide: Your First 24 Hours in the USA",
+    description: "A practical New York City arrival guide covering JFK, Newark, LaGuardia, transport, money, phone setup, tipping, safety, food, and first-day planning.",
+    intro: "New York feels immediate: noise, choices, traffic, signs, platforms, and people moving with purpose. Your first 24 hours should be simple enough that the city can impress you without exhausting you.",
+    readingTime: "12 min read",
+    quick: ["Confirm whether you land at JFK, Newark, or LaGuardia.", "Choose airport transport by borough, luggage, time, and transfers.", "Set up data before leaving airport Wi-Fi.", "Prepare for card payments, taxes, fees, and tipping.", "Keep the first evening in one neighborhood."],
+    sections: [
+      { id: "nyc-airport-basics", heading: "Airport arrival basics", paragraphs: ["JFK, Newark, and LaGuardia have different transport patterns, pickup zones, and travel times. Before you leave the terminal, confirm your borough, address, and whether your route uses rail, bus, taxi, ride-hailing, or shuttle.", "New York airport areas can feel busy when you are tired. Use official signs, staffed counters, app instructions, or taxi ranks rather than following someone who approaches you with a better-sounding offer."] },
+      { id: "airport-to-nyc", heading: "Getting from the airport to the city", paragraphs: ["Public transport can be cost-effective but may involve transfers and stairs. Official taxis and ride-hailing can be more direct but affected by traffic, tolls, airport fees, and pickup-zone rules.", "Choose the option you can complete calmly. If you are arriving late, traveling with family, or carrying heavy luggage, a verified direct ride may be worth the simplicity."] },
+      { id: "nyc-tipping", heading: "Money, cards, and tipping basics", paragraphs: ["Cards are widely used in New York, but a small cash reserve can help with tips or backup. Remember that listed prices may not include tax, and service situations can involve tipping.", "You do not need to solve every tipping nuance on the plane. Learn the main categories before arrival: taxis or rides, sit-down restaurants, bars, hotel services, and deliveries."] },
+      { id: "nyc-food-comfort", heading: "Food, water, and first-day comfort", paragraphs: ["New York has endless food choices, which is exactly why the first meal should be easy. Choose something near your stay, especially if you are carrying bags or arriving after a long flight.", "Buy water or basic supplies before you become too tired to make decisions. If your room is not ready, ask about luggage storage instead of wandering the city with everything important on you."] },
+      { id: "nyc-first-night", heading: "First-night area planning", paragraphs: ["Stay where the arrival route and next morning make sense. Manhattan may be convenient for many visitors, but parts of Brooklyn, Queens, New Jersey, or airport-area hotels can be practical depending on your plans.", "Check the final walk, building entrance, and late check-in. A short-looking route can feel different with luggage, rain, subway stairs, or a tired phone battery."] }
+    ],
+    checklist: ["Airport and borough confirmed", "Hotel address saved offline", "Phone data tested", "Transport route or pickup zone understood", "Card and small cash backup ready", "Tipping categories reviewed", "Simple nearby food plan chosen"],
+    mistakes: ["Assuming JFK, Newark, and LaGuardia use the same route", "Accepting unofficial ride offers", "Forgetting tolls, fees, taxes, and tips", "Dragging luggage through unnecessary transfers", "Planning a cross-borough first evening after a long flight"],
+    faqs: [
+      { question: "What is the easiest airport transport for first-time visitors to New York?", answer: "It depends on your airport, borough, luggage, and arrival time. Public transport can work well for some routes, while official taxis or verified rides are simpler for others." },
+      { question: "Should I take a taxi or subway from the airport?", answer: "Compare the full route. Subway or rail may be cheaper, but taxis or rides can reduce transfers with luggage or late arrivals." },
+      { question: "Do I need cash in New York City?", answer: "Cards are widely accepted, but small cash can help with tips, backup, or occasional small purchases." },
+      { question: "What should I avoid on my first day in NYC?", answer: "Avoid unofficial rides, complex cross-city plans, loose phone use near traffic, and expensive timed bookings close to landing." }
+    ],
+    related: ["/countries/united-states-first-24-hours/", "/travel-basics/how-to-leave-an-airport-safely/", "/travel-basics/cash-vs-card-while-traveling/", "/travel-basics/airport-taxi-scams/", "/travel-basics/arriving-late-at-night/", "/cities/london-arrival-guide/"],
+    relatedTools: ["/tools/airport-transport-helper/", "/tools/first-day-itinerary-builder/"]
   }
 };
 
@@ -669,7 +945,7 @@ function basicGuide(d: typeof basicBlueprints[number]): Guide {
     "first-international-trip-checklist": {
       seoTitle: "First International Trip Checklist: Before You Fly | EZ Roam Guide",
       description: "Planning your first international trip? Use this practical checklist for documents, money, phone setup, packing, airport arrival, safety, and day one.",
-      related: ["/travel-basics/plan-your-first-24-hours-abroad/", "/travel-basics/sim-card-vs-esim/", "/travel-basics/cash-vs-card-while-traveling/", "/travel-basics/travel-safety-basics/"],
+      related: ["/travel-basics/plan-your-first-24-hours-abroad/", "/travel-basics/sim-card-vs-esim/", "/countries/south-korea-first-24-hours/", "/countries/united-states-first-24-hours/", "/travel-basics/cash-vs-card-while-traveling/", "/travel-basics/travel-safety-basics/"],
       relatedTools: ["/tools/first-time-traveler-confidence-checker/", "/tools/travel-adapter-charging-checklist/"],
       faqs: [
         { question: "What should I check first for an international trip?", answer: "Start with passport validity, destination entry requirements, transit rules, and health requirements. These can take the longest to correct." },
@@ -680,7 +956,7 @@ function basicGuide(d: typeof basicBlueprints[number]): Guide {
     "sim-card-vs-esim": {
       seoTitle: "SIM Card vs eSIM for International Travel | EZ Roam Guide",
       description: "SIM card or eSIM for travel? Compare setup, compatibility, cost, calls, verification texts, hotspot use, reliability, and the right option.",
-      related: ["/countries/sri-lanka-first-24-hours/", "/countries/japan-first-24-hours/", "/countries/thailand-first-24-hours/", "/countries/singapore-first-24-hours/"],
+      related: ["/countries/sri-lanka-first-24-hours/", "/countries/japan-first-24-hours/", "/countries/south-korea-first-24-hours/", "/countries/france-first-24-hours/", "/countries/thailand-first-24-hours/", "/countries/singapore-first-24-hours/"],
       faqs: [
         { question: "Is an eSIM better than a physical SIM for travel?", answer: "An eSIM is faster to arrange and keeps the physical slot free, but a local SIM may include a local number or better long-stay value. Phone compatibility and coverage decide the answer." },
         { question: "Can I keep my normal number active?", answer: "Many dual-SIM phones let you keep the home line active for calls or verification texts while using a travel line for data. Disable expensive data roaming and review your carrier's charges." },
@@ -795,7 +1071,7 @@ function basicGuide(d: typeof basicBlueprints[number]): Guide {
         { question: "What is dynamic currency conversion?", answer: "It is when a terminal offers to charge in your home currency. The familiar amount can include a poor exchange rate, so read the screen carefully before choosing." },
         { question: "What should I do if my card is declined?", answer: "Try a backup payment method, move away from pressure, and contact your bank through its official app or card number. Do not use a phone number supplied by a stranger." }
       ],
-      related: ["/travel-basics/cash-vs-card-while-traveling/", "/travel-basics/airport-arrival-checklist/", "/travel-basics/best-airport-transport-new-country/", "/travel-basics/travel-safety-basics/", "/countries/singapore-first-24-hours/"]
+      related: ["/travel-basics/cash-vs-card-while-traveling/", "/travel-basics/airport-arrival-checklist/", "/travel-basics/best-airport-transport-new-country/", "/travel-basics/travel-safety-basics/", "/countries/france-first-24-hours/", "/countries/united-states-first-24-hours/"]
     },
     "no-phone-signal-after-landing": {
       seoTitle: "No Phone Signal After Landing Abroad? What to Do | EZ Roam Guide",
@@ -850,7 +1126,7 @@ function basicGuide(d: typeof basicBlueprints[number]): Guide {
         { question: "Is it better to explore near the hotel first?", answer: "Yes for most travelers. Learning nearby streets, food options, transport stops, and landmarks makes the rest of the trip easier." },
         { question: "What is a good first-day itinerary?", answer: "A calm plan is airport transfer, check-in or bag drop, simple food, short orientation walk, water and supplies, tomorrow's route check, and rest." }
       ],
-      related: ["/travel-basics/plan-your-first-24-hours-abroad/", "/travel-basics/first-night-abroad-where-to-stay/", "/travel-basics/best-airport-transport-new-country/", "/travel-basics/offline-travel-documents-checklist/", "/cities/bangkok-arrival-guide/"]
+      related: ["/travel-basics/plan-your-first-24-hours-abroad/", "/travel-basics/first-night-abroad-where-to-stay/", "/travel-basics/best-airport-transport-new-country/", "/travel-basics/offline-travel-documents-checklist/", "/cities/bangkok-arrival-guide/", "/cities/paris-arrival-guide/", "/cities/london-arrival-guide/"]
     }
   };
   const enhancement = enhancements[guide.slug];
