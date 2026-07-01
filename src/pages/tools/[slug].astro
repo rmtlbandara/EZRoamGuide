@@ -1,15 +1,15 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Breadcrumb from "../../components/Breadcrumb.astro";
-import { findGuideByHref, hrefFor, site, type Guide } from "../../data/site";
-import { hrefForTool, toolUrl, travelTools, type TravelTool } from "../../data/tools";
+import { findGuideByHref, type Guide } from "../../data/site";
+import { hrefForTool, travelTools, type TravelTool } from "../../data/tools";
+import { absoluteUrl, breadcrumbListSchema, faqPageSchema, toolWebApplicationSchema, webPageSchema } from "../../data/schema";
 
 export function getStaticPaths() {
   return travelTools.map((tool) => ({ params: { slug: tool.slug }, props: { tool } }));
 }
 
 const { tool } = Astro.props as { tool: TravelTool };
-const url = toolUrl(tool);
 const relatedGuides = tool.relatedGuides.map((href) => {
   const guide = findGuideByHref(href) as Guide | undefined;
   const relatedTool = travelTools.find((candidate) => hrefForTool(candidate) === href);
@@ -19,44 +19,20 @@ const relatedGuides = tool.relatedGuides.map((href) => {
     meta: guide ? `Updated: ${guide.lastUpdated} · ${guide.readingTime}` : relatedTool ? `${relatedTool.category} · ${relatedTool.readingTime}` : undefined
   };
 });
-const breadcrumbSchema = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Home", item: site.url },
-    { "@type": "ListItem", position: 2, name: "Tools", item: new URL("/tools/", site.url).toString() },
-    { "@type": "ListItem", position: 3, name: tool.title, item: url }
-  ]
-};
-const faqSchema = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: tool.faqs.map((faq) => ({
-    "@type": "Question",
-    name: faq.question,
-    acceptedAnswer: { "@type": "Answer", text: faq.answer }
-  }))
-};
-const appSchema = {
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  name: tool.title,
-  url,
-  applicationCategory: "TravelApplication",
-  operatingSystem: "Any modern device",
-  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
-  description: tool.description,
-  publisher: { "@type": "Organization", name: site.name, url: site.url }
-};
-const webPageSchema = {
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  name: tool.title,
-  url,
-  description: tool.description
-};
+const relatedLinks = [
+  ...relatedGuides,
+  { href: "/tools/", title: "See more free travel planning tools", meta: "Tools hub · Arrival planning helpers" }
+];
+const breadcrumbSchema = breadcrumbListSchema([
+  { name: "Home", url: absoluteUrl("/") },
+  { name: "Tools", url: absoluteUrl("/tools/") },
+  { name: tool.title, url: absoluteUrl(hrefForTool(tool)) }
+]);
+const faqSchema = faqPageSchema(tool.faqs);
+const appSchema = toolWebApplicationSchema(tool);
+const pageSchema = webPageSchema(tool.title, tool.description, hrefForTool(tool));
 ---
-<BaseLayout title={`${tool.title} | EZ Roam Guide`} description={tool.description} canonical={hrefForTool(tool)} schema={[breadcrumbSchema, faqSchema, webPageSchema, appSchema]}>
+<BaseLayout title={`${tool.title} | EZ Roam Guide`} description={tool.description} canonical={hrefForTool(tool)} schema={[breadcrumbSchema, faqSchema, pageSchema, appSchema].filter(Boolean)}>
   <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Tools", href: "/tools/" }, { label: tool.title }]} />
   <header class="page-head">
     <div class="container">
@@ -148,7 +124,7 @@ const webPageSchema = {
       <section class="article-section" id="related">
         <h2>Related guides and tools</h2>
         <div class="related">
-          {relatedGuides.map((item) => (
+          {relatedLinks.map((item) => (
             <a href={item.href}>
               <span>{item.title} →</span>
               {item.meta && <small>{item.meta}</small>}

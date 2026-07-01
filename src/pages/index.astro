@@ -3,13 +3,9 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import GuideCard from "../components/GuideCard.astro";
 import SearchBox from "../components/SearchBox.astro";
 import ToolCard from "../components/ToolCard.astro";
-import { basicGuides, cityGuides, countryGuides, site } from "../data/site";
+import { basicGuides, cityGuides, countryGuides } from "../data/site";
 import { travelTools } from "../data/tools";
 
-const schema = [
-  { "@context": "https://schema.org", "@type": "WebSite", name: site.name, url: site.url, description: site.description },
-  { "@context": "https://schema.org", "@type": "Organization", name: site.name, url: site.url, email: site.email }
-];
 const featuredCountrySlugs = ["south-korea-first-24-hours", "france-first-24-hours", "australia-first-24-hours", "united-states-first-24-hours", "japan-first-24-hours", "singapore-first-24-hours"];
 const featuredCountries = featuredCountrySlugs.map((slug) => countryGuides.find((guide) => guide.slug === slug)).filter(Boolean);
 const featuredCitySlugs = ["seoul-arrival-guide", "paris-arrival-guide", "london-arrival-guide", "new-york-city-arrival-guide", "tokyo-arrival-guide", "dubai-arrival-guide"];
@@ -19,7 +15,7 @@ const latestGuides = latestGuideSlugs.map((slug) => [...countryGuides, ...cityGu
 const homepageToolSlugs = ["first-24-hours-travel-planner", "hotel-address-card-generator", "first-time-traveler-confidence-checker"];
 const homepageTools = homepageToolSlugs.map((slug) => travelTools.find((tool) => tool.slug === slug)).filter(Boolean);
 ---
-<BaseLayout title="EZ Roam Guide – First 24 Hours Travel Guides" description="Practical first-day travel guides for airport arrivals, transport, SIMs, money, safety, etiquette, and planning your first 24 hours abroad." schema={schema}>
+<BaseLayout title="EZ Roam Guide – First 24 Hours Travel Guides" description="Practical first-day travel guides for airport arrivals, transport, SIMs, money, safety, etiquette, and planning your first 24 hours abroad.">
   <section class="hero">
     <div class="container hero-inner">
       <div class="hero-text">

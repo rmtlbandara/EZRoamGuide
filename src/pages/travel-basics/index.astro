@@ -6,13 +6,37 @@ import Breadcrumb from "../../components/Breadcrumb.astro";
 import SectionFilter from "../../components/SectionFilter.astro";
 import { basicGuides } from "../../data/site";
 import { travelTools } from "../../data/tools";
+import { absoluteUrl, breadcrumbListSchema, webPageSchema } from "../../data/schema";
 
 const helpfulToolSlugs = ["first-time-traveler-confidence-checker", "hotel-address-card-generator", "arrival-day-walking-distance-helper"];
 const helpfulTools = helpfulToolSlugs.map((slug) => travelTools.find((tool) => tool.slug === slug)).filter(Boolean);
+const title = "Travel Basics for International Travelers | EZ Roam Guide";
+const description = "Clear travel basics for first-time international travelers: airport safety, SIMs, money, public transport, etiquette, scams, and first-day planning.";
+const breadcrumbSchema = breadcrumbListSchema([
+  { name: "Home", url: absoluteUrl("/") },
+  { name: "Travel Basics", url: absoluteUrl("/travel-basics/") }
+]);
+const pageSchema = webPageSchema("Travel Basics for International Travelers", description, "/travel-basics/");
 ---
-<BaseLayout title="Travel Basics for International Travelers | EZ Roam Guide" description="Clear travel basics for first-time international travelers: airport safety, SIMs, money, public transport, etiquette, scams, and first-day planning.">
+<BaseLayout title={title} description={description} schema={[breadcrumbSchema, pageSchema]}>
   <Breadcrumb items={[{label:"Home",href:"/"},{label:"Travel Basics"}]} />
   <header class="page-head"><div class="container"><p class="eyebrow">Travel basics</p><h1>Skills that travel well</h1><p class="lede">Straightforward guides to the decisions that follow you across borders, written for global readers and first-time international travelers.</p></div></header>
+  <section class="section alt">
+    <div class="container feature-grid">
+      <div>
+        <p class="eyebrow">Content clusters</p>
+        <h2>Use these articles by arrival problem</h2>
+      </div>
+      <div class="related">
+        <a href="/travel-basics/airport-arrival-checklist/"><span>Airport arrival checklist for first-time travelers →</span><small>Airport arrival and transport</small></a>
+        <a href="/travel-basics/sim-card-vs-esim/"><span>SIM Card vs eSIM for International Travel →</span><small>SIM, eSIM, and internet access</small></a>
+        <a href="/travel-basics/cash-vs-card-while-traveling/"><span>Cash vs card when traveling abroad →</span><small>Travel money and first-day budget</small></a>
+        <a href="/travel-basics/travel-safety-basics/"><span>First-day travel safety basics →</span><small>Safety, scams, and arrival mistakes</small></a>
+        <a href="/travel-basics/first-night-abroad-where-to-stay/"><span>Choose your first-night stay area →</span><small>First-night stay and local basics</small></a>
+        <a href="/tools/first-24-hours-travel-planner/"><span>Use the First 24 Hours Travel Planner →</span><small>Turn guidance into a simple plan</small></a>
+      </div>
+    </div>
+  </section>
   <section class="section"><div class="container">
     <SectionFilter targetId="travel-basics-list" label="Filter this section" placeholder="Filter topics such as SIM, airport transport, cash, safety, or documents" noResults="No travel basics article matches yet. Try a broader word such as airport, SIM, cash, safety, or transport." />
     <div id="travel-basics-list" class="card-grid" data-filter-scope>{basicGuides.map((guide) => <GuideCard guide={guide} />)}</div>

@@ -3,6 +3,7 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import "../styles/global.css";
 import { site } from "../data/site";
+import { organizationSchema, websiteSchema } from "../data/schema";
 
 interface Props {
   title: string;
@@ -13,7 +14,8 @@ interface Props {
 }
 const { title, description, canonical = Astro.url.pathname, type = "website", schema } = Astro.props;
 const canonicalUrl = new URL(canonical, site.url).toString();
-const schemas = Array.isArray(schema) ? schema : schema ? [schema] : [];
+const pageSchemas = Array.isArray(schema) ? schema : schema ? [schema] : [];
+const schemas = [websiteSchema, organizationSchema, ...pageSchemas].filter(Boolean);
 ---
 <!doctype html>
 <html lang="en">

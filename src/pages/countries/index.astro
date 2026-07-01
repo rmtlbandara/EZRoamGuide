@@ -4,12 +4,49 @@ import GuideCard from "../../components/GuideCard.astro";
 import Breadcrumb from "../../components/Breadcrumb.astro";
 import SectionFilter from "../../components/SectionFilter.astro";
 import { countryGuides } from "../../data/site";
+import { absoluteUrl, breadcrumbListSchema, webPageSchema } from "../../data/schema";
+
+const title = "Country Arrival Guides | EZ Roam Guide";
+const description = "Browse practical first 24 hours country guides covering airports, transport, SIMs, money, safety, food, and local etiquette.";
+const breadcrumbSchema = breadcrumbListSchema([
+  { name: "Home", url: absoluteUrl("/") },
+  { name: "Countries", url: absoluteUrl("/countries/") }
+]);
+const pageSchema = webPageSchema("Country Arrival Guides", description, "/countries/");
 ---
-<BaseLayout title="Country Arrival Guides | EZ Roam Guide" description="Browse practical first 24 hours country guides covering airports, transport, SIMs, money, safety, food, and local etiquette.">
+<BaseLayout title={title} description={description} schema={[breadcrumbSchema, pageSchema]}>
   <Breadcrumb items={[{label:"Home",href:"/"},{label:"Countries"}]} />
   <header class="page-head"><div class="container"><p class="eyebrow">Country guides</p><h1>Your first 24 hours, country by country</h1><p class="lede">Start with the systems that shape an arrival: entry formalities, airport transport, connectivity, money, local movement, and everyday etiquette.</p></div></header>
+  <section class="section alt">
+    <div class="container feature-grid">
+      <div>
+        <p class="eyebrow">How to use country guides</p>
+        <h2>Begin with the big arrival system</h2>
+      </div>
+      <div>
+        <p>Country guides explain the practical rules and habits that affect many destinations inside the same country: airport arrival flow, SIM choices, cash and cards, safety reminders, food basics, and local etiquette.</p>
+        <p>After choosing a country, use a city guide for the airport-to-neighborhood details and a Travel Basics article for deeper first-day decisions.</p>
+        <div class="actions">
+          <a class="button secondary" href="/cities/">See city arrival guides</a>
+          <a class="button secondary" href="/travel-basics/">Read Travel Basics</a>
+          <a class="button secondary" href="/tools/">Open planning tools</a>
+        </div>
+      </div>
+    </div>
+  </section>
   <section class="section"><div class="container">
     <SectionFilter targetId="country-guide-list" label="Filter this section" placeholder="Filter country guides by country or topic" noResults="No country guide matches yet. Try a broader word such as airport, SIM, money, or safety." />
     <div id="country-guide-list" class="card-grid" data-filter-scope>{countryGuides.map((guide) => <GuideCard guide={guide} />)}</div>
   </div></section>
+  <section class="section alt">
+    <div class="container feature-grid">
+      <div><p class="eyebrow">First-day clusters</p><h2>Connect the country guide to your arrival plan</h2></div>
+      <div class="related">
+        <a href="/travel-basics/how-to-leave-an-airport-safely/"><span>Plan your first airport exit →</span><small>Airport arrival and transport</small></a>
+        <a href="/travel-basics/sim-card-vs-esim/"><span>Compare SIM and eSIM options →</span><small>Internet access after landing</small></a>
+        <a href="/travel-basics/money-first-24-hours-abroad/"><span>Prepare first-day travel money →</span><small>Cash, cards, and backup money</small></a>
+        <a href="/travel-basics/travel-safety-basics/"><span>Review first-day safety basics →</span><small>Scams, documents, and calm choices</small></a>
+      </div>
+    </div>
+  </section>
 </BaseLayout>
