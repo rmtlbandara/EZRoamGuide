@@ -247,7 +247,7 @@ function countryGuide(d: typeof countryBlueprints[number]): Guide {
   return {
     kind: "country", slug: d.slug, label: d.name, eyebrow: "Country arrival guide",
     title: `First 24 Hours in ${d.name}`,
-    seoTitle: `First 24 Hours in ${d.name}: Arrival Guide | EZ Roam Guide`,
+    seoTitle: `${d.name} First 24 Hours Travel Guide | EZ Roam Guide`,
     description: `A practical first-day guide to ${d.name}, covering airport transport, SIMs, money, safety, etiquette, and a calm arrival plan.`,
     intro: `Landing in ${d.name} is easier when the first decisions are already simple. This guide takes you from the arrivals hall to a settled first evening, without turning day one into a race.`,
     lastUpdated: updated, readingTime: "10 min read",
@@ -266,7 +266,7 @@ function countryGuide(d: typeof countryBlueprints[number]): Guide {
 
 const countryEnhancements: Record<string, Partial<Guide>> = {
   "sri-lanka-first-24-hours": {
-    seoTitle: "First 24 Hours in Sri Lanka: Arrival Guide | EZ Roam Guide",
+    seoTitle: "Sri Lanka First 24 Hours Travel Guide | EZ Roam Guide",
     description: "Arriving in Sri Lanka? Plan airport transport, SIM setup, cash, your first night, safety, etiquette, late arrivals, and the first 24 hours.",
     sections: [
       { id: "first-steps", heading: "The first thing to do after arriving", paragraphs: ["Before joining a SIM, taxi, or exchange queue, connect to airport Wi-Fi and message your accommodation. Confirm whether you are going to Colombo, Negombo, or directly elsewhere; drivers may hear “Colombo” as the city even when a booking is closer to the airport.", "Keep the address in English and, if supplied by the property, Sinhala or Tamil. A nearby landmark and telephone number help when a map pin falls on the wrong entrance."] },
@@ -339,7 +339,7 @@ const countryEnhancements: Record<string, Partial<Guide>> = {
   },
   "south-korea-first-24-hours": {
     title: "First 24 Hours in South Korea: Arrival Guide for First-Time Travelers",
-    seoTitle: "First 24 Hours in South Korea: Arrival Guide for First-Time Travelers",
+    seoTitle: "South Korea First 24 Hours Travel Guide | EZ Roam Guide",
     description: "Plan your first 24 hours in South Korea with simple tips for airport arrival, transport, SIM/eSIM, money, etiquette, safety, and first-day comfort.",
     intro: "Your first day in South Korea is easier when you separate the important arrival tasks from the excitement of being there. Focus first on getting connected, choosing the right airport route, handling payment basics, and reaching your first stay with enough energy left to eat and rest.",
     readingTime: "13 min read",
@@ -365,7 +365,7 @@ const countryEnhancements: Record<string, Partial<Guide>> = {
   },
   "france-first-24-hours": {
     title: "First 24 Hours in France: Airport, Transport, Money and Etiquette Guide",
-    seoTitle: "First 24 Hours in France: Airport, Transport, Money and Etiquette Guide",
+    seoTitle: "France First 24 Hours Travel Guide | EZ Roam Guide",
     description: "A simple first-day France arrival guide covering airport transport, money, SIM/eSIM, local etiquette, safety, food, and first-night planning.",
     intro: "Arriving in France feels smoother when you solve the ordinary things first: the route from the airport, a working phone, a payment backup, a calm first meal, and enough rest to make better decisions tomorrow.",
     readingTime: "13 min read",
@@ -392,7 +392,7 @@ const countryEnhancements: Record<string, Partial<Guide>> = {
   },
   "australia-first-24-hours": {
     title: "First 24 Hours in Australia: Arrival Guide for Long-Haul Travelers",
-    seoTitle: "First 24 Hours in Australia: Arrival Guide for Long-Haul Travelers",
+    seoTitle: "Australia First 24 Hours Travel Guide | EZ Roam Guide",
     description: "Plan your first 24 hours in Australia with practical tips for airport arrival, transport, money, phone setup, jet lag, safety, and first-day planning.",
     intro: "Australia often begins with a long flight, a tired body, and a city that may be larger than it looks on a map. The first day should protect your energy: clear the airport, reach your stay, eat, hydrate, and leave major decisions until you are rested.",
     readingTime: "13 min read",
@@ -419,7 +419,7 @@ const countryEnhancements: Record<string, Partial<Guide>> = {
   },
   "united-states-first-24-hours": {
     title: "First 24 Hours in the United States: Arrival Guide for International Visitors",
-    seoTitle: "First 24 Hours in the United States: Arrival Guide for International Visitors",
+    seoTitle: "United States First 24 Hours Travel Guide | EZ Roam Guide",
     description: "A practical first-day USA arrival guide for international visitors, covering airport exits, transport, money, phone setup, tipping, safety, and planning.",
     intro: "The United States is not one arrival system. A first day in New York, Los Angeles, Chicago, Miami, or Dallas can feel completely different, so your best preparation is city-specific transport, a working phone, card readiness, and a basic understanding of tipping.",
     readingTime: "13 min read",
@@ -474,7 +474,7 @@ function cityGuide(d: typeof cityBlueprints[number]): Guide {
   return {
     kind: "city", slug, label: name, eyebrow: "City arrival guide",
     title: `${name} Arrival Guide: Your First 24 Hours`,
-    seoTitle: `${name} Arrival Guide: First 24 Hours | EZ Roam Guide`,
+    seoTitle: `${name} First 24 Hours City Guide | EZ Roam Guide`,
     description: `Plan a calm first day in ${name}: airport transfer, transport, money, internet, food, etiquette, safety, and an easy arrival schedule.`,
     intro: `${name} becomes much more manageable when you solve arrival transport, connectivity, and one good meal before thinking about sightseeing. Here is a grounded plan for the hours when you are most tired and least familiar with the city.`,
     lastUpdated: updated, readingTime: "8 min read",
@@ -556,7 +556,7 @@ const cityEnhancements: Record<string, Partial<Guide>> = {
   },
   "seoul-arrival-guide": {
     title: "Seoul Arrival Guide: Your First 24 Hours in South Korea",
-    seoTitle: "Seoul Arrival Guide: Your First 24 Hours in South Korea",
+    seoTitle: "Seoul First 24 Hours City Guide | EZ Roam Guide",
     description: "Plan your first 24 hours in Seoul with simple tips for airport transport, SIM/eSIM, T-money-style transit planning, money, food, safety, and rest.",
     intro: "Seoul is organized, fast, and large enough that a first arrival works best with a simple sequence: land, connect, choose the right airport route, reach your district, eat nearby, and learn tomorrow's first transport step.",
     readingTime: "12 min read",
@@ -581,7 +581,7 @@ const cityEnhancements: Record<string, Partial<Guide>> = {
   },
   "paris-arrival-guide": {
     title: "Paris Arrival Guide: Your First 24 Hours in France",
-    seoTitle: "Paris Arrival Guide: Your First 24 Hours in France",
+    seoTitle: "Paris First 24 Hours City Guide | EZ Roam Guide",
     description: "A simple Paris arrival guide for first-time visitors, covering airport transport, money, SIM/eSIM, public transport, safety, food, and first-night planning.",
     intro: "Paris is easier on day one when you resist the urge to prove you have arrived. Get from the airport to your stay, understand the local transport basics, eat something simple, and save the big Paris moment for when your body has caught up.",
     readingTime: "12 min read",
@@ -606,7 +606,7 @@ const cityEnhancements: Record<string, Partial<Guide>> = {
   },
   "london-arrival-guide": {
     title: "London Arrival Guide: Your First 24 Hours in the UK",
-    seoTitle: "London Arrival Guide: Your First 24 Hours in the UK",
+    seoTitle: "London First 24 Hours City Guide | EZ Roam Guide",
     description: "Plan your first 24 hours in London with airport transport tips, public transport basics, money advice, phone setup, safety reminders, and first-day planning.",
     intro: "London arrival planning begins with one question: which airport? Once that is clear, the city becomes much easier to handle. Pick the route that gets you to the right area with the least first-day friction.",
     readingTime: "12 min read",
@@ -631,7 +631,7 @@ const cityEnhancements: Record<string, Partial<Guide>> = {
   },
   "new-york-city-arrival-guide": {
     title: "New York City Arrival Guide: Your First 24 Hours in the USA",
-    seoTitle: "New York City Arrival Guide: Your First 24 Hours in the USA",
+    seoTitle: "New York City First 24 Hours City Guide | EZ Roam Guide",
     description: "A practical New York City arrival guide covering JFK, Newark, LaGuardia, transport, money, phone setup, tipping, safety, food, and first-day planning.",
     intro: "New York feels immediate: noise, choices, traffic, signs, platforms, and people moving with purpose. Your first 24 hours should be simple enough that the city can impress you without exhausting you.",
     readingTime: "12 min read",

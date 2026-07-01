@@ -184,6 +184,7 @@ li + li { margin-top: .55rem; }
 .footer-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 3rem; }
 .site-footer .brand { color: white; }
 .site-footer nav { display: flex; flex-wrap: wrap; gap: .7rem 1.2rem; }
+.site-footer nav a { display: inline-flex; min-height: 40px; align-items: center; }
 .site-footer a { color: #e4efec; }
 .site-footer small { display: block; margin-top: 2rem; color: #aebdb9; max-width: 900px; }
 .not-found { min-height: 65vh; display: grid; place-items: center; text-align: center; }

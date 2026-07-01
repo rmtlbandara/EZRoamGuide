@@ -56,7 +56,7 @@ const webPageSchema = {
   description: tool.description
 };
 ---
-<BaseLayout title={tool.seoTitle} description={tool.description} canonical={hrefForTool(tool)} schema={[breadcrumbSchema, faqSchema, webPageSchema, appSchema]}>
+<BaseLayout title={`${tool.title} | EZ Roam Guide`} description={tool.description} canonical={hrefForTool(tool)} schema={[breadcrumbSchema, faqSchema, webPageSchema, appSchema]}>
   <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Tools", href: "/tools/" }, { label: tool.title }]} />
   <header class="page-head">
     <div class="container">

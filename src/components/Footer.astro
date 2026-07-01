@@ -1,8 +1,8 @@
 ---
 const links = [
-  ["Tools", "/tools/"], ["Travel Basics", "/travel-basics/"], ["Search", "/search/"], ["About", "/about/"], ["Contact", "/contact/"], ["Privacy Policy", "/privacy-policy/"],
-  ["Terms of Use", "/terms-of-use/"], ["Disclaimer", "/disclaimer/"],
-  ["Editorial Policy", "/editorial-policy/"], ["Cookie Policy", "/cookie-policy/"], ["Sitemap", "/sitemap/"]
+  ["Countries", "/countries/"], ["Cities", "/cities/"], ["Travel Basics", "/travel-basics/"], ["Tools", "/tools/"], ["Search", "/search/"],
+  ["About", "/about/"], ["Contact", "/contact/"], ["Privacy Policy", "/privacy-policy/"], ["Editorial Policy", "/editorial-policy/"],
+  ["Terms", "/terms-of-use/"], ["Disclaimer", "/disclaimer/"], ["Cookie Policy", "/cookie-policy/"], ["Sitemap", "/sitemap/"]
 ];
 ---
 <footer class="site-footer">
@@ -10,13 +10,13 @@ const links = [
     <div class="footer-grid">
       <div>
         <a class="brand" href="/"><span class="brand-mark" aria-hidden="true">EZ</span><span>EZ Roam Guide</span></a>
-        <p>Simple travel guides for your first day in a new place.</p>
+        <p>Practical first-day travel guidance for arriving in a new country or city with more confidence.</p>
       </div>
       <nav aria-label="Footer navigation">
         {links.map(([label, href]) => <a href={href}>{label}</a>)}
       </nav>
     </div>
-    <small>EZ Roam Guide provides general travel information for planning purposes. Always confirm official rules, local laws, and travel requirements before your trip.</small>
+    <small>EZ Roam Guide provides general travel planning information, not official legal, immigration, medical, or safety advice. Always confirm current rules and requirements with the responsible authority before you travel.</small>
     <small>© {new Date().getFullYear()} EZ Roam Guide. All rights reserved.</small>
   </div>
 </footer>
