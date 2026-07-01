@@ -25,6 +25,31 @@ const firstSections = guide.sections.slice(0, midpoint);
 const secondSections = guide.sections.slice(midpoint);
 const mistakesHeading = guide.mistakesHeading ?? "Common first-day mistakes";
 const checklistHeading = guide.checklistHeading ?? "First 24 hours checklist";
+const isDestinationGuide = guide.kind === "country" || guide.kind === "city";
+const audienceItems = guide.kind === "country"
+  ? ["First-time international travelers who want the country-level arrival basics before choosing a city route.", "Solo travelers, couples, and families who need a calm airport-to-first-night plan.", "Late-night arrivals who want fewer decisions after immigration, baggage, and transport."]
+  : guide.kind === "city"
+    ? ["Travelers deciding how to get from the airport or station to their first stay.", "Visitors carrying luggage who want simple first-night, food, transport, and safety priorities.", "Anyone arriving tired, late, or unfamiliar with the city layout."]
+    : ["Travelers preparing for the practical decisions that happen in the first 24 hours abroad.", "First-time international travelers who want a simple framework instead of scattered advice.", "People who want to connect this topic to airport arrival, money, safety, transport, and first-night planning."];
+const practicalExamples = guide.kind === "country"
+  ? ["If you land late, keep the first transfer direct and choose accommodation that is easy to reach rather than chasing the cheapest route.", "If you rely on mobile maps, test data and messaging before leaving the airport Wi-Fi area.", "If you are unsure about cash, prepare a modest first-day amount and keep a card backup separate."]
+  : guide.kind === "city"
+    ? ["If your accommodation is far from the airport, compare the final door-to-door route, not just the fastest train or cheapest ride.", "If the last walk from a station looks complicated, choose a simpler transfer while you still have luggage.", "If you arrive tired, keep the first evening to check-in, food, water, charging devices, and tomorrow’s first route."]
+    : ["If this topic affects airport exit, solve it before you leave the terminal or station area.", "If you are unsure, choose the option you can verify and reverse easily instead of the most complicated plan.", "If a decision depends on live rules, prices, or schedules, confirm current details before relying on it."];
+const firstDayFlow = isDestinationGuide
+  ? [
+      ["Hour 0–1", "Clear arrival formalities, collect bags, pause in a staffed area, and check phone battery, documents, and first-night address."],
+      ["Hour 1–2", "Set up or test internet, prepare payment backup, and choose official transport based on your final stop and luggage."],
+      ["Hour 2–4", "Travel to your accommodation, check in or store bags, hydrate, and avoid adding complicated errands."],
+      ["Hour 4–8", "Eat a simple meal, buy only basic supplies, take one short orientation walk if you feel steady, and keep valuables organized."],
+      ["Hour 8–24", "Sleep, charge devices, review tomorrow’s first route, and leave sightseeing or admin tasks for when you are rested."]
+    ]
+  : [
+      ["Before departure", "Save the key details offline and decide what you will handle before landing versus after arrival."],
+      ["At the airport", "Use staffed areas, official counters, clear signs, and verified apps while you solve the practical first-day task."],
+      ["Before leaving", "Confirm your route, payment method, phone connection, address, and backup plan."],
+      ["First evening", "Keep the plan light: check in, eat, hydrate, charge devices, and prepare tomorrow’s first step."]
+    ];
 ---
 <BaseLayout title={guide.seoTitle} description={guide.description} canonical={hrefFor(guide)} type="article" schema={schemas}>
   <Breadcrumb items={[{ label: "Home", href: "/" }, { label: sectionName, href: sectionHref }, { label: guide.label }]} />
@@ -46,24 +71,38 @@ const checklistHeading = guide.checklistHeading ?? "First 24 hours checklist";
         <h2 id="quick-summary">Quick summary</h2>
         <ul>{guide.quick.map((item) => <li>{item}</li>)}</ul>
       </section>
+      <section class="article-section" id="who-this-guide-is-for">
+        <h2>Who this guide is for</h2>
+        <ul class="plain-list compact-list">{audienceItems.map((item) => <li>{item}</li>)}</ul>
+      </section>
       {firstSections.map((section) => <section class="article-section" id={section.id}><h2>{section.heading}</h2>{section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}</section>)}
+      <section class="article-section" id="practical-examples">
+        <h2>Practical first-day examples</h2>
+        <ul>{practicalExamples.map((item) => <li>{item}</li>)}</ul>
+      </section>
       {secondSections.map((section) => <section class="article-section" id={section.id}><h2>{section.heading}</h2>{section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}</section>)}
+      <section class="article-section" id="first-24-hour-flow">
+        <h2>{isDestinationGuide ? "Suggested first 24-hour flow" : "How to use this during your first 24 hours"}</h2>
+        <ol class="flow-list">
+          {firstDayFlow.map(([time, action]) => <li><strong>{time}</strong><span>{action}</span></li>)}
+        </ol>
+      </section>
       {guide.mistakes && <section class="callout warm article-section" id="mistakes"><h2>{mistakesHeading}</h2><ul>{guide.mistakes.map((item) => <li>{item}</li>)}</ul></section>}
       {guide.checklist && <section class="callout article-section" id="checklist"><h2>{checklistHeading}</h2><ul>{guide.checklist.map((item) => <li>{item}</li>)}</ul></section>}
       <aside class="note"><strong>Check before you travel:</strong> Rules, prices, entry procedures, transport options, health advice, and safety conditions can change. Use this guide as a practical starting point and confirm official details for your dates and circumstances.</aside>
-      {guide.officialSources && (
-        <section class="article-section" id="official-sources">
-          <h2>Official sources to check before you travel</h2>
-          <p>Use these first-party websites to confirm current entry rules, airport procedures, and transport information.</p>
-          <ul class="source-list">
-            {guide.officialSources.map((source) => <li><a href={source.href} rel="noopener noreferrer">{source.label}</a></li>)}
-          </ul>
+      {relatedTools.length > 0 && (
+        <section class="article-section" id="related-tools">
+          <h2>Helpful EZ Roam Guide tools</h2>
+          <div class="related">
+            {relatedTools.map((tool) => (
+              <a href={hrefForTool(tool)}>
+                <span>{tool.title} →</span>
+                <small>{tool.category} · {tool.readingTime}</small>
+              </a>
+            ))}
+          </div>
         </section>
       )}
-      <section class="faq article-section" id="faq">
-        <h2>Frequently asked questions</h2>
-        {guide.faqs.map((faq) => <details><summary>{faq.question}</summary><p>{faq.answer}</p></details>)}
-      </section>
       <section class="article-section" id="related">
         <h2>Related guides</h2>
         <div class="related">
@@ -79,31 +118,45 @@ const checklistHeading = guide.checklistHeading ?? "First 24 hours checklist";
           </a>
         </div>
       </section>
-      {relatedTools.length > 0 && (
-        <section class="article-section" id="related-tools">
-          <h2>Helpful travel tools</h2>
-          <div class="related">
-            {relatedTools.map((tool) => (
-              <a href={hrefForTool(tool)}>
-                <span>{tool.title} →</span>
-                <small>{tool.category} · {tool.readingTime}</small>
-              </a>
-            ))}
-          </div>
-        </section>
-      )}
+      <section class="faq article-section" id="faq">
+        <h2>Frequently asked questions</h2>
+        {guide.faqs.map((faq) => <details><summary>{faq.question}</summary><p>{faq.answer}</p></details>)}
+      </section>
+      <section class="article-section" id="source-notes">
+        <h2>Source notes</h2>
+        <p>This guide is written as practical planning guidance for the first 24 hours after arrival. It avoids live price, schedule, legal, immigration, medical, and safety claims unless those details are clearly presented as items to verify.</p>
+        {guide.officialSources ? (
+          <>
+            <p>Use these first-party sources to confirm current entry rules, airport procedures, public transport details, and local requirements for your exact travel dates.</p>
+            <ul class="source-list">
+              {guide.officialSources.map((source) => <li><a href={source.href} rel="noopener noreferrer">{source.label}</a></li>)}
+            </ul>
+          </>
+        ) : (
+          <p>Before you travel, confirm current details with official airport, immigration, public transport, tourism, and government advisory sources for your destination.</p>
+        )}
+      </section>
+      <section class="article-section editorial-note" id="editorial-note">
+        <h2>Author and editorial note</h2>
+        <p>Written by the EZ Roam Guide Editorial Team. This page is reviewed for clarity, usefulness, internal links, and source-awareness, but it is not official advice from an airport, government, embassy, transport operator, or travel provider.</p>
+        <p><strong>Last reviewed:</strong> {guide.lastUpdated}</p>
+      </section>
     </article>
     <aside class="toc" aria-label="Table of contents">
       <strong>On this page</strong>
       <ul>
         <li><a href="#quick-summary">Quick summary</a></li>
+        <li><a href="#who-this-guide-is-for">Who this guide is for</a></li>
         {guide.sections.map((section) => <li><a href={`#${section.id}`}>{section.heading}</a></li>)}
+        <li><a href="#practical-examples">Practical examples</a></li>
+        <li><a href="#first-24-hour-flow">{isDestinationGuide ? "First 24-hour flow" : "How to use this guide"}</a></li>
         {guide.mistakes && <li><a href="#mistakes">{mistakesHeading}</a></li>}
         {guide.checklist && <li><a href="#checklist">Checklist</a></li>}
-        {guide.officialSources && <li><a href="#official-sources">Official sources</a></li>}
-        <li><a href="#faq">FAQ</a></li>
-        <li><a href="#related">Related guides</a></li>
         {relatedTools.length > 0 && <li><a href="#related-tools">Helpful tools</a></li>}
+        <li><a href="#related">Related guides</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#source-notes">Source notes</a></li>
+        <li><a href="#editorial-note">Editorial note</a></li>
       </ul>
     </aside>
   </div>

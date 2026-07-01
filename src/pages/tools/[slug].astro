@@ -132,6 +132,18 @@ const pageSchema = webPageSchema(tool.title, tool.description, hrefForTool(tool)
           ))}
         </div>
       </section>
+
+      <section class="article-section" id="source-notes">
+        <h2>Source notes</h2>
+        <p>This tool uses only the answers you enter on this page to produce a general planning suggestion. It does not check live prices, schedules, exchange rates, transport disruption, visa rules, health requirements, or local safety alerts.</p>
+        <p>Before relying on the result, confirm current details with official airport, immigration, transport, government advisory, and provider sources for your destination and travel dates.</p>
+      </section>
+
+      <section class="article-section editorial-note" id="editorial-note">
+        <h2>Author and editorial note</h2>
+        <p>Built and reviewed by the EZ Roam Guide Editorial Team as a practical first-day travel planning helper. The result is not official advice from an airport, government, embassy, transport operator, insurer, bank, or mobile provider.</p>
+        <p><strong>Last reviewed:</strong> {tool.lastUpdated}</p>
+      </section>
     </article>
     <aside class="toc" aria-label="Table of contents">
       <strong>On this page</strong>
@@ -140,6 +152,8 @@ const pageSchema = webPageSchema(tool.title, tool.description, hrefForTool(tool)
         <li><a href="#tool">Interactive tool</a></li>
         <li><a href="#faq">FAQ</a></li>
         <li><a href="#related">Related guides and tools</a></li>
+        <li><a href="#source-notes">Source notes</a></li>
+        <li><a href="#editorial-note">Editorial note</a></li>
       </ul>
     </aside>
   </div>
